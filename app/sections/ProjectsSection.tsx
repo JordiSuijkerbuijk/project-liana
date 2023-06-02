@@ -5,6 +5,13 @@ import { MouseEvent as MouseEventReact, useEffect, useRef, useState } from 'reac
 import image from '../../public/images/hover.jpg';
 
 export default function ProjectsSection() {
+  // TODO: Voeg intersection observer toe
+  // TODO: check met tristan of er andere manieren zijn om deze section cleaner
+  // te maken?
+  // TODO: Uitzoeken of er een manier is voor mousemove met animejs (vergeten
+  // hoe dit zit)
+  // TODO: Is er een manier om de kleine image uit te scalen als soort out
+  // animation (misschien met cancel animation frame en dan scalen)
   const projects = [1, 2, 3];
   const projectsContainerRef = useRef<HTMLInputElement>(null);
   const sectionRef = useRef<HTMLInputElement>(null);
