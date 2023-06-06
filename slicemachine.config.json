@@ -1,0 +1,5 @@
+{
+  "repositoryName": "project-liana",
+  "adapter": "@slicemachine/adapter-next",
+  "libraries": ["./slices"]
+}
