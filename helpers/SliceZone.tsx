@@ -1,7 +1,7 @@
 import { Slice } from '@prismicio/client';
 
 export type Components = {
-  [key: string]: string;
+  [key: string]: () => JSX.Element;
 };
 
 export default function SliceZone(slices: Slice[] = [], components: Components = {}) {
