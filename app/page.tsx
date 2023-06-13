@@ -1,6 +1,7 @@
 import Section from '@/components/Section';
-import { Components } from '@/helpers/SliceZone';
+import SliceZone, { Components } from '@/helpers/SliceZone';
 import { getClient } from '@/helpers/getClient';
+import { Slice } from '@prismicio/client';
 import ProjectsSection from './sections/ProjectsSection';
 
 async function getData() {
@@ -14,7 +15,11 @@ async function getData() {
 }
 
 const components: Components = {
-  projects: ProjectsSection,
+  projects: (props: Slice) => (
+    <Section color='#000'>
+      <ProjectsSection {...props} />
+    </Section>
+  ),
 };
 
 export default async function Home() {
@@ -25,10 +30,12 @@ export default async function Home() {
     <main className='flex flex-col items-center justify-between min-h-screen p-24'>
       <Section />
       <Section />
-      <Section color='#f7938b' />
+      <Section color='#fefefe'>
+        <ProjectsSection />
+      </Section>
+      {SliceZone(data?.slices, components)}
       <Section />
       <Section />
-      {/* {SliceZone(data?.slices, components)} */}
     </main>
   );
 }

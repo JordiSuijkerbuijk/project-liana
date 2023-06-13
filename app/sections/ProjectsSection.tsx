@@ -4,6 +4,11 @@ import Image from 'next/image';
 import { MouseEvent as MouseEventReact, useEffect, useRef, useState } from 'react';
 import image from '../../public/images/hover.jpg';
 
+//TODO: change type to be correct
+// export interface ProjectsSectionType extends defaultProps {
+//   data: any;
+// }
+
 export default function ProjectsSection() {
   // TODO: Voeg intersection observer toe
   // TODO: check met tristan of er andere manieren zijn om deze section cleaner
