@@ -142,6 +142,108 @@ export type ProjectsDocument<Lang extends string = string> =
     Lang
   >;
 export type AllDocumentTypes = HomeDocument | ProjectsDocument;
+/**
+ * Primary content in Projects → Primary
+ *
+ */
+interface ProjectsSliceDefaultPrimary {
+  /**
+   * Title field in *Projects → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: projects.primary.title
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  title: prismic.RichTextField;
+  /**
+   * Description field in *Projects → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: projects.primary.description
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  description: prismic.RichTextField;
+}
+/**
+ * Item in Projects → Items
+ *
+ */
+export interface ProjectsSliceDefaultItem {
+  /**
+   * Title field in *Projects → Items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: projects.items[].title
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  title: prismic.RichTextField;
+  /**
+   * Description field in *Projects → Items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: projects.items[].description
+   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   *
+   */
+  description: prismic.RichTextField;
+  /**
+   * Background Image field in *Projects → Items*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: projects.items[].background_image
+   * - **Documentation**: https://prismic.io/docs/core-concepts/image
+   *
+   */
+  background_image: prismic.ImageField<never>;
+  /**
+   * Hover image field in *Projects → Items*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: projects.items[].hover_image
+   * - **Documentation**: https://prismic.io/docs/core-concepts/image
+   *
+   */
+  hover_image: prismic.ImageField<never>;
+}
+/**
+ * Default variation for Projects Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `Default`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ProjectsSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ProjectsSliceDefaultPrimary>,
+  Simplify<ProjectsSliceDefaultItem>
+>;
+/**
+ * Slice variation for *Projects*
+ *
+ */
+type ProjectsSliceVariation = ProjectsSliceDefault;
+/**
+ * Projects Shared Slice
+ *
+ * - **API ID**: `projects`
+ * - **Description**: `Projects`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ProjectsSlice = prismic.SharedSlice<
+  "projects",
+  ProjectsSliceVariation
+>;
 declare module "@prismicio/client" {
   interface CreateClient {
     (
@@ -157,6 +259,11 @@ declare module "@prismicio/client" {
       ProjectsDocumentData,
       ProjectsDocument,
       AllDocumentTypes,
+      ProjectsSliceDefaultPrimary,
+      ProjectsSliceDefaultItem,
+      ProjectsSliceDefault,
+      ProjectsSliceVariation,
+      ProjectsSlice,
     };
   }
 }
