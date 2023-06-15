@@ -1,10 +1,10 @@
 import { Slice } from '@prismicio/client';
 
 export type Components = {
-  [key: string]: string;
+  [key: string]: (slice: Slice) => JSX.Element;
 };
 
-export default function SliceZone(slices: Slice[] = [], components: Components = {}) {
+export default function SliceZone(slices: Slice[], components: Components) {
   return slices.map((slice: Slice, key) => {
     const Element = components[slice.slice_type];
 

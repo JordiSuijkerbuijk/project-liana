@@ -1,6 +1,8 @@
-import { Components } from '@/helpers/SliceZone';
+'use client';
+
+import SliceZone, { Components } from '@/helpers/SliceZone';
 import { getClient } from '@/helpers/getClient';
-import ProjectsSection from './sections/ProjectsSection';
+import Projects from '@/slices/Projects';
 
 async function getData() {
   const client = getClient();
@@ -12,7 +14,9 @@ async function getData() {
   }
 }
 
-const components: Components = {};
+const components: Components = {
+  projects: Projects,
+};
 
 export default async function Home() {
   const home = await getData();
@@ -21,8 +25,8 @@ export default async function Home() {
   const data = home.props.data;
 
   return (
-    <main className='flex flex-col items-center justify-between min-h-screen p-24'>
-      <ProjectsSection />
+    <main className="flex flex-col items-center justify-between min-h-screen p-24">
+      {SliceZone(data.slices, components)}
     </main>
   );
 }
