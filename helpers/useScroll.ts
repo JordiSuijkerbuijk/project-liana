@@ -1,7 +1,9 @@
+"use client";
+
 import { useCallback, useEffect, useRef } from "react";
 import { useEvent } from "./useEvent";
 
-const defaultOptions = { top: true, bottom: false };
+const defaultOptions = { top: true, bottom: false, offsetViewPort: false };
 
 function clamp(value: number): number {
   return Math.min(Math.max(value, 0), 1);
@@ -9,7 +11,7 @@ function clamp(value: number): number {
 
 export function useScroll(
   callback: (progress: number) => void,
-  options: { top?: boolean; bottom?: boolean }
+  options: { top?: boolean; bottom?: boolean; offsetViewPort?: boolean }
 ) {
   options = { ...defaultOptions, ...options };
   const slice = useRef<HTMLElement>(null);
@@ -25,10 +27,11 @@ export function useScroll(
 
     const adjustedTop = options.top ? clientHeight : 0;
     const adjustedBottom = options.bottom ? clientHeight : 0;
+    const sliceEndAjustment = options.offsetViewPort ? window.innerHeight : 0;
 
     const progress = clamp(
       (scrollTop + adjustedTop - offsetTop) /
-        (sliceHeight - adjustedTop + adjustedBottom)
+        (sliceHeight - adjustedTop + adjustedBottom + sliceEndAjustment)
     );
 
     if (previous.current !== progress) {

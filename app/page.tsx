@@ -1,5 +1,6 @@
-import SliceZone, { Components } from "@/helpers/SliceZone";
+import { Components } from "@/helpers/SliceZone";
 import { getClient } from "@/helpers/getClient";
+import FakeSection from "./sections/FakeSection";
 
 async function getData() {
   const client = getClient();
@@ -20,8 +21,10 @@ export default async function Home() {
   const data = home.props.data;
 
   return (
-    <main className="flex flex-col items-center justify-between min-h-screen p-24">
-      {SliceZone(data.slices, components)}
+    <main className="flex flex-col items-center justify-between">
+      <div className="h-screen bg-[beige] w-full"></div>
+      <FakeSection />
+      <div className="h-screen bg-[beige] w-full"></div>
     </main>
   );
 }
