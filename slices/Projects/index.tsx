@@ -20,12 +20,12 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
   const description = asHTML(slice.primary.description);
   const items = slice.items;
 
-  //TODO: type cleanup
-  //TODO: code cleanup
-  //TODO: on scroll it doesn't animate and looks kinda wonky fix that
-  //TODO: on hover op description
-  //TODO: replace images
-  //TODO: connect prismic;
+  // TODO: maybe mouse always follows and on mouseEnter we only change opacity
+  // (fixes position on mouse enter issue)
+
+  //TODO: create in animation when slice is in view for first time
+
+  //Create text overlay on card
 
   useEffect(() => {
     if (!projectsContainerRef.current || !sectionRef.current) return;
