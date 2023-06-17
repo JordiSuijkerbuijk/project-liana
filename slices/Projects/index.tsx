@@ -3,7 +3,7 @@
 import { Content, asHTML, asText } from '@prismicio/client';
 import { SliceComponentProps } from '@prismicio/react';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
  * Props for `Projects`.
@@ -13,12 +13,13 @@ export type ProjectsProps = SliceComponentProps<Content.ProjectsSlice>;
 const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
   const projectsContainerRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const imagesRef = useRef<HTMLElement[]>();
-  const [currentProject, setCurrentProject] = useState(0);
+  const imagesRef = useRef<HTMLDivElement>(null);
 
   const title = asText(slice.primary.title);
   const description = asHTML(slice.primary.description);
   const items = slice.items;
+
+  const imageWidth = 144;
 
   // TODO: maybe mouse always follows and on mouseEnter we only change opacity
   // (fixes position on mouse enter issue)
@@ -30,68 +31,56 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
   useEffect(() => {
     if (!projectsContainerRef.current || !sectionRef.current) return;
 
-    if (!imagesRef.current) {
-      imagesRef.current = Array.from(projectsContainerRef.current.querySelectorAll('img'));
-    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!sectionRef.current) return;
+        if (entry.isIntersecting) {
+          sectionRef.current.addEventListener('mousemove', mouseMoveHandler);
+          return;
+        }
+
+        sectionRef.current.removeEventListener('mousemove', mouseMoveHandler);
+      });
+    });
+
+    observer.observe(sectionRef.current);
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
   }, []);
 
-  function mouseMoveHandler(event: MouseEvent, projectKey: number) {
-    const element = event.target as HTMLElement;
-    const image = element.querySelector('img');
+  function mouseMoveHandler(event: MouseEvent) {
+    if (!sectionRef.current || !imagesRef.current) return;
 
-    if (!projectsContainerRef.current || !sectionRef.current || !image) return;
+    const y = event.y + window.scrollY - sectionRef.current.offsetTop - imageWidth / 2;
+    const x = event.x - sectionRef.current.offsetLeft - imageWidth / 2;
 
-    image.animate(
-      {
-        transform: `translate(${event.layerX - image.clientWidth / 2}px, ${
-          event.layerY - image.clientWidth / 2
-        }px)`,
-      },
-      { duration: 300, fill: 'forwards', composite: 'replace' }
+    imagesRef.current.animate(
+      { transform: `translate(${x}px, ${y}px)` },
+      { duration: 200, fill: 'forwards' }
     );
   }
 
-  function mouseHandlerEvent(event: MouseEvent) {
-    mouseMoveHandler(event, currentProject);
-  }
-
-  function mouseEnterHandler(event: MouseEvent) {
-    if (!projectsContainerRef.current || !imagesRef.current || !sectionRef.current) return;
-
-    const element = event.target as HTMLElement;
-    const image = element.querySelector('img');
-
-    if (image) {
-      image.animate(
-        { opacity: 1 },
-
-        { duration: 200, fill: 'forwards' }
-      );
+  function mouseEnterHandler(key: number) {
+    if (imagesRef.current && imagesRef.current.children[key]) {
+      imagesRef.current.children[key].animate({ opacity: 1 }, { duration: 200, fill: 'forwards' });
     }
-
-    window.addEventListener('mousemove', mouseHandlerEvent, true);
   }
 
-  function mouseLeaveHandler(event: MouseEvent) {
-    if (!projectsContainerRef.current || !imagesRef.current || !sectionRef.current) return;
-
-    window.removeEventListener('mousemove', mouseHandlerEvent, true);
-
-    const element = event.target as HTMLElement;
-    const image = element.querySelector('img');
-
-    if (image) {
-      image.animate(
-        {
-          opacity: 0,
-        },
-        { duration: 200, fill: 'forwards' }
-      );
+  function mouseLeaveHandler(key: number) {
+    if (imagesRef.current && imagesRef.current.children[key]) {
+      imagesRef.current.children[key].animate({ opacity: 0 }, { duration: 200, fill: 'forwards' });
     }
   }
 
   return (
-    <div className='grid grid-cols-4 p-24 overflow-hidden lg:grid-cols-12 gap-x-8' ref={sectionRef}>
+    <div
+      className='relative grid grid-cols-4 p-24 overflow-hidden lg:grid-cols-12 gap-x-8'
+      ref={sectionRef}
+    >
       <div className='sticky left-0 flex flex-col col-span-4 gap-y-4 top-8 h-fit'>
         <h2 className='text-2xl'>{title}</h2>
         <div className='max-w-lg text-sm' dangerouslySetInnerHTML={{ __html: description }} />
@@ -102,25 +91,31 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
           return (
             <div
               className='relative w-full max-w-4xl bg-white bg-bottom bg-cover rounded-lg h-96'
-              id={`${key}`}
               key={key}
               style={{ backgroundImage: `url(${item.background_image.url})` }}
-              onMouseEnter={mouseEnterHandler}
-              onMouseLeave={mouseLeaveHandler}
-            >
-              {item.hover_image && (
-                <Image
-                  src={item.hover_image.url || ''}
-                  alt={item.hover_image.alt || ''}
-                  width={item.hover_image.dimensions?.width || 144}
-                  height={item.hover_image.dimensions?.height || 144}
-                  className='relative z-20 origin-center rounded-lg opacity-0 pointer-events-none linear h-36 w-36'
-                  loading='lazy'
-                />
-              )}
-            </div>
+              onMouseEnter={() => mouseEnterHandler(key)}
+              onMouseLeave={() => mouseLeaveHandler(key)}
+              id={`${key}`}
+            />
           );
         })}
+      </div>
+      <div className='absolute top-0 left-0 pointer-events-none' ref={imagesRef}>
+        {items.map(
+          (item, key) =>
+            item.hover_image && (
+              <Image
+                src={item.hover_image.url || ''}
+                alt={item.hover_image.alt || ''}
+                width={item.hover_image.dimensions?.width || 144}
+                height={item.hover_image.dimensions?.height || 144}
+                className='rounded-lg opacity-0 linear h-36 w-36'
+                style={{ transform: `translateY(-${key * 100}%)` }}
+                loading='lazy'
+                key={key}
+              />
+            )
+        )}
       </div>
     </div>
   );
