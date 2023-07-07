@@ -36,7 +36,6 @@ const Projects = (): JSX.Element => {
           image.clientWidth / 2);
 
       const element = projectsContainerRef.current.children[key] as HTMLElement;
-      console.log('event.pageY', event.pageY);
       const y =
         event.pageY -
         (sectionRef.current.offsetTop +
@@ -99,19 +98,22 @@ const Projects = (): JSX.Element => {
         ref={projectsContainerRef}
       >
         {/* project card */}
-        {projects.map((item, key) => (
-          <div
-            className="relative w-full max-w-4xl overflow-hidden bg-black rounded-lg h-96"
-            key={key}
-          >
-            <Image
-              {...image}
-              alt="hover image"
-              className="z-10 transition-transform duration-150 rounded-lg linear h-36 w-36"
-              style={{ transform: `translate(-100%, -${key * 24}rem` }}
-            />
-          </div>
-        ))}
+        {projects.map((item, key) => {
+          console.log('item', item);
+          return (
+            <div
+              className="relative w-full max-w-4xl overflow-hidden bg-black rounded-lg h-96"
+              key={key}
+            >
+              <Image
+                {...image}
+                alt="hover image"
+                className="z-10 transition-transform duration-150 rounded-lg linear h-36 w-36"
+                style={{ transform: `translate(-100%, -${key * 24}rem` }}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );

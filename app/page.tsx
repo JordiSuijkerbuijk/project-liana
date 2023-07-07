@@ -1,5 +1,3 @@
-'use client';
-
 import SliceZone, { Components } from '@/helpers/SliceZone';
 import { getClient } from '@/helpers/getClient';
 import Projects from '@/slices/Projects';
