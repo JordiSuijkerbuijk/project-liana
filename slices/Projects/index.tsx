@@ -22,10 +22,7 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
 
   const imageWidth = 144;
 
-  // TODO: maybe mouse always follows and on mouseEnter we only change opacity
-  // (fixes position on mouse enter issue)
-
-  //TODO: create in animation when slice is in view for first time
+  //TODO: add resize listener when mobile it shouldn't show to hover animation
 
   //Create text overlay on card
 
@@ -111,15 +108,15 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
 
   return (
     <div
-      className='relative grid grid-cols-4 p-24 lg:grid-cols-12 gap-x-8 max-w-screen-2xl'
+      className='relative grid grid-cols-4 p-24 gap-8 max-w-screen-2xl lg:grid-cols-12'
       ref={sectionRef}
     >
-      <div className='sticky left-0 flex flex-col col-span-4 gap-y-4 top-8 h-fit'>
+      <div className='flex flex-col col-span-4 gap-y-4 h-fit lg:top-8 lg:sticky lg:left-0'>
         <h2 className='text-2xl'>{title}</h2>
         <div className='max-w-lg text-sm' dangerouslySetInnerHTML={{ __html: description }} />
       </div>
       <div
-        className='flex flex-col items-end col-span-7 col-start-6 gap-y-8'
+        className='flex flex-col items-end gap-y-8 col-span-4 lg:col-span-7 lg:col-start-6'
         ref={projectsContainerRef}
       >
         {/* project card */}
