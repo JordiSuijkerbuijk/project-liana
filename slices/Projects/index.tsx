@@ -2,6 +2,7 @@
 
 import { Content, asHTML, asText } from '@prismicio/client';
 import { SliceComponentProps } from '@prismicio/react';
+import anime from 'animejs';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 
@@ -31,7 +32,35 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
   useEffect(() => {
     if (!projectsContainerRef.current || !sectionRef.current) return;
 
-    const observer = new IntersectionObserver((entries) => {
+    const projectsArray = Array.from(projectsContainerRef.current.children);
+
+    const inAnimationObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          console.log('entry.intersectionRatio', entry.intersectionRatio);
+          if (entry.isIntersecting) {
+            anime({
+              targets: entry.target,
+              opacity: [0, 1],
+              translateX: ['5rem', '0rem'],
+              easing: 'easeInOutQuad',
+              duration: 500,
+            });
+
+            inAnimationObserver.unobserve(entry.target);
+
+            return;
+          }
+        });
+      },
+      { rootMargin: '-10%' }
+    );
+
+    projectsArray.map((item) => {
+      inAnimationObserver.observe(item);
+    });
+
+    const mouseMoveObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!sectionRef.current) return;
         if (entry.isIntersecting) {
@@ -43,11 +72,15 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
       });
     });
 
-    observer.observe(sectionRef.current);
+    mouseMoveObserver.observe(sectionRef.current);
 
     return () => {
+      projectsArray.map((item) => {
+        inAnimationObserver.unobserve(item);
+      });
+
       if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+        mouseMoveObserver.unobserve(sectionRef.current);
       }
     };
   }, []);
@@ -55,8 +88,7 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
   function mouseMoveHandler(event: MouseEvent) {
     if (!sectionRef.current || !imagesRef.current) return;
 
-    const y =
-      event.y + window.scrollY - sectionRef.current.offsetTop - imageWidth / 2;
+    const y = event.y + window.scrollY - sectionRef.current.offsetTop - imageWidth / 2;
     const x = event.x - sectionRef.current.offsetLeft - imageWidth / 2;
 
     imagesRef.current.animate(
@@ -67,43 +99,34 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
 
   function mouseEnterHandler(key: number) {
     if (imagesRef.current && imagesRef.current.children[key]) {
-      imagesRef.current.children[key].animate(
-        { opacity: 1 },
-        { duration: 200, fill: 'forwards' }
-      );
+      imagesRef.current.children[key].animate({ opacity: 1 }, { duration: 200, fill: 'forwards' });
     }
   }
 
   function mouseLeaveHandler(key: number) {
     if (imagesRef.current && imagesRef.current.children[key]) {
-      imagesRef.current.children[key].animate(
-        { opacity: 0 },
-        { duration: 200, fill: 'forwards' }
-      );
+      imagesRef.current.children[key].animate({ opacity: 0 }, { duration: 200, fill: 'forwards' });
     }
   }
 
   return (
     <div
-      className="relative grid grid-cols-4 p-24 overflow-hidden lg:grid-cols-12 gap-x-8"
+      className='relative grid grid-cols-4 p-24 lg:grid-cols-12 gap-x-8 max-w-screen-2xl'
       ref={sectionRef}
     >
-      <div className="sticky left-0 flex flex-col col-span-4 gap-y-4 top-8 h-fit">
-        <h2 className="text-2xl">{title}</h2>
-        <div
-          className="max-w-lg text-sm"
-          dangerouslySetInnerHTML={{ __html: description }}
-        />
+      <div className='sticky left-0 flex flex-col col-span-4 gap-y-4 top-8 h-fit'>
+        <h2 className='text-2xl'>{title}</h2>
+        <div className='max-w-lg text-sm' dangerouslySetInnerHTML={{ __html: description }} />
       </div>
       <div
-        className="flex flex-col items-end col-span-8 gap-y-8"
+        className='flex flex-col items-end col-span-7 col-start-6 gap-y-8'
         ref={projectsContainerRef}
       >
         {/* project card */}
         {items.map((item, key) => {
           return (
             <div
-              className="relative w-full max-w-4xl bg-white bg-bottom bg-cover rounded-lg h-96"
+              className='relative w-full max-w-3xl bg-white bg-bottom bg-cover rounded-lg h-96 translate-x-20 opacity-0'
               key={key}
               style={{ backgroundImage: `url(${item.background_image.url})` }}
               onMouseEnter={() => mouseEnterHandler(key)}
@@ -113,10 +136,7 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
           );
         })}
       </div>
-      <div
-        className="absolute top-0 left-0 pointer-events-none"
-        ref={imagesRef}
-      >
+      <div className='absolute top-0 left-0 pointer-events-none' ref={imagesRef}>
         {items.map(
           (item, key) =>
             item.hover_image && (
@@ -125,9 +145,9 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
                 alt={item.hover_image.alt || ''}
                 width={item.hover_image.dimensions?.width || 144}
                 height={item.hover_image.dimensions?.height || 144}
-                className="rounded-lg opacity-0 linear h-36 w-36"
+                className='rounded-lg opacity-0 linear h-36 w-36'
                 style={{ transform: `translateY(-${key * 100}%)` }}
-                loading="lazy"
+                loading='lazy'
                 key={key}
               />
             )
