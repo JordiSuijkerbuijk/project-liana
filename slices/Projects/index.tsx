@@ -4,7 +4,7 @@ import { Content, asHTML, asText } from '@prismicio/client';
 import { SliceComponentProps } from '@prismicio/react';
 import anime from 'animejs';
 import Image from 'next/image';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 /**
  * Props for `Projects`.
@@ -20,11 +20,26 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
   const description = asHTML(slice.primary.description);
   const items = slice.items;
 
-  const imageWidth = 144;
+  const imageSize = 144;
+  const currentAnimationFrame = useRef(0);
 
-  //TODO: add resize listener when mobile it shouldn't show to hover animation
+  const pos = useRef({ x: 0, y: 0 });
 
-  //Create text overlay on card
+  let isFiring = false;
+
+  //TODO: hover state
+  //TODO:
+
+  const resizeHandler = useCallback(() => {
+    if (!sectionRef.current) return;
+
+    if (window.innerWidth > 1024) {
+      sectionRef.current.addEventListener('mousemove', mouseMoveHandler, { passive: true });
+      return;
+    }
+
+    sectionRef.current.removeEventListener('mousemove', mouseMoveHandler);
+  }, []);
 
   useEffect(() => {
     if (!projectsContainerRef.current || !sectionRef.current) return;
@@ -34,7 +49,6 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
     const inAnimationObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          console.log('entry.intersectionRatio', entry.intersectionRatio);
           if (entry.isIntersecting) {
             anime({
               targets: entry.target,
@@ -57,41 +71,65 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
       inAnimationObserver.observe(item);
     });
 
-    const mouseMoveObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!sectionRef.current) return;
-        if (entry.isIntersecting) {
-          sectionRef.current.addEventListener('mousemove', mouseMoveHandler);
-          return;
-        }
+    let mouseMoveObserver: IntersectionObserver | null = null;
 
-        sectionRef.current.removeEventListener('mousemove', mouseMoveHandler);
+    if (window.innerWidth > 1024) {
+      if (!sectionRef.current) return;
+
+      mouseMoveObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!sectionRef.current) return;
+          if (entry.isIntersecting) {
+            sectionRef.current.addEventListener('mousemove', mouseMoveHandler, false);
+            return;
+          }
+
+          sectionRef.current.removeEventListener('mousemove', mouseMoveHandler);
+        });
       });
-    });
 
-    mouseMoveObserver.observe(sectionRef.current);
+      mouseMoveObserver.observe(sectionRef.current);
+    }
+
+    window.addEventListener('resize', resizeHandler);
 
     return () => {
       projectsArray.map((item) => {
         inAnimationObserver.unobserve(item);
       });
 
-      if (sectionRef.current) {
+      if (sectionRef.current && mouseMoveObserver) {
         mouseMoveObserver.unobserve(sectionRef.current);
       }
+
+      window.removeEventListener('resize', resizeHandler);
     };
-  }, []);
+  }, [resizeHandler]);
+
+  function lerp(start: number, end: number, amt: number) {
+    return (1 - amt) * start + amt * end;
+  }
 
   function mouseMoveHandler(event: MouseEvent) {
+    if (currentAnimationFrame.current) cancelAnimationFrame(currentAnimationFrame.current);
+    currentAnimationFrame.current = requestAnimationFrame(() => animate(event));
+  }
+
+  function animate(event: MouseEvent) {
     if (!sectionRef.current || !imagesRef.current) return;
 
-    const y = event.y + window.scrollY - sectionRef.current.offsetTop - imageWidth / 2;
-    const x = event.x - sectionRef.current.offsetLeft - imageWidth / 2;
+    const targetY = event.y + window.scrollY - sectionRef.current.offsetTop - imageSize / 2;
+    const targetX = event.x - imageSize / 2;
+
+    const y = lerp(pos.current.y, targetY, 0.075);
+    const x = lerp(pos.current.x, targetX, 0.075);
 
     imagesRef.current.animate(
       { transform: `translate(${x}px, ${y}px)` },
-      { duration: 200, fill: 'forwards' }
+      { duration: 50, fill: 'forwards' }
     );
+    pos.current.x = targetX;
+    pos.current.y = targetY;
   }
 
   function mouseEnterHandler(key: number) {
@@ -108,28 +146,39 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
 
   return (
     <div
-      className='relative grid grid-cols-4 p-24 gap-8 max-w-screen-2xl lg:grid-cols-12'
+      className='relative grid grid-cols-4 gap-8 p-6 max-w-screen-2xl lg:p-24 lg:grid-cols-12'
       ref={sectionRef}
     >
       <div className='flex flex-col col-span-4 gap-y-4 h-fit lg:top-8 lg:sticky lg:left-0'>
         <h2 className='text-2xl'>{title}</h2>
-        <div className='max-w-lg text-sm' dangerouslySetInnerHTML={{ __html: description }} />
+        <div className='max-w-lg' dangerouslySetInnerHTML={{ __html: description }} />
       </div>
       <div
-        className='flex flex-col items-end gap-y-8 col-span-4 lg:col-span-7 lg:col-start-6'
+        className='flex flex-col items-end col-span-4 gap-y-8 lg:col-span-7 lg:col-start-6'
         ref={projectsContainerRef}
       >
         {/* project card */}
         {items.map((item, key) => {
+          const title = asText(item.title);
+          const description = asText(item.description);
+
           return (
             <div
-              className='relative w-full max-w-3xl bg-white bg-bottom bg-cover rounded-lg h-96 translate-x-20 opacity-0'
+              className='relative flex items-end w-full max-w-3xl overflow-hidden translate-x-20 opacity-0 aspect-video group hover:shadow-xl'
               key={key}
-              style={{ backgroundImage: `url(${item.background_image.url})` }}
               onMouseEnter={() => mouseEnterHandler(key)}
               onMouseLeave={() => mouseLeaveHandler(key)}
-              id={`${key}`}
-            />
+            >
+              <div
+                className='absolute top-0 left-0 z-10 w-full h-full bg-bottom bg-cover rounded-lg'
+                style={{ backgroundImage: `url(${item.background_image.url})` }}
+              />
+              <div className='relative z-30 flex flex-col p-6 text-white transition-all duration-300 ease-in-out translate-y-2 opacity-0 gap-y-2 group-hover:opacity-100 group-hover:translate-y-0'>
+                <h2 className='text-lg'>{title}</h2>
+                <p className='text-xs'>{description}</p>
+              </div>
+              <div className='absolute bottom-0 left-0 z-20 w-full transition-opacity duration-300 ease-in-out rounded-lg opacity-0 h-3/4 bg-gradient-to-t from-black/80 to-transparent group-hover:opacity-100' />
+            </div>
           );
         })}
       </div>
