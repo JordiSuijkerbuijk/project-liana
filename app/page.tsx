@@ -22,7 +22,7 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col items-center justify-between min-h-screen p-24">
-      <HeadingAnimation text="PROJECT LIANA" />
+      <HeadingAnimation text="Project liana" />
       {/* {SliceZone(data.slices, components)} */}
     </main>
   );

@@ -43,5 +43,7 @@ export default function HeadingAnimation({ text = '' }: { text: string }) {
     };
   }, [text, randomizeLetters, originalWord]);
 
-  return <h1 className="text-black text-8xl font-whyte" ref={element} />;
+  return (
+    <h1 className="text-black text-8xl font-ppmori-regular" ref={element} />
+  );
 }

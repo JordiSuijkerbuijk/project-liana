@@ -7,7 +7,7 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      whyte: 'whyte',
+      'ppmori-regular': 'ppmori-regular',
     },
     extend: {
       backgroundImage: {
