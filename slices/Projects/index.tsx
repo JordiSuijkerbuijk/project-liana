@@ -25,11 +25,6 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
 
   const pos = useRef({ x: 0, y: 0 });
 
-  let isFiring = false;
-
-  //TODO: hover state
-  //TODO:
-
   const resizeHandler = useCallback(() => {
     if (!sectionRef.current) return;
 
@@ -119,7 +114,7 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
     if (!sectionRef.current || !imagesRef.current) return;
 
     const targetY = event.y + window.scrollY - sectionRef.current.offsetTop - imageSize / 2;
-    const targetX = event.x - imageSize / 2;
+    const targetX = event.x - sectionRef.current.offsetLeft - imageSize / 2;
 
     const y = lerp(pos.current.y, targetY, 0.075);
     const x = lerp(pos.current.x, targetX, 0.075);
