@@ -15,6 +15,9 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
   const projectsContainerRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const inAnimationObserverRef = useRef<IntersectionObserver | undefined>(undefined);
+  const mouseMoveObserverRef = useRef<IntersectionObserver | undefined>(undefined);
 
   const title = asText(slice.primary.title);
   const description = asHTML(slice.primary.description);
@@ -25,10 +28,30 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
 
   const pos = useRef({ x: 0, y: 0 });
 
-  let isFiring = false;
+  const animate = useCallback((event: MouseEvent) => {
+    if (!sectionRef.current || !imagesRef.current) return;
 
-  //TODO: hover state
-  //TODO:
+    const targetY = event.y + window.scrollY - sectionRef.current.offsetTop - imageSize / 2;
+    const targetX = event.x - sectionRef.current.offsetLeft - imageSize / 2;
+
+    const y = lerp(pos.current.y, targetY, 0.075);
+    const x = lerp(pos.current.x, targetX, 0.075);
+
+    imagesRef.current.animate(
+      { transform: `translate(${x}px, ${y}px)` },
+      { duration: 50, fill: 'forwards' }
+    );
+    pos.current.x = targetX;
+    pos.current.y = targetY;
+  }, []);
+
+  const mouseMoveHandler = useCallback(
+    (event: MouseEvent) => {
+      if (currentAnimationFrame.current) cancelAnimationFrame(currentAnimationFrame.current);
+      currentAnimationFrame.current = requestAnimationFrame(() => animate(event));
+    },
+    [animate]
+  );
 
   const resizeHandler = useCallback(() => {
     if (!sectionRef.current) return;
@@ -39,14 +62,14 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
     }
 
     sectionRef.current.removeEventListener('mousemove', mouseMoveHandler);
-  }, []);
+  }, [mouseMoveHandler]);
 
   useEffect(() => {
     if (!projectsContainerRef.current || !sectionRef.current) return;
 
     const projectsArray = Array.from(projectsContainerRef.current.children);
 
-    const inAnimationObserver = new IntersectionObserver(
+    inAnimationObserverRef.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -58,7 +81,9 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
               duration: 500,
             });
 
-            inAnimationObserver.unobserve(entry.target);
+            if (inAnimationObserverRef.current) {
+              inAnimationObserverRef.current.unobserve(entry.target);
+            }
 
             return;
           }
@@ -68,19 +93,19 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
     );
 
     projectsArray.map((item) => {
-      inAnimationObserver.observe(item);
+      if (inAnimationObserverRef.current) {
+        inAnimationObserverRef.current.observe(item);
+      }
     });
-
-    let mouseMoveObserver: IntersectionObserver | null = null;
 
     if (window.innerWidth > 1024) {
       if (!sectionRef.current) return;
 
-      mouseMoveObserver = new IntersectionObserver((entries) => {
+      mouseMoveObserverRef.current = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (!sectionRef.current) return;
           if (entry.isIntersecting) {
-            sectionRef.current.addEventListener('mousemove', mouseMoveHandler, false);
+            sectionRef.current.addEventListener('mousemove', mouseMoveHandler);
             return;
           }
 
@@ -88,48 +113,28 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
         });
       });
 
-      mouseMoveObserver.observe(sectionRef.current);
+      mouseMoveObserverRef.current.observe(sectionRef.current);
     }
 
     window.addEventListener('resize', resizeHandler);
 
     return () => {
       projectsArray.map((item) => {
-        inAnimationObserver.unobserve(item);
+        if (inAnimationObserverRef.current) {
+          inAnimationObserverRef.current.unobserve(item);
+        }
       });
 
-      if (sectionRef.current && mouseMoveObserver) {
-        mouseMoveObserver.unobserve(sectionRef.current);
+      if (sectionRef.current && mouseMoveObserverRef.current) {
+        mouseMoveObserverRef.current.unobserve(sectionRef.current);
       }
 
       window.removeEventListener('resize', resizeHandler);
     };
-  }, [resizeHandler]);
+  }, [resizeHandler, mouseMoveHandler]);
 
   function lerp(start: number, end: number, amt: number) {
     return (1 - amt) * start + amt * end;
-  }
-
-  function mouseMoveHandler(event: MouseEvent) {
-    if (currentAnimationFrame.current) cancelAnimationFrame(currentAnimationFrame.current);
-    currentAnimationFrame.current = requestAnimationFrame(() => animate(event));
-  }
-
-  function animate(event: MouseEvent) {
-    if (!sectionRef.current || !imagesRef.current) return;
-
-    const targetY = event.y + window.scrollY - sectionRef.current.offsetTop - imageSize / 2;
-    const targetX = event.x - imageSize / 2;
-
-    const y = lerp(pos.current.y, targetY, 0.075);
-    const x = lerp(pos.current.x, targetX, 0.075);
-
-    imagesRef.current.animate(
-      { transform: `translate(${x}px, ${y}px)` },
-      { duration: 50, fill: 'forwards' }
-    );
-    pos.current.x = targetX;
-    pos.current.y = targetY;
   }
 
   function mouseEnterHandler(key: number) {
@@ -144,12 +149,81 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
     }
   }
 
+  function onClickHandler(projectIndex: number) {
+    if (!projectsContainerRef.current) return;
+
+    if (sectionRef.current && mouseMoveObserverRef.current) {
+      mouseMoveObserverRef.current.unobserve(sectionRef.current);
+      sectionRef.current.removeEventListener('mousemove', mouseMoveHandler);
+
+      imagesRef.current.style.display = 'none';
+    }
+
+    window.removeEventListener('resize', resizeHandler);
+
+    let targets = Array.from(projectsContainerRef.current.children);
+
+    targets.map((item) => {
+      if (inAnimationObserverRef.current) {
+        inAnimationObserverRef.current.unobserve(item);
+      }
+    });
+
+    const currentProject = targets[projectIndex];
+
+    targets = targets.filter((item, key) => {
+      if (key !== projectIndex) {
+        return item;
+      }
+    });
+
+    if (contentRef.current) {
+      targets.push(contentRef.current);
+    }
+
+    const sideSpace = (sectionRef.current.clientWidth - currentProject.clientWidth) / 2;
+
+    const currentPosition =
+      currentProject.offsetTop + sectionRef.current?.offsetTop - window.scrollY;
+
+    const verticalSpace = (window.innerHeight - currentProject.clientHeight) / 2;
+
+    anime({
+      targets,
+      opacity: 0,
+      easing: 'easeInOutSine',
+      complete: function (anim) {
+        currentProject.style.pointerEvents = 'none';
+      },
+    });
+
+    const transitionTimeline = anime.timeline({
+      easing: 'easeInOutSine',
+    });
+
+    transitionTimeline.add({
+      targets: currentProject,
+      translateX: `-${currentProject.offsetLeft - sideSpace}px`,
+      translateY: `${(currentPosition - verticalSpace) * -1}px`,
+    });
+
+    const scale = window.innerHeight / currentProject.clientHeight;
+
+    transitionTimeline.add({
+      targets: currentProject,
+      scale,
+    });
+  }
+
   return (
     <div
       className='relative grid grid-cols-4 gap-8 p-6 max-w-screen-2xl lg:p-24 lg:grid-cols-12'
       ref={sectionRef}
     >
-      <div className='flex flex-col col-span-4 gap-y-4 h-fit lg:top-8 lg:sticky lg:left-0'>
+      <div
+        className='flex flex-col col-span-4 gap-y-4 h-fit lg:top-8 lg:sticky lg:left-0'
+        ref={contentRef}
+      >
         <h2 className='text-2xl'>{title}</h2>
         <div className='max-w-lg' dangerouslySetInnerHTML={{ __html: description }} />
       </div>
@@ -164,10 +238,11 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
 
           return (
             <div
-              className='relative flex items-end w-full max-w-3xl overflow-hidden translate-x-20 opacity-0 aspect-video group hover:shadow-xl'
+              className='relative flex items-end w-full max-w-3xl overflow-hidden translate-x-20 opacity-0 aspect-video group hover:shadow-xl transform-center'
               key={key}
               onMouseEnter={() => mouseEnterHandler(key)}
               onMouseLeave={() => mouseLeaveHandler(key)}
+              onClick={() => onClickHandler(key)}
             >
               <div
                 className='absolute top-0 left-0 z-10 w-full h-full bg-bottom bg-cover rounded-lg'
