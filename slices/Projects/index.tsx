@@ -150,13 +150,15 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
   }
 
   function onClickHandler(projectIndex: number) {
-    if (!projectsContainerRef.current) return;
+    if (!projectsContainerRef.current || !sectionRef.current) return;
 
-    if (sectionRef.current && mouseMoveObserverRef.current) {
+    if (mouseMoveObserverRef.current) {
       mouseMoveObserverRef.current.unobserve(sectionRef.current);
       sectionRef.current.removeEventListener('mousemove', mouseMoveHandler);
 
-      imagesRef.current.style.display = 'none';
+      if (imagesRef.current) {
+        imagesRef.current.style.display = 'none';
+      }
     }
 
     window.removeEventListener('resize', resizeHandler);
@@ -169,7 +171,7 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
       }
     });
 
-    const currentProject = targets[projectIndex];
+    const currentProject = targets[projectIndex] as HTMLElement;
 
     targets = targets.filter((item, key) => {
       if (key !== projectIndex) {
