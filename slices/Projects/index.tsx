@@ -196,6 +196,10 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
       easing: 'easeInOutSine',
       complete: function (anim) {
         currentProject.style.pointerEvents = 'none';
+        const body = document.querySelector('body') as HTMLElement;
+        if (body) {
+          body.style.overflow = 'hidden';
+        }
       },
     });
 
@@ -209,11 +213,11 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
       translateY: `${(currentPosition - verticalSpace) * -1}px`,
     });
 
-    const scale = window.innerHeight / currentProject.clientHeight;
+    const scale = window.innerWidth / currentProject.clientWidth;
 
     transitionTimeline.add({
       targets: currentProject,
-      scale,
+      maxWidth: `${window.innerWidth}px`,
     });
   }
 
