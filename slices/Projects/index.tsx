@@ -23,7 +23,7 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
   const description = asHTML(slice.primary.description);
   const items = slice.items;
 
-  const imageSize = 144;
+  const imageSize = 192;
   const currentAnimationFrame = useRef(0);
 
   const pos = useRef({ x: 0, y: 0 });
@@ -34,12 +34,12 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
     const targetY = event.y + window.scrollY - sectionRef.current.offsetTop - imageSize / 2;
     const targetX = event.x - sectionRef.current.offsetLeft - imageSize / 2;
 
-    const y = lerp(pos.current.y, targetY, 0.075);
-    const x = lerp(pos.current.x, targetX, 0.075);
+    const y = lerp(pos.current.y, targetY, 0.2);
+    const x = lerp(pos.current.x, targetX, 0.2);
 
     imagesRef.current.animate(
       { transform: `translate(${x}px, ${y}px)` },
-      { duration: 50, fill: 'forwards' }
+      { duration: 0, fill: 'forwards' }
     );
     pos.current.x = targetX;
     pos.current.y = targetY;
@@ -222,21 +222,12 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
   }
 
   return (
-    <div
-      className='relative grid grid-cols-4 gap-8 p-6 max-w-screen-2xl lg:p-24 lg:grid-cols-12'
-      ref={sectionRef}
-    >
-      <div
-        className='flex flex-col col-span-4 gap-y-4 h-fit lg:top-8 lg:sticky lg:left-0'
-        ref={contentRef}
-      >
+    <div className='relative flex flex-col gap-8 p-6 max-w-screen-2xl lg:p-24' ref={sectionRef}>
+      <div className='flex flex-col gap-y-4 h-fit lg:top-8 lg:sticky lg:left-0' ref={contentRef}>
         <h2 className='text-2xl'>{title}</h2>
         <div className='max-w-lg' dangerouslySetInnerHTML={{ __html: description }} />
       </div>
-      <div
-        className='flex flex-col items-end col-span-4 gap-y-8 lg:col-span-7 lg:col-start-6'
-        ref={projectsContainerRef}
-      >
+      <div className='flex flex-col items-end gap-y-8' ref={projectsContainerRef}>
         {/* project card */}
         {items.map((item, key) => {
           const title = asText(item.title);
@@ -244,7 +235,7 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
 
           return (
             <div
-              className='relative flex items-end w-full max-w-3xl overflow-hidden translate-x-20 opacity-0 aspect-video group hover:shadow-xl transform-center'
+              className='relative flex items-end w-full overflow-hidden translate-x-20 opacity-0 aspect-[20/9] group hover:shadow-xl transform-center'
               key={key}
               onMouseEnter={() => mouseEnterHandler(key)}
               onMouseLeave={() => mouseLeaveHandler(key)}
@@ -254,9 +245,9 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
                 className='absolute top-0 left-0 z-10 w-full h-full bg-bottom bg-cover rounded-lg'
                 style={{ backgroundImage: `url(${item.background_image.url})` }}
               />
-              <div className='relative z-30 flex flex-col p-6 text-white transition-all duration-300 ease-in-out translate-y-2 opacity-0 gap-y-2 group-hover:opacity-100 group-hover:translate-y-0'>
-                <h2 className='text-lg'>{title}</h2>
-                <p className='text-xs'>{description}</p>
+              <div className='relative z-30 flex flex-col p-12 text-white transition-all duration-300 ease-in-out translate-y-2 opacity-0 gap-y-2 group-hover:opacity-100 group-hover:translate-y-0'>
+                <h2 className='text-3xl'>{title}</h2>
+                <p className='text-sm'>{description}</p>
               </div>
               <div className='absolute bottom-0 left-0 z-20 w-full transition-opacity duration-300 ease-in-out rounded-lg opacity-0 h-3/4 bg-gradient-to-t from-black/80 to-transparent group-hover:opacity-100' />
             </div>
@@ -272,7 +263,7 @@ const Projects = (slice: Content.ProjectsSlice): JSX.Element => {
                 alt={item.hover_image.alt || ''}
                 width={item.hover_image.dimensions?.width || 144}
                 height={item.hover_image.dimensions?.height || 144}
-                className='rounded-lg opacity-0 linear h-36 w-36'
+                className='w-48 h-48 rounded-lg opacity-0 linear'
                 style={{ transform: `translateY(-${key * 100}%)` }}
                 loading='lazy'
                 key={key}
