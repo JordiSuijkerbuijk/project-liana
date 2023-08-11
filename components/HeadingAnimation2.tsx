@@ -14,14 +14,18 @@ export default function HeadingAnimation2({ text = '' }: { text: string }) {
   useEffect(() => {
     if (!textRef.current || !elementRef.current) return;
 
-    timelineRef.current = anime
-      .timeline({
-        targets: Array.from(textRef.current.children),
-        easing: 'easeInQuad',
-        delay: anime.stagger(100),
-        autoplay: false,
-      })
-      .add({ opacity: [0.1, 1], duration: 1500 });
+    timelineRef.current = anime.timeline({
+      // targets: Array.from(textRef.current.children),
+      easing: 'easeInQuad',
+      // delay: anime.stagger(100),
+      autoplay: false,
+    });
+
+    Array.from(textRef.current.children).map((item) => {
+      if (timelineRef.current) {
+        timelineRef.current.add({ targets: item, opacity: [0.2, 1], duration: 400 });
+      }
+    });
 
     observerRef.current = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -50,9 +54,9 @@ export default function HeadingAnimation2({ text = '' }: { text: string }) {
         1,
         (window.scrollY -
           elementRef.current.offsetTop +
-          (textRef.current.offsetTop + textRef.current.clientHeight / 2) * 0.75) /
+          (textRef.current.offsetTop + textRef.current.clientHeight / 2)) /
           window.innerHeight
-      ) * 1.6
+      ) * 1.4
     );
 
     timelineRef.current.seek(timelineRef.current.duration * scrollPercentage);
