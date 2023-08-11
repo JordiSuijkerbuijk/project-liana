@@ -62,8 +62,11 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
         Math.floor(scrollPercentage / dividedPercentage)
       );
 
-      // Make it more like the exo ape one. kinde squeezing the next item in and
-      // scaling in at the same time.also add text and the headingAnimation
+      //TODO: scaling in and out like on exo ape
+      //TODO: incorporate the headingANimation
+      //TODO: check if scaling the item after scrolling looks nice
+      //TODO: add better resolution items
+      //TODO: research a nice easing for this functionality
 
       if (currentAnimationKey.current !== currentKey) {
         anime({
