@@ -3,20 +3,58 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'ppmori-regular';
-  src: url('../public/fonts/ppmori-regular.woff2') format('woff2'),
-    url('../public/fonts/ppmori-regular.woff') format('woff');
+  font-family: "BertiogaSans-light";
+  src: url("../public/fonts/BertiogaSans/BertiogaSans-Light.woff2")
+      format("woff2"),
+    url("../public/fonts/BertiogaSans/BertiogaSans-Light.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BertiogaSans-regular";
+  src: url("../public/fonts/BertiogaSans/BertiogaSans-Regular.woff2")
+      format("woff2"),
+    url("../public/fonts/BertiogaSans/BertiogaSans-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BertiogaSans-medium";
+  src: url("../public/fonts/BertiogaSans/BertiogaSans-Medium.woff2")
+      format("woff2"),
+    url("../public/fonts/BertiogaSans/BertiogaSans-Medium.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BertiogaSans-semibold";
+  src: url("../public/fonts/BertiogaSans/BertiogaSans-SemiBold.woff2")
+      format("woff2"),
+    url("../public/fonts/BertiogaSans/BertiogaSans-SemiBold.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BertiogaSans-bold";
+  src: url("../public/fonts/BertiogaSans/BertiogaSans-Bold.woff2")
+      format("woff2"),
+    url("../public/fonts/BertiogaSans/BertiogaSans-Bold.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 :root {
-  --background-color: #EEE8E2;
+  --background-color: #eee8e2;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-color: #EEE8E2;
+    --background-color: #eee8e2;
   }
 }
 
@@ -26,5 +64,11 @@ body {
 }
 
 h1 {
-  font-family: 'whyte';
+  font-family: "BertiogaSans-bold";
+  font-size: 5rem;
+}
+
+p {
+  font-family: "BertiogaSans-light";
+  font-weight: 100;
 }
