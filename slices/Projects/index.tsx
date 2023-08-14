@@ -62,26 +62,56 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
         Math.floor(scrollPercentage / dividedPercentage)
       );
 
-      //TODO: scaling in and out like on exo ape
-      //TODO: incorporate the headingANimation
-      //TODO: check if scaling the item after scrolling looks nice
-      //TODO: add better resolution items
-      //TODO: research a nice easing for this functionality
-
       if (currentAnimationKey.current !== currentKey) {
         anime({
           targets: backgroundImageRef.current,
           translateY: `-${dividedPercentage * currentKey}%`,
           easing: 'easeOutCubic',
-          duration: 600,
+          duration: 1000,
         });
 
         anime({
-          targets: middleImageRef.current,
-          translateY: `-${100 * (slice.items.length - currentKey - 1)}%`,
+          targets: Array.from(backgroundImageRef.current.children)[
+            currentAnimationKey.current < currentKey
+              ? currentAnimationKey.current
+              : currentAnimationKey.current - 1
+          ],
+          scale: currentAnimationKey.current < currentKey ? 1.15 : 1,
           easing: 'easeOutCubic',
-          duration: 600,
+          duration: 1000,
         });
+
+        if (middleImageRef.current) {
+          const imageArray = Array.from(middleImageRef.current.children);
+
+          const firstImage =
+            currentAnimationKey.current < currentKey
+              ? imageArray[currentAnimationKey.current]
+              : imageArray[currentAnimationKey.current - 1];
+
+          if (firstImage) {
+            anime({
+              targets: firstImage,
+              height: `${currentAnimationKey.current < currentKey ? 0 : 288}px`,
+              easing: 'easeOutCubic',
+              duration: 1000,
+            });
+          }
+
+          const secondImage =
+            currentAnimationKey.current < currentKey
+              ? imageArray[currentAnimationKey.current + 1]
+              : imageArray[currentAnimationKey.current];
+
+          if (secondImage) {
+            anime({
+              targets: secondImage,
+              height: `${currentAnimationKey.current < currentKey ? 288 : 0}px`,
+              easing: 'easeOutCubic',
+              duration: 1000,
+            });
+          }
+        }
 
         currentAnimationKey.current = currentKey;
       }
@@ -91,13 +121,10 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
   return (
     <div
       className='relative flex flex-col w-full h-full max-w-6xl [contain:paint]'
-      style={{ height: `4000px` }}
+      style={{ height: `3500px` }}
       ref={elementRef}
     >
-      <div
-        className='h-[600px] overflow-hidden sticky z-10'
-        style={{ top: `${(window.innerHeight - cardHeight) / 2}px` }}
-      >
+      <div className='h-[600px] overflow-hidden sticky z-10' style={{ top: `calc(50% - 300px)` }}>
         <div className='flex flex-col' ref={backgroundImageRef}>
           {items.map((item, key) => {
             const image = item.background_image;
@@ -105,7 +132,7 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
             return (
               image.url && (
                 <Image
-                  className='z-10 object-cover object-top w-full h-[800px]'
+                  className='z-10 object-cover object-top w-full h-[700px]'
                   width={image.dimensions.width}
                   height={image.dimensions.height}
                   src={image.url}
@@ -116,7 +143,32 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
             );
           })}
         </div>
-        <div className='absolute top-0 z-20 flex flex-col items-center justify-center w-full h-full'>
+        <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center z-20'>
+          <div className='relative w-56 h-72' ref={middleImageRef}>
+            {items.map((item, key) => {
+              const hoverImage = item.hover_image;
+
+              return (
+                hoverImage.url && (
+                  <div
+                    className='w-56 overflow-hidden relative transform-top'
+                    key={key}
+                    style={{ height: `${key === currentAnimationKey.current ? 288 : 0}px` }}
+                  >
+                    <Image
+                      className='absolute top-0 left-0 z-20 object-cover object-top w-56 h-72 aspect-[5/9]'
+                      width={hoverImage.dimensions.width}
+                      height={hoverImage.dimensions.height}
+                      src={hoverImage.url}
+                      alt={hoverImage.alt || ''}
+                    />
+                  </div>
+                )
+              );
+            })}
+          </div>
+        </div>
+        {/* <div className='absolute top-0 z-20 flex flex-col items-center justify-center w-full h-full'>
           <div className='w-56 overflow-hidden h-72'>
             <div
               className='flex flex-col w-56 h-72'
@@ -141,7 +193,7 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
               })}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

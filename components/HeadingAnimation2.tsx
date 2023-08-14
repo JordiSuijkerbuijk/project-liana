@@ -9,7 +9,7 @@ export default function HeadingAnimation2({ text = '' }: { text: string }) {
   const timelineRef = useRef<AnimeTimelineInstance | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const testText =
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
   useEffect(() => {
     if (!textRef.current || !elementRef.current) return;
@@ -56,7 +56,7 @@ export default function HeadingAnimation2({ text = '' }: { text: string }) {
           elementRef.current.offsetTop +
           (textRef.current.offsetTop + textRef.current.clientHeight / 2)) /
           window.innerHeight
-      ) * 1.4
+      ) * 1.2
     );
 
     timelineRef.current.seek(timelineRef.current.duration * scrollPercentage);
@@ -69,7 +69,7 @@ export default function HeadingAnimation2({ text = '' }: { text: string }) {
         ref={textRef}
       >
         {testText.split(' ').map((item, key) => (
-          <p className='opacity-20' key={key}>
+          <p className='opacity-20 transition-opacity duration-400' key={key}>
             {item}
           </p>
         ))}
