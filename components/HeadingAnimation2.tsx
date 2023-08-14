@@ -14,18 +14,21 @@ export default function HeadingAnimation2({ text = '' }: { text: string }) {
   useEffect(() => {
     if (!textRef.current || !elementRef.current) return;
 
-    timelineRef.current = anime.timeline({
-      // targets: Array.from(textRef.current.children),
-      easing: 'easeInQuad',
-      // delay: anime.stagger(100),
-      autoplay: false,
-    });
+    timelineRef.current = anime
+      .timeline({
+        targets: Array.from(textRef.current.children),
+        easing: 'easeInQuad',
+        delay: anime.stagger(175),
+        duration: 1000,
+        autoplay: false,
+      })
+      .add({ opacity: [0.2, 1] });
 
-    Array.from(textRef.current.children).map((item) => {
-      if (timelineRef.current) {
-        timelineRef.current.add({ targets: item, opacity: [0.2, 1], duration: 400 });
-      }
-    });
+    // Array.from(textRef.current.children).map((item) => {
+    //   if (timelineRef.current) {
+    //     timelineRef.current.add({ targets: item, opacity: [0.2, 1], duration: 400 });
+    //   }
+    // });
 
     observerRef.current = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
