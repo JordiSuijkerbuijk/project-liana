@@ -77,6 +77,7 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
               : currentAnimationKey.current - 1
           ],
           scale: currentAnimationKey.current < currentKey ? 1.15 : 1,
+          rotate: `${currentAnimationKey.current < currentKey ? 5 : 0}deg`,
           easing: 'easeOutCubic',
           duration: 1000,
         });
@@ -92,7 +93,7 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
           if (firstImage) {
             anime({
               targets: firstImage,
-              height: `${currentAnimationKey.current < currentKey ? 0 : 288}px`,
+              height: currentAnimationKey.current < currentKey ? 144 : 288,
               easing: 'easeOutCubic',
               duration: 1000,
             });
@@ -106,7 +107,8 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
           if (secondImage) {
             anime({
               targets: secondImage,
-              height: `${currentAnimationKey.current < currentKey ? 288 : 0}px`,
+              height: 288,
+              translateY: currentAnimationKey.current < currentKey ? '0%' : '-100%',
               easing: 'easeOutCubic',
               duration: 1000,
             });
@@ -144,19 +146,23 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
           })}
         </div>
         <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center z-20'>
-          <div className='relative w-56 h-72' ref={middleImageRef}>
+          <div className='relative w-56 h-72 overflow-hidden' ref={middleImageRef}>
             {items.map((item, key) => {
               const hoverImage = item.hover_image;
 
               return (
                 hoverImage.url && (
                   <div
-                    className='w-56 overflow-hidden relative transform-top'
+                    className='w-56 h-72 absolute left-0 bottom-0'
                     key={key}
-                    style={{ height: `${key === currentAnimationKey.current ? 288 : 0}px` }}
+                    style={{
+                      height: `288px`,
+                      transformOrigin: `${key === currentAnimationKey.current ? 'top' : 'bottom'}`,
+                      transform: `translateY(-${currentAnimationKey.current < key ? 100 : 0}%)`,
+                    }}
                   >
                     <Image
-                      className='absolute top-0 left-0 z-20 object-cover object-top w-56 h-72 aspect-[5/9]'
+                      className='z-20 object-cover object-top w-56 h-72 aspect-[5/9]'
                       width={hoverImage.dimensions.width}
                       height={hoverImage.dimensions.height}
                       src={hoverImage.url}
