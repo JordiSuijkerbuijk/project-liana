@@ -115,6 +115,9 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
           }
         }
 
+        //TODO: tweak backscrolling animation to look like at overlaps again
+        //TODO: get a nice easing and duration
+
         currentAnimationKey.current = currentKey;
       }
     }
