@@ -1,44 +1,81 @@
 "use client";
 
 import Container from "@/app/components/Container";
-// import lerp from "@/helpers/lerp";
 import playScrollBasedAnimation from "@/helpers/playScrollBasedAnimation";
 import { useScroll } from "@/helpers/useScroll";
 import anime, { AnimeTimelineInstance } from "animejs";
 import { useEffect, useRef } from "react";
 
 export default function VideoSlice() {
-  const timelineRef = useRef<AnimeTimelineInstance | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const videoContainerRef = useRef<HTMLDivElement>(null);
+  const titleWrapper = useRef<HTMLHeadingElement>(null);
 
-  const originalStartValue = useRef<number>(7.5);
-  const currentClipVal = useRef<number>(7.5);
-  const targetClipVal = useRef<number>(7.5);
-  const animFrame = useRef<number | null>(0);
+  const timelineRef = useRef<AnimeTimelineInstance | null>(null);
+  const timelineSize = useRef<'mobile' | 'tablet' | 'desktop'>('mobile');
 
+  
   useEffect(() => {
-    const tl = anime
-      .timeline({
-        duration: 100,
-        easing: "linear",
-      })
-      .add({
-        targets: videoRef.current,
-        clipPath: ["inset(0% 7.5% 0% 7.5%)", "inset(0% 0% 0% 0%)"],
-      });
-    timelineRef.current = tl;
-  }, []);
+    createTimeline();
+    
+    window.addEventListener('resize', handleResize);
+    () => {
+      window.removeEventListener('resize', handleResize);
+    }
+  }, [])
+
+  function handleResize() {
+    const size = window.innerWidth < 1024 ? window.innerWidth < 768 ? "mobile" : 'tablet' : 'desktop'
+    if(timelineSize.current !== size) createTimeline();
+  }
+
+  function createTimeline(){
+    const words = titleWrapper?.current?.querySelectorAll('.word') 
+
+    const paddingValues = {
+      mobile: {
+        start: '0.25rem',
+        end: '1rem'
+      },
+      tablet: {
+        start: '0.5rem',
+        end: '2rem'
+      },
+      desktop: {
+        start: '0.75rem',
+        end: '3.5rem'
+      }
+    }
+
+    const size = window.innerWidth < 1024 ? window.innerWidth < 768 ? "mobile" : 'tablet' : 'desktop'
+    const paddingAmountStart = paddingValues[size].start
+    const paddingAmountEnd = paddingValues[size].end
+
+    timelineSize.current = size;
+
+    timelineRef.current = anime
+    .timeline({
+      duration: 100,
+      easing: "linear",
+      autoplay: false
+    })
+    .add({
+      targets: words,
+      paddingLeft: [paddingAmountStart, paddingAmountEnd],
+      paddingRight: [paddingAmountStart, paddingAmountEnd],
+    }).add({
+      targets: videoContainerRef.current,
+      clipPath: ["inset(0% 7.5% 0% 7.5%)", "inset(0% 0% 0% 0%)"],
+    }, 0)
+    .add({
+      targets: videoRef.current,
+      scale: [1, 1.1],
+    }, 0)
+  }
 
   // Scroll-based zoom animation
   const sectionContainer = useScroll(
     (progress) => {
-      console.log("progress", progress);
-      // Use progress to calculate the target and use that to animate lerped val
-      // so animation isn't so choppy. Especially with small progress container
-      // targetClipVal.current =
-      //   originalStartValue.current - originalStartValue.current * progress;
-      // if (animFrame?.current) cancelAnimationFrame(animFrame.current);
-      // animFrame.current = requestAnimationFrame(animateClipPath);
       playScrollBasedAnimation(progress, timelineRef.current);
     },
     {
@@ -46,47 +83,38 @@ export default function VideoSlice() {
       bottom: false,
     }
   );
-
-  // function animateClipPath() {
-  //   if (!videoRef?.current) return null;
-  //   const lerpedVal = lerp(currentClipVal.current, targetClipVal.current, 0.25);
-
-  //   if (isWithinRange(lerpedVal, targetClipVal.current)) {
-  //     videoRef.current.style.clipPath = `inset(0% ${targetClipVal.current} 0% ${targetClipVal.current})`;
-  //     currentClipVal.current = targetClipVal.current;
-  //     if (animFrame.current) cancelAnimationFrame(animFrame.current);
-  //     return null;
-  //   }
-
-  //   videoRef.current.style.clipPath = `inset(0% ${lerpedVal}% 0% ${lerpedVal}%)`;
-  //   currentClipVal.current = lerpedVal;
-  //   animFrame.current = requestAnimationFrame(animateClipPath);
-  // }
-
-  // function isWithinRange(val: number, target: number) {
-  //   return val >= target - 0.01 && val <= target + 0.01;
-  // }
-
+  
   return (
-    <section className="flex flex-col gap-y-12 py-24">
+    <section className="flex flex-col w-full py-24">
       <div ref={sectionContainer}>
-        <Container className="flex justify-center">
-          <h2 className="text-bold text-8xl text-center">
-            Create Stunning Websites Effortlessly with Liana
+        <Container className="flex justify-center pt-12 pb-8 lg:pb-12 lg:pt-24">
+          <h2 className="flex flex-col justify-center text-2xl text-center md:text-5xl lg:text-8xl" ref={titleWrapper}>
+            <span>
+              <span className="px-3 word">Create</span> 
+              <span className="px-3 word">stunning</span>
+              <span className="px-3 word">websites</span>
+            </span>
+            <span>
+              <span className="px-3 word">with</span>
+              <span className="px-3 word">Liana</span>
+            </span>
           </h2>
         </Container>
       </div>
-      <video
-        muted
-        disablePictureInPicture
-        disableRemotePlayback
-        loop
-        playsInline
-        className="h-screen object-cover clip-path-video-element"
-        ref={videoRef}
-      >
-        <source src="https://terrazabalear.com/wp-content/uploads/2023/03/terraza_balear-awakening_senses_-_loop-1.mp4-1080p-1.mp4" />
-      </video>
+      <div className="relative w-full h-screen overflow-hidden clip-path-video-element" ref={videoContainerRef}>
+        <video
+          muted
+          disablePictureInPicture
+          disableRemotePlayback
+          loop
+          playsInline
+          autoPlay
+          className="absolute inset-0 object-cover w-full h-full"
+          ref={videoRef}
+        >
+          <source src="https://terrazabalear.com/wp-content/uploads/2023/03/terraza_balear-awakening_senses_-_loop-1.mp4-1080p-1.mp4" />
+        </video>
+      </div>
     </section>
   );
 }
