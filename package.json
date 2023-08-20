@@ -13,10 +13,13 @@
     "@prismicio/client": "^7.0.1",
     "@prismicio/next": "^1.2.1",
     "@prismicio/react": "^2.6.2",
+    "@studio-freight/lenis": "^1.0.16",
     "@types/node": "20.2.3",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
+    "animejs": "^3.2.1",
     "autoprefixer": "10.4.14",
+    "clsx": "^1.2.1",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
     "next": "13.4.3",
@@ -30,6 +33,7 @@
   "devDependencies": {
     "@prismicio/types": "^0.2.8",
     "@slicemachine/adapter-next": "^0.2.1",
+    "@types/animejs": "^3.1.7",
     "prismic-ts-codegen": "^0.1.11",
     "slice-machine-ui": "^1.1.1"
   }
