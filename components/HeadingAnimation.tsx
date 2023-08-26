@@ -1,49 +1,75 @@
 'use client';
 
-import { useCallback, useEffect, useRef } from 'react';
+import anime, { AnimeTimelineInstance } from 'animejs';
+import { RefObject, useCallback, useEffect, useRef } from 'react';
 
-export default function HeadingAnimation({ text = '' }: { text: string }) {
-  const element = useRef<HTMLHeadingElement | null>(null);
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const originalWord = text;
+export default function HeadingAnimation({
+  text = '',
+  containerRef,
+}: {
+  text: string;
+  containerRef: RefObject<HTMLDivElement>;
+}) {
+  const textRef = useRef<HTMLDivElement>(null);
+  const timelineRef = useRef<AnimeTimelineInstance | null>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
-  const randomizeLetters = useCallback(
-    (string: string, offset: number): string => {
-      return string
-        .split('')
-        .map((item, key) => {
-          if (key < offset) {
-            return originalWord.split('')[key];
-          }
+  const scrollHandler = useCallback(() => {
+    if (!containerRef.current || !textRef.current || !timelineRef.current) return;
 
-          return characters[Math.floor(Math.random() * 26)];
-        })
-        .join('');
-    },
-    [originalWord]
-  );
+    const scrollPercentage = Math.max(
+      0,
+      Math.min(
+        1,
+        (window.scrollY - (textRef.current.offsetTop + textRef.current.clientHeight / 2)) /
+          containerRef.current.clientHeight
+      ) * 1.2
+    );
+
+    timelineRef.current.seek(timelineRef.current.duration * scrollPercentage);
+  }, [containerRef]);
 
   useEffect(() => {
-    let iterations = 0;
-    const interval = setInterval(() => {
-      if (!element.current) return;
+    if (!textRef.current || !containerRef.current) return;
 
-      const randomString = randomizeLetters(text, iterations);
-      element.current.innerText = randomString;
+    timelineRef.current = anime
+      .timeline({
+        targets: Array.from(textRef.current.children),
+        easing: 'easeInQuad',
+        delay: anime.stagger(175),
+        duration: 1000,
+        autoplay: false,
+      })
+      .add({ opacity: [0.2, 1] });
 
-      if (randomString === originalWord) {
-        clearInterval(interval);
-      }
+    observerRef.current = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          window.addEventListener('scroll', scrollHandler);
+          return;
+        }
 
-      iterations += 1 / 1.5;
-    }, 50);
+        window.removeEventListener('scroll', scrollHandler);
+      });
+    });
+
+    observerRef.current.observe(containerRef.current);
 
     return () => {
-      clearInterval(interval);
+      window.removeEventListener('scroll', scrollHandler);
     };
-  }, [text, randomizeLetters, originalWord]);
+  }, [containerRef, scrollHandler]);
 
   return (
-    <h1 className="text-black text-8xl font-ppmori-regular" ref={element} />
+    <div
+      className='flex flex-wrap max-w-5xl px-12 py-12 text-3xl font-bold text-black gap-x-1'
+      ref={textRef}
+    >
+      {text.split(' ').map((item, key) => (
+        <p className='transition-opacity opacity-20 duration-400' key={key}>
+          {item}
+        </p>
+      ))}
+    </div>
   );
 }

@@ -1,4 +1,3 @@
-import HeadingAnimation2 from '@/components/HeadingAnimation2';
 import Section from '@/components/Section';
 import SliceZone, { Components } from '@/helpers/SliceZone';
 import { getClient } from '@/helpers/getClient';
@@ -24,14 +23,12 @@ export default async function Home() {
 
   return (
     <main className='flex flex-col items-center justify-between min-h-screen'>
-      <Section />
-      <Section color='#000' className='flex items-center justify-center'>
-        <HeadingAnimation2 text='test' />
+      <Section className='h-screen' />
+      <Section color='#000' className='flex justify-center h-full'>
+        {SliceZone(data?.slices, components)}
       </Section>
-      <Section />
-      {SliceZone(data?.slices, components)}
-      <Section />
-      <Section />
+      <Section className='h-screen' />
+      <Section className='h-screen' />
     </main>
   );
 }

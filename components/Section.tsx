@@ -16,7 +16,7 @@ export default function Section({ children, className = '', color = '' }: Sectio
   });
 
   return (
-    <section className={clsx(['w-full h-screen', className])} data-color={color}>
+    <section className={clsx(['w-full', className])} data-color={color}>
       <div className='z-10 h-full'>{children}</div>
       <div className='absolute top-0 left-0 w-full h-full opacity-0' style={{ color: color }} />
     </section>
