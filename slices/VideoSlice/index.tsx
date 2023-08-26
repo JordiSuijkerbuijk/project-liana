@@ -4,7 +4,7 @@ import Container from "@/app/components/Container";
 import playScrollBasedAnimation from "@/helpers/playScrollBasedAnimation";
 import { useScroll } from "@/helpers/useScroll";
 import anime, { AnimeTimelineInstance } from "animejs";
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 
 export default function VideoSlice() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -12,65 +12,81 @@ export default function VideoSlice() {
   const titleWrapper = useRef<HTMLHeadingElement>(null);
 
   const timelineRef = useRef<AnimeTimelineInstance | null>(null);
-  const timelineSize = useRef<'mobile' | 'tablet' | 'desktop'>('mobile');
+  const timelineSize = useRef<"mobile" | "tablet" | "desktop">("mobile");
 
-  
   useEffect(() => {
     createTimeline();
-    
-    window.addEventListener('resize', handleResize);
+
+    window.addEventListener("resize", handleResize);
     () => {
-      window.removeEventListener('resize', handleResize);
-    }
-  }, [])
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   function handleResize() {
-    const size = window.innerWidth < 1024 ? window.innerWidth < 768 ? "mobile" : 'tablet' : 'desktop'
-    if(timelineSize.current !== size) createTimeline();
+    const size =
+      window.innerWidth < 1024
+        ? window.innerWidth < 768
+          ? "mobile"
+          : "tablet"
+        : "desktop";
+    if (timelineSize.current !== size) createTimeline();
   }
 
-  function createTimeline(){
-    const words = titleWrapper?.current?.querySelectorAll('.word') 
+  function createTimeline() {
+    const words = titleWrapper?.current?.querySelectorAll(".word");
 
     const paddingValues = {
       mobile: {
-        start: '0.25rem',
-        end: '1rem'
+        start: "0.25rem",
+        end: "1rem",
       },
       tablet: {
-        start: '0.5rem',
-        end: '2rem'
+        start: "0.5rem",
+        end: "2rem",
       },
       desktop: {
-        start: '0.75rem',
-        end: '3.5rem'
-      }
-    }
+        start: "0.75rem",
+        end: "3.5rem",
+      },
+    };
 
-    const size = window.innerWidth < 1024 ? window.innerWidth < 768 ? "mobile" : 'tablet' : 'desktop'
-    const paddingAmountStart = paddingValues[size].start
-    const paddingAmountEnd = paddingValues[size].end
+    const size =
+      window.innerWidth < 1024
+        ? window.innerWidth < 768
+          ? "mobile"
+          : "tablet"
+        : "desktop";
+    const paddingAmountStart = paddingValues[size].start;
+    const paddingAmountEnd = paddingValues[size].end;
 
     timelineSize.current = size;
 
     timelineRef.current = anime
-    .timeline({
-      duration: 100,
-      easing: "linear",
-      autoplay: false
-    })
-    .add({
-      targets: words,
-      paddingLeft: [paddingAmountStart, paddingAmountEnd],
-      paddingRight: [paddingAmountStart, paddingAmountEnd],
-    }).add({
-      targets: videoContainerRef.current,
-      clipPath: ["inset(0% 7.5% 0% 7.5%)", "inset(0% 0% 0% 0%)"],
-    }, 0)
-    .add({
-      targets: videoRef.current,
-      scale: [1, 1.1],
-    }, 0)
+      .timeline({
+        duration: 100,
+        easing: "linear",
+        autoplay: false,
+      })
+      .add({
+        targets: words,
+        paddingLeft: [paddingAmountStart, paddingAmountEnd],
+        paddingRight: [paddingAmountStart, paddingAmountEnd],
+      })
+      .add(
+        {
+          targets: videoContainerRef.current,
+          clipPath: ["inset(0% 7.5% 0% 7.5%)", "inset(0% 0% 0% 0%)"],
+        },
+        0
+      )
+      .add(
+        {
+          targets: videoRef.current,
+          scale: [1, 1.1],
+        },
+        0
+      );
   }
 
   // Scroll-based zoom animation
@@ -83,14 +99,17 @@ export default function VideoSlice() {
       bottom: false,
     }
   );
-  
+
   return (
     <section className="flex flex-col w-full py-24">
-      <div ref={sectionContainer}>
-        <Container className="flex justify-center pt-12 pb-8 lg:pb-12 lg:pt-24">
-          <h2 className="flex flex-col justify-center text-2xl text-center md:text-5xl lg:text-8xl" ref={titleWrapper}>
+      <div ref={sectionContainer as RefObject<HTMLDivElement>}>
+        <Container className="flex justify-center pt-12 pb-8 overflow-hidden lg:pb-12 lg:pt-24">
+          <h2
+            className="flex flex-col justify-center text-2xl text-center md:text-5xl lg:text-8xl"
+            ref={titleWrapper}
+          >
             <span>
-              <span className="px-3 word">Create</span> 
+              <span className="px-3 word">Create</span>
               <span className="px-3 word">stunning</span>
               <span className="px-3 word">websites</span>
             </span>
@@ -101,7 +120,10 @@ export default function VideoSlice() {
           </h2>
         </Container>
       </div>
-      <div className="relative w-full h-screen overflow-hidden clip-path-video-element" ref={videoContainerRef}>
+      <div
+        className="relative w-full h-screen overflow-hidden clip-path-video-element"
+        ref={videoContainerRef}
+      >
         <video
           muted
           disablePictureInPicture
