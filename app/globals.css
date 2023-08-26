@@ -21,8 +21,8 @@
 }
 
 body {
-  background-color: var(--background-color);
-  transition: 0.3s ease-in-out;
+  background-color: var( --background-color);
+  transition: 0.6s ease-in-out;
 }
 
 h1 {
