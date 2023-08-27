@@ -1,8 +1,13 @@
-import { Inter } from "next/font/google";
 import LenisInstantiator from "./components/LenisInstantiator";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+import { League_Spartan } from "next/font/google";
+import "./globals.css";
+
+const leagueSpartan = League_Spartan({
+  weight: ["100", "400", "600", "900"],
+  subsets: ["latin"],
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -17,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <LenisInstantiator>
-        <body className={inter.className}>{children}</body>
+        <body className={leagueSpartan.className}>{children}</body>
       </LenisInstantiator>
     </html>
   );
