@@ -7,6 +7,9 @@ module.exports = {
     "./slices/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      'ppmori-regular': 'ppmori-regular',
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

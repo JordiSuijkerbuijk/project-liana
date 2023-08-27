@@ -67,7 +67,7 @@ interface HomeDocumentData {
  * Slice for *Home → Slice Zone*
  *
  */
-type HomeDocumentDataSlicesSlice = never;
+type HomeDocumentDataSlicesSlice = ProjectsSlice;
 /**
  * Home document from Prismic
  *

@@ -1,30 +1,37 @@
-import { Components } from "@/helpers/SliceZone";
+import Section from '@/components/Section';
+import SliceZone, { Components } from '@/helpers/SliceZone';
 import { getClient } from "@/helpers/getClient";
+import Projects from '@/slices/Projects';
 import VideoSlice from "@/slices/VideoSlice";
 
 async function getData() {
   const client = getClient();
 
   if (client) {
-    const props = await client.getSingle("home");
+    const props = await client.getSingle('home');
 
     return { props };
   }
 }
 
-const components: Components = {};
+const components: Components = {
+  projects: Projects,
+};
 
 export default async function Home() {
   const home = await getData();
-  if (!home) return;
-
-  const data = home.props.data;
+  const data = home?.props?.data;
 
   return (
     <main className="flex flex-col items-center justify-between min-h-screen">
       <div className="bg-[beige] h-[400px]" />
       <VideoSlice />
-      {/* {SliceZone(data.slices, components)} */}
+      <Section className='h-screen' />
+      <Section color='#000' className='flex justify-center h-full'>
+        {SliceZone(data?.slices, components)}
+      </Section>
+      <Section className='h-screen' />
+      <Section className='h-screen' />
     </main>
   );
 }
