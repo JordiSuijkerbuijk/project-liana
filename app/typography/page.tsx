@@ -1,4 +1,4 @@
-import Container from "@/app/components/Container";
+import Container from "@/components/Container";
 
 export default function Typography() {
   return (

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import anime, { AnimeTimelineInstance } from 'animejs';
-import { RefObject, useCallback, useEffect, useRef } from 'react';
+import anime, { AnimeTimelineInstance } from "animejs";
+import { RefObject, useCallback, useEffect, useRef } from "react";
 
 export default function HeadingAnimation({
-  text = '',
+  text = "",
   containerRef,
 }: {
   text: string;
@@ -15,13 +15,15 @@ export default function HeadingAnimation({
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const scrollHandler = useCallback(() => {
-    if (!containerRef.current || !textRef.current || !timelineRef.current) return;
+    if (!containerRef.current || !textRef.current || !timelineRef.current)
+      return;
 
     const scrollPercentage = Math.max(
       0,
       Math.min(
         1,
-        (window.scrollY - (textRef.current.offsetTop + textRef.current.clientHeight / 2)) /
+        (window.scrollY -
+          (textRef.current.offsetTop + textRef.current.clientHeight / 2)) /
           containerRef.current.clientHeight
       ) * 1.2
     );
@@ -35,7 +37,7 @@ export default function HeadingAnimation({
     timelineRef.current = anime
       .timeline({
         targets: Array.from(textRef.current.children),
-        easing: 'easeInQuad',
+        easing: "easeInQuad",
         delay: anime.stagger(175),
         duration: 1000,
         autoplay: false,
@@ -45,28 +47,28 @@ export default function HeadingAnimation({
     observerRef.current = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          window.addEventListener('scroll', scrollHandler);
+          window.addEventListener("scroll", scrollHandler);
           return;
         }
 
-        window.removeEventListener('scroll', scrollHandler);
+        window.removeEventListener("scroll", scrollHandler);
       });
     });
 
     observerRef.current.observe(containerRef.current);
 
     return () => {
-      window.removeEventListener('scroll', scrollHandler);
+      window.removeEventListener("scroll", scrollHandler);
     };
   }, [containerRef, scrollHandler]);
 
   return (
     <div
-      className='flex flex-wrap max-w-5xl px-12 py-12 text-3xl font-bold text-black gap-x-1'
+      className="flex flex-wrap max-w-5xl px-12 py-12 text-heading-5 font-bold text-black gap-x-1"
       ref={textRef}
     >
-      {text.split(' ').map((item, key) => (
-        <p className='transition-opacity opacity-20 duration-400' key={key}>
+      {text.split(" ").map((item, key) => (
+        <p className="transition-opacity opacity-20 duration-400" key={key}>
           {item}
         </p>
       ))}

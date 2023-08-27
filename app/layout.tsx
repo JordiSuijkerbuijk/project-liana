@@ -1,6 +1,4 @@
-import LenisInstantiator from "./components/LenisInstantiator";
-import "./globals.css";
-
+import LenisInstantiator from "@/components/LenisInstantiator";
 import { League_Spartan } from "next/font/google";
 import "./globals.css";
 

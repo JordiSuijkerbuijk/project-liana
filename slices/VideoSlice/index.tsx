@@ -1,6 +1,6 @@
 "use client";
 
-import Container from "@/app/components/Container";
+import Container from "@/components/Container";
 import playScrollBasedAnimation from "@/helpers/playScrollBasedAnimation";
 import { useScroll } from "@/helpers/useScroll";
 import anime, { AnimeTimelineInstance } from "animejs";
@@ -105,7 +105,7 @@ export default function VideoSlice() {
       <div ref={sectionContainer as RefObject<HTMLDivElement>}>
         <Container className="flex justify-center pt-12 pb-8 overflow-hidden lg:pb-12 lg:pt-24">
           <h2
-            className="flex flex-col justify-center text-2xl text-center md:text-5xl lg:text-8xl"
+            className="flex flex-col justify-center text-center text-heading-2 font-semibold"
             ref={titleWrapper}
           >
             <span>
