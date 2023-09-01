@@ -141,12 +141,13 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
             return (
               image.url && (
                 <Image
-                  className='z-10 object-cover object-top w-full h-[700px]'
+                  className='z-10 object-cover object-top w-full'
                   width={image.dimensions.width}
                   height={image.dimensions.height}
                   src={image.url}
                   alt={image.alt || ''}
                   key={key}
+                  loading='eager'
                 />
               )
             );
