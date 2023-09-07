@@ -122,7 +122,7 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
   }, [scrollHandler]);
 
   return (
-    <div
+    <section
       className='relative flex flex-col w-full h-full max-w-6xl [contain:paint]'
       style={{ height: `3500px` }}
       ref={elementRef}
@@ -182,6 +182,6 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
