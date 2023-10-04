@@ -7,8 +7,14 @@ module.exports = {
     "./slices/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    colors: {
+      purple: '#c295d8',
+      'purple-light': '#c295d880',
+      pink: '#f1c6d3'
+    },
     fontFamily: {
       "ppmori-regular": "ppmori-regular",
+      "drukwide": "drukwide"
     },
     extend: {
       backgroundImage: {

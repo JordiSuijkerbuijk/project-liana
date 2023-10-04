@@ -1,3 +1,4 @@
+import OnScrollLine from '@/components/OnScrollLine';
 import SliceZone, { Components } from '@/helpers/SliceZone';
 import { getClient } from '@/helpers/getClient';
 import Hero from '@/slices/Hero';
@@ -25,8 +26,9 @@ export default async function Home() {
   const data = home?.props?.data;
 
   return (
-    <main className='flex flex-col items-center justify-between min-h-screen'>
-      {SliceZone(data?.slices, components)}
+    <main className='relative flex flex-col items-center justify-between min-h-screen'>
+      <div className='relative z-10'>{SliceZone(data?.slices, components)}</div>
+      <OnScrollLine />
     </main>
   );
 }
