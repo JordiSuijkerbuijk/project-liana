@@ -61,12 +61,6 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background-color: #eee8e2;
-  }
-}
-
 h1 {
   color: #c295d8;
   font-family: 'drukwide'
