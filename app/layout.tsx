@@ -1,5 +1,6 @@
 import LenisInstantiator from "@/components/LenisInstantiator";
 import { League_Spartan } from "next/font/google";
+import Navbar from '@/components/Navbar';
 import "./globals.css";
 
 const leagueSpartan = League_Spartan({
@@ -20,7 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <LenisInstantiator>
-        <body className={leagueSpartan.className}>{children}</body>
+        <body className={leagueSpartan.className}>
+          <Navbar />
+          {children}
+        </body>
       </LenisInstantiator>
     </html>
   );

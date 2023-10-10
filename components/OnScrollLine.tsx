@@ -22,7 +22,6 @@ export default function OnScrollLine() {
 
   const sectionContainer = useScroll(
     (progress) => {
-      console.log('progress', progress);
       playScrollBasedAnimation(progress * 2, timelineRef.current);
     },
     {
@@ -40,8 +39,8 @@ export default function OnScrollLine() {
         <svg viewBox='0 0 2000 2000' className='lineAnimation'>
           <defs>
             <linearGradient id='linear' x1='0%' y1='0%' x2='100%' y2='0%'>
-              <stop offset='0%' stop-color='#c295d8' />
-              <stop offset='100%' stop-color='#f1c6d3' />
+              <stop offset='0%' stopColor='#c295d8' />
+              <stop offset='100%' stopColor='#f1c6d3' />
             </linearGradient>
           </defs>
           <path
