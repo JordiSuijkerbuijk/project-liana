@@ -10,7 +10,8 @@ module.exports = {
     colors: {
       purple: '#c295d8',
       'purple-light': '#c295d880',
-      pink: '#f1c6d3'
+      pink: '#f1c6d3',
+      transparent: 'transparent'
     },
     fontFamily: {
       "ppmori-regular": "ppmori-regular",

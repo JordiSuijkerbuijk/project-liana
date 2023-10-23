@@ -22,7 +22,6 @@ export default function OnScrollLine() {
 
   const sectionContainer = useScroll(
     (progress) => {
-      console.log('progress', progress);
       playScrollBasedAnimation(progress * 2, timelineRef.current);
     },
     {
@@ -32,7 +31,7 @@ export default function OnScrollLine() {
   );
 
   return (
-    <div className="absolute top-0 left-0 w-full overflow-hidden aspect-square">
+    <div className='absolute top-0 left-0 w-full overflow-hidden aspect-square'>
       <div
         className='absolute w-[calc(100%_+_40px)] -left-4 top-16'
         ref={sectionContainer as RefObject<HTMLDivElement>}
