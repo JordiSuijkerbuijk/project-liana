@@ -5,6 +5,7 @@ import { SliceComponentProps } from '@prismicio/react';
 import anime from 'animejs';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
+import perlinNoise from './test';
 
 /**
  * Props for `Hero`.
@@ -17,36 +18,28 @@ export type HeroProps = SliceComponentProps<Content.HeroSlice>;
 const Hero = (slice: any): JSX.Element => {
   const firstImageContainer = useRef<HTMLDivElement>(null);
   const secondImageContainer = useRef<HTMLDivElement>(null);
-  const headingRefPart1 = useRef<HTMLDivElement>(null);
-  const headingRefPart2 = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (
-      !firstImageContainer.current ||
-      !secondImageContainer.current ||
-      !headingRefPart1.current ||
-      !headingRefPart2.current
-    )
+    if (!firstImageContainer.current || !secondImageContainer.current || !headingRef.current)
       return;
 
     anime({
-      targets: [
-        firstImageContainer.current,
-        secondImageContainer.current,
-        headingRefPart1.current,
-        headingRefPart2.current,
-      ],
+      targets: [firstImageContainer.current, secondImageContainer.current, headingRef.current],
       translateY: 0,
       easing: 'easeInOutExpo',
     });
 
     // init();
+    if (typeof window !== undefined) {
+      perlinNoise();
+    }
     // initPattern();
   }, []);
 
   return (
-    <section className='flex flex-col justify-around w-full h-screen'>
-      <div className='relative z-20 flex items-end justify-between pt-16 pr-16'>
+    <section className='flex flex-col justify-end w-full h-screen'>
+      <div className='relative z-20 flex items-end justify-between pr-4'>
         <div className='w-5/12 max-w-2xl pl-4 text-3xl'>
           <p>We help elevate your brand by creating exceptional digital products</p>
         </div>
@@ -81,20 +74,15 @@ const Hero = (slice: any): JSX.Element => {
           </div>
         </div>
       </div>
-      <div className='z-20 flex items-center justify-center overflow-hidden leading-tight tracking-tighter gap-x-28'>
+      <div className='relative z-20 flex items-center justify-center overflow-hidden tracking-tighter'>
         <h1
-          className='uppercase text-[7.5vw] translate-y-full transition-transform duration-500'
-          ref={headingRefPart1}
-        >
-          Project
-        </h1>
-        <h1
-          className='uppercase text-[7.5vw] -translate-y-full transition-transform duration-500'
-          ref={headingRefPart2}
+          className='relative uppercase text-[21vw] leading-none z-20 translate-y-full transition-transform duration-500 bg-clip-text text-transparent bg-gradient-to-r from-purple via-purple to-pink'
+          ref={headingRef}
         >
           liana
         </h1>
       </div>
+      <canvas id='canvas' className='fixed top-0 left-0 blur-2xl' />
     </section>
   );
 };

@@ -8,18 +8,19 @@ module.exports = {
   ],
   theme: {
     colors: {
-      purple: '#c295d8',
-      'purple-light': '#c295d880',
-      pink: '#f1c6d3',
-      white: '#fff',
-      background: '#1c1c1c',
+      purple: "#c295d8",
+      "purple-light": "#c295d880",
+      pink: "#f1c6d3",
+      white: "#fff",
+      background: "#1c1c1c",
       "background-tint": "#494949",
       "gradient-purple": "#c295d8",
-      "gradient-pink": "#f1c6d3" 
+      "gradient-pink": "#f1c6d3",
+      transparent: "transparent",
     },
     fontFamily: {
       "ppmori-regular": "ppmori-regular",
-      "drukwide": "drukwide"
+      drukwide: "drukwide",
     },
     extend: {
       backgroundImage: {
@@ -40,15 +41,15 @@ module.exports = {
         ],
       },
       scale: {
-        33: '0.33',
-        66: '0.66'
+        33: "0.33",
+        66: "0.66",
       },
       transitionTimingFunction: {
-        'custom-ease-in': 'cubic-bezier(.12,0,.66,.04)'
+        "custom-ease-in": "cubic-bezier(.12,0,.66,.04)",
       },
       transitionDuration: {
-        DEFAULT: '300ms'
-      }
+        DEFAULT: "300ms",
+      },
     },
   },
   plugins: [],
