@@ -1,6 +1,7 @@
 "use client";
 
 import Container from "@/components/Container";
+import GlitchEffectText from "@/components/GlitchEffectText";
 import Icon from "@/components/Icon/Icon";
 import anime from "animejs";
 import clsx from "clsx";
@@ -12,17 +13,17 @@ const mockMenu = [
   {
     label: "Projects",
     link: "/projects",
-    iconType: "home",
+    iconType: "browser" as const,
   },
   {
     label: "About us",
     link: "/about-us",
-    iconType: "home",
+    iconType: "speechBubble" as const,
   },
   {
     label: "Contact",
     link: "/contact",
-    iconType: "home",
+    iconType: "addressBook" as const,
   },
 ];
 
@@ -64,12 +65,30 @@ export default function NavBar() {
     setMenuIsOpen(!menuIsOpen);
   }
 
+  function handleMouseMove(e: MouseEvent) {
+    if (!barRef?.current) return;
+    const menuPositioning = barRef.current.getBoundingClientRect();
+
+    const x = e.clientX - menuPositioning.left;
+    const y = e.clientY - menuPositioning.top;
+
+    barRef.current.style.setProperty("--mouse-x", `${x}px`);
+    barRef.current.style.setProperty("--mouse-y", `${y}px`);
+  }
+
   return (
     <div className="fixed z-20 w-full top-6">
       <Container className="flex justify-center">
-        <div className="w-24 px-4 py-2 clip-rounded" ref={barRef}>
-          <span className="absolute inset-0 inline-block w-full h-full blur-xl -z-10">
-            <span className="absolute inset-0 inline-block w-full h-full bg-background-tint/80" />
+        <div
+          className="relative w-24 px-4 py-2 clip-rounded"
+          ref={barRef}
+          onMouseMove={handleMouseMove}
+        >
+          {/* Hover circle */}
+          <span className="inline-block absolute top-0 left-0 w-full h-full radial-gradient-white" />
+          {/* Backdrop handling */}
+          <span className="absolute inset-0 inline-block w-full h-full backdrop-blur-xl -z-10">
+            <span className="absolute inset-0 inline-block w-full h-full bg-background-shade/80" />
           </span>
           {/* Outer items */}
           <div className="relative flex items-center justify-between w-full gap-x-4">
@@ -93,21 +112,22 @@ export default function NavBar() {
             )}
             ref={hamburgerContentContainer}
           >
-            <nav className="px-4 py-2">
-              <ul>
+            <nav className="relative px-4 pt-5 pb-2">
+              <ul className="flex flex-col gap-y-3">
                 {/* TODO: Connect to Prismic */}
                 {mockMenu.map((item) => {
                   return (
                     <li key={item.link}>
-                      <Link
-                        href={item.link}
-                        className="relative inline-flex justify-between w-full gap-x-2 text-body group"
-                      >
-                        <span className="absolute inset-0 w-[calc(100%_+_1rem)] -translate-x-2 transition-opacity opacity-0 bg-gradient-to-br from-gradient-purple to-gradient-pink rounded-xl -z-10 group-hover:opacity-100" />
-                        {/* <span className="inline-block w-2 h-2 translate-y-1.5 rounded-full bg-gradient-to-br from-gradient-purple to to-gradient-pink" /> */}
-                        {item.label}
-                        <Icon type={item.iconType} className="w-6" />
-                      </Link>
+                      <GlitchEffectText
+                        text={item.label}
+                        link={item.link}
+                        iconType={item.iconType}
+                        iconClass={
+                          item.iconType === "browser"
+                            ? "stroke-white"
+                            : "fill-white"
+                        }
+                      />
                     </li>
                   );
                 })}
