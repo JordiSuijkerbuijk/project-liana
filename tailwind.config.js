@@ -47,6 +47,9 @@ module.exports = {
         33: "0.33",
         66: "0.66",
       },
+      spacing: {
+        px: "0.0625rem",
+      },
       transitionTimingFunction: {
         "custom-ease-in": "cubic-bezier(.12,0,.66,.04)",
       },

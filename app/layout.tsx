@@ -1,6 +1,7 @@
+import FontResizer from "@/components/FontSizeResizer";
 import LenisInstantiator from "@/components/LenisInstantiator";
+import Navbar from "@/components/Navbar";
 import { League_Spartan } from "next/font/google";
-import Navbar from '@/components/Navbar';
 import "./globals.css";
 
 const leagueSpartan = League_Spartan({
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <LenisInstantiator>
+        <FontResizer />
         <body className={leagueSpartan.className}>
           <Navbar />
           {children}
