@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
-  const [currentIndex, setCurrentIndex] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const items = slice.items || [];
   const elementRef = useRef<HTMLDivElement | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -102,8 +102,8 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
                   <Image
                     className={clsx([
                       'z-10 object-cover w-screen h-screen transition-transform duration-700',
-                      index > currentIndex && 'rotate-[3deg]',
-                      index < currentIndex && '-rotate-[3deg]',
+                      index > currentIndex && '-rotate-[3deg]',
+                      index < currentIndex && 'rotate-[3deg]',
                     ])}
                     width={item.background_image.dimensions?.width || 10}
                     height={item.background_image.dimensions?.height || 10}
@@ -116,7 +116,7 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
               </div>
             </div>
           ))}
-        <div className='fixed z-50 w-1/4 max-w-lg overflow-hidden -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 h-1/2'>
+        <div className='fixed z-50 w-1/4 max-w-sm overflow-hidden -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 h-1/2'>
           {items &&
             items.map((item, index) => (
               <div
@@ -129,18 +129,16 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
               >
                 <div
                   className={clsx([
-                    'w-full flex center transition-all duration-700 overflow-hidden origin-top max-h-[750px]',
+                    'w-full flex center transition-all duration-700 overflow-hidden origin-top max-h-[33.75rem]',
                     index === currentIndex && 'h-full',
                     index > currentIndex && 'scale-110 mt-auto',
-                    index < currentIndex && 'scale-110 mb-auto',
                   ])}
                 >
                   {item.background_image && (
                     <Image
                       className={clsx([
-                        'z-10 object-cover aspect-video h-[800px] transition-transform duration-700',
-                        index > currentIndex && 'rotate-[3deg]',
-                        index < currentIndex && '-rotate-[3deg]',
+                        'z-10 object-cover object-center aspect-video h-[40rem] transition-transform duration-700',
+                        index > currentIndex && 'rotate-[5deg]',
                       ])}
                       width={item.background_image.dimensions?.width || 10}
                       height={item.background_image.dimensions?.height || 10}

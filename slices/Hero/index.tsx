@@ -59,11 +59,11 @@ const Hero = (slice: any): JSX.Element => {
 
   return (
     <section className='flex flex-col justify-end w-full h-screen'>
-      <div className='relative z-20 flex items-end justify-between pr-4'>
-        <div className='w-5/12 max-w-2xl pl-4 text-3xl'>
+      <div className='relative z-20 flex flex-wrap items-end justify-between pr-4 lg:flex-row'>
+        <div className='hidden w-5/12 max-w-2xl pl-4 text-3xl lg:flex'>
           <p>We help elevate your brand by creating exceptional digital products</p>
         </div>
-        <div className='flex w-3/5 max-w-5xl lg:max-w-7xl justify-center overflow-hidden rounded-[325px] before:pt-[50%] max-h-[500px] lg:max-h-[750px] z-10 mr-6'>
+        <div className='flex w-full max-w-5xl justify-center overflow-hidden rounded-[20.3125rem] before:pt-[50%] max-h-[24rem] lg:max-h-[31.25rem] z-10 mr-6 lg:w-3/5'>
           <div className='relative w-full overflow-hidden -translate-x-2 -skew-x-12'>
             <div
               className='absolute left-2 w-full top-0 translate-y-[calc(100%_+_6px)] transition-transform duration-500'
