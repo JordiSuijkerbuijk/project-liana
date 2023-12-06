@@ -19,7 +19,7 @@ const Hero = (slice: any): JSX.Element => {
   const firstImageContainer = useRef<HTMLDivElement>(null);
   const secondImageContainer = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     if (!firstImageContainer.current || !secondImageContainer.current || !headingRef.current)
