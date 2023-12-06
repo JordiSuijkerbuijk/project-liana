@@ -8,14 +8,22 @@ module.exports = {
   ],
   theme: {
     colors: {
-      purple: '#c295d8',
-      'purple-light': '#c295d880',
-      pink: '#f1c6d3',
-      transparent: 'transparent'
+      purple: "#c295d8",
+      "purple-light": "#c295d880",
+      pink: "#f1c6d3",
+      white: "#fff",
+      background: "#1c1c1c",
+      "background-tint": "#494949",
+      "gradient-purple": "#c295d8",
+      "gradient-pink": "#f1c6d3",
+      transparent: "transparent",
+      "background-shade": "#0e0e0e",
+      "gradient-purple": "#c295d8",
+      "gradient-pink": "#f1c6d3",
     },
     fontFamily: {
       "ppmori-regular": "ppmori-regular",
-      "drukwide": "drukwide"
+      drukwide: "drukwide",
     },
     extend: {
       backgroundImage: {
@@ -34,6 +42,16 @@ module.exports = {
           "var(--tiny-body-text)",
           "var(--tiny-body-text-line-height)",
         ],
+      },
+      scale: {
+        33: "0.33",
+        66: "0.66",
+      },
+      transitionTimingFunction: {
+        "custom-ease-in": "cubic-bezier(.12,0,.66,.04)",
+      },
+      transitionDuration: {
+        DEFAULT: "300ms",
       },
     },
   },
