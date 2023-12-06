@@ -5,12 +5,20 @@ import { SliceComponentProps } from '@prismicio/react';
 import anime from 'animejs';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
-import perlinNoise from './test';
+
+import clsx from 'clsx';
+import localFont from 'next/font/local';
 
 /**
  * Props for `Hero`.
  */
 export type HeroProps = SliceComponentProps<Content.HeroSlice>;
+
+const drukwide = localFont({
+  src: '../../public/fonts/DrukWide/Druk-Wide-Bold.ttf',
+  variable: '--font-drukwide',
+  display: 'swap',
+});
 
 /**
  * Component for "Hero" Slices.
@@ -33,19 +41,19 @@ const Hero = (slice: any): JSX.Element => {
 
     // init();
     if (typeof window !== undefined) {
-      perlinNoise();
+      // perlinNoise();
     }
 
     //TODO: make this animation random forever loop
 
-    anime({
-      targets: [canvasRef.current],
-      translateX: [0, -5000],
-      translateY: [0, -5000],
-      opacity: [100, 25, 100],
-      loop: true,
-      duration: 1000000,
-    });
+    // anime({
+    //   targets: [canvasRef.current],
+    //   translateX: [0, -5000],
+    //   translateY: [0, -5000],
+    //   opacity: [100, 25, 100],
+    //   loop: true,
+    //   duration: 1000000,
+    // });
     // initPattern();
   }, []);
 
@@ -55,7 +63,7 @@ const Hero = (slice: any): JSX.Element => {
         <div className='w-5/12 max-w-2xl pl-4 text-3xl'>
           <p>We help elevate your brand by creating exceptional digital products</p>
         </div>
-        <div className='flex w-3/5 max-w-5xl justify-center overflow-hidden rounded-[325px] before:pt-[50%] max-h-[500px] z-10'>
+        <div className='flex w-3/5 max-w-5xl lg:max-w-7xl justify-center overflow-hidden rounded-[325px] before:pt-[50%] max-h-[500px] lg:max-h-[750px] z-10 mr-6'>
           <div className='relative w-full overflow-hidden -translate-x-2 -skew-x-12'>
             <div
               className='absolute left-2 w-full top-0 translate-y-[calc(100%_+_6px)] transition-transform duration-500'
@@ -88,7 +96,10 @@ const Hero = (slice: any): JSX.Element => {
       </div>
       <div className='relative z-20 flex items-center justify-center overflow-hidden tracking-tighter'>
         <h1
-          className='relative uppercase text-[21vw] leading-none z-20 translate-y-full transition-transform duration-500 bg-clip-text text-transparent bg-gradient-to-r from-purple via-purple to-pink'
+          className={clsx([
+            'relative uppercase text-[21vw] leading-none z-20 translate-y-full transition-transform duration-500 bg-clip-text text-transparent bg-gradient-to-r from-purple via-purple to-pink',
+            drukwide.className,
+          ])}
           ref={headingRef}
         >
           liana

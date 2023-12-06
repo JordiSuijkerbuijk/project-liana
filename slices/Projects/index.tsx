@@ -84,7 +84,7 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
           items.map((item, index) => (
             <div
               className={clsx([
-                'w-screen h-screen fixed left-0 bottom-0 transition-transform duration-500 overflow-hidden z-10',
+                'w-screen h-screen fixed left-0 bottom-0 transition-transform duration-700 overflow-hidden z-10',
                 index > currentIndex && 'translate-y-full',
                 index < currentIndex && '-translate-y-full',
               ])}
@@ -92,7 +92,7 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
             >
               <div
                 className={clsx([
-                  'w-full transition-all duration-500',
+                  'w-full transition-all duration-700',
                   index === currentIndex && 'h-full',
                   index > currentIndex && 'h-1/2 scale-110',
                   index < currentIndex && 'h-1/2 scale-110',
@@ -101,7 +101,7 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
                 {item.background_image && (
                   <Image
                     className={clsx([
-                      'z-10 object-cover w-screen h-screen transition-transform duration-500',
+                      'z-10 object-cover w-screen h-screen transition-transform duration-700',
                       index > currentIndex && 'rotate-[3deg]',
                       index < currentIndex && '-rotate-[3deg]',
                     ])}
@@ -116,29 +116,29 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
               </div>
             </div>
           ))}
-        <div className='fixed z-50 w-1/4 overflow-hidden -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 h-1/2'>
+        <div className='fixed z-50 w-1/4 max-w-lg overflow-hidden -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 h-1/2'>
           {items &&
             items.map((item, index) => (
               <div
                 className={clsx([
-                  'absolute bottom-0 w-full left-0 h-full min-h-full transition-transform duration-1000 overflow-hidden flex',
-                  index > currentIndex && '-translate-y-full',
-                  index < currentIndex && 'translate-y-full',
+                  'absolute w-full left-0 h-full min-h-full transition-transform duration-700 overflow-hidden flex',
+                  index > currentIndex && '-translate-y-full bottom-0',
+                  index < currentIndex && 'translate-y-full top-0',
                 ])}
                 key={index}
               >
                 <div
                   className={clsx([
-                    'w-full transition-all duration-1000 overflow-hidden origin-top',
+                    'w-full flex center transition-all duration-700 overflow-hidden origin-top max-h-[750px]',
                     index === currentIndex && 'h-full',
-                    index > currentIndex && 'h-1/2 scale-110 mt-auto',
-                    index < currentIndex && 'h-1/2 scale-110 mb-auto',
+                    index > currentIndex && 'scale-110 mt-auto',
+                    index < currentIndex && 'scale-110 mb-auto',
                   ])}
                 >
                   {item.background_image && (
                     <Image
                       className={clsx([
-                        'z-10 object-cover w-full h-full transition-transform duration-500',
+                        'z-10 object-cover aspect-video h-[800px] transition-transform duration-700',
                         index > currentIndex && 'rotate-[3deg]',
                         index < currentIndex && '-rotate-[3deg]',
                       ])}
@@ -154,6 +154,7 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
               </div>
             ))}
         </div>
+        <div className='absolute top-0 left-0 z-20 w-full h-full bg-background/20' />
       </div>
     </section>
   );

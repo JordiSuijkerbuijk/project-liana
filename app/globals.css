@@ -2,13 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "drukwide";
-  src: url("/public/fonts/Drukwide/Druk-Wide-Bold.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
 :root {
   --background-color: #1c1c1c;
 
