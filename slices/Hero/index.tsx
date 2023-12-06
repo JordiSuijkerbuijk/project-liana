@@ -19,6 +19,7 @@ const Hero = (slice: any): JSX.Element => {
   const firstImageContainer = useRef<HTMLDivElement>(null);
   const secondImageContainer = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!firstImageContainer.current || !secondImageContainer.current || !headingRef.current)
@@ -34,6 +35,17 @@ const Hero = (slice: any): JSX.Element => {
     if (typeof window !== undefined) {
       perlinNoise();
     }
+
+    //TODO: make this animation random forever loop
+
+    anime({
+      targets: [canvasRef.current],
+      translateX: [0, -5000],
+      translateY: [0, -5000],
+      opacity: [100, 25, 100],
+      loop: true,
+      duration: 1000000,
+    });
     // initPattern();
   }, []);
 
@@ -82,7 +94,7 @@ const Hero = (slice: any): JSX.Element => {
           liana
         </h1>
       </div>
-      <canvas id='canvas' className='fixed top-0 left-0 blur-2xl' />
+      <canvas id='canvas' className='fixed top-0 left-0 blur-2xl' ref={canvasRef} />
     </section>
   );
 };
