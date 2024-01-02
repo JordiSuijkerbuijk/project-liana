@@ -3,11 +3,11 @@
 import { Content } from '@prismicio/client';
 import { SliceComponentProps } from '@prismicio/react';
 import anime from 'animejs';
-import Image from 'next/image';
-import { useEffect, useRef } from 'react';
-
 import clsx from 'clsx';
 import localFont from 'next/font/local';
+import Image from 'next/image';
+import { useEffect, useRef } from 'react';
+import PerlinNoise from './test';
 
 /**
  * Props for `Hero`.
@@ -41,7 +41,7 @@ const Hero = (slice: any): JSX.Element => {
 
     // init();
     if (typeof window !== undefined) {
-      // perlinNoise();
+      PerlinNoise();
     }
 
     //TODO: make this animation random forever loop
@@ -105,7 +105,7 @@ const Hero = (slice: any): JSX.Element => {
           liana
         </h1>
       </div>
-      <canvas id='canvas' className='fixed top-0 left-0 blur-2xl' ref={canvasRef} />
+      <canvas id='canvas' className='fixed top-0 left-0' ref={canvasRef} />
     </section>
   );
 };

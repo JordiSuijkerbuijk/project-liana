@@ -10,30 +10,47 @@ function randomNoise(canvas, x, y, width, height, alpha) {
       pixels = imageData.data,
       n = pixels.length,
       i = 0;
+
+      console.log('pixels', pixels);
   while (i < n) {
-      pixels[i++] = pixels[i++] = pixels[i++] = (random() * 256) | 0;
+    pixels[i++] = pixels[i++] = pixels[i++] = (random() * 50) | 0;
       pixels[i++] = alpha;
+      // pixels[i++] = 241 | 0
+      // pixels[i++] = 198 | 0
+      // pixels[i++] = 211 | 0
+      // pixels[i++] = random() * 255;
   }
   g.putImageData(imageData, x, y);
   return canvas;
 }
 
+// https://github.com/joeiddon/perlin/blob/master/demo.html
+// https://joeiddon.github.io/projects/javascript/perlin.html
+
 export default function perlinNoise() {
   const canvas = document.getElementById('canvas');
   canvas.width = 5000;
-  canvas.height = 5000;
+  canvas.height = 5080;
 
   let noise = randomNoise(canvas);
   var g = canvas.getContext("2d");
+  g.fillStyle = '#f1c6d3'
   g.save();
+
+ var  size = 10;
+
+        var x = (Math.random() * (noise.width )) | 0,
+          y = (Math.random() * (noise.height )) | 0;
+
+  g.drawImage(noise, x, y, size, size, 0, 0, canvas.width, canvas.height);
   
-  /* Scale random iterations onto the canvas to generate Perlin noise. */
-  for (var size = 25; size <= noise.width; size *= 25) {
-      var x = (Math.random() * (noise.width - size)) | 0,
-          y = (Math.random() * (noise.height - size)) | 0;
-      g.globalAlpha = 25 / size;
-      g.drawImage(noise, x, y, size, size, 0, 0, canvas.width, canvas.height);
-  }
+  // /* Scale random iterations onto the canvas to generate Perlin noise. */
+  // for (var size = 20; size <= noise.width / 10; size *= 5) {
+  //     var x = (Math.random() * (noise.width - size)) | 0,
+  //         y = (Math.random() * (noise.height - size)) | 0;
+  //     g.globalAlpha = 5 / size;
+  //     g.drawImage(noise, x, y, size, size, 0, 0, canvas.width, canvas.height);
+  // }
 
   g.restore();
   return canvas;
