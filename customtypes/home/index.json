@@ -17,7 +17,8 @@
           "choices": {
             "projects": { "type": "SharedSlice" },
             "hero": { "type": "SharedSlice" },
-            "video_slice": { "type": "SharedSlice" }
+            "video_slice": { "type": "SharedSlice" },
+            "highlighted_text": { "type": "SharedSlice" }
           }
         }
       }

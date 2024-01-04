@@ -4,7 +4,11 @@ import type * as prismic from "@prismicio/client";
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
-type HomeDocumentDataSlicesSlice = ProjectsSlice | HeroSlice | VideoSliceSlice;
+type HomeDocumentDataSlicesSlice =
+  | ProjectsSlice
+  | HeroSlice
+  | VideoSliceSlice
+  | HighlightedTextSlice;
 
 /**
  * Content for Home documents
@@ -217,6 +221,51 @@ type HeroSliceVariation = HeroSliceDefault;
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
 /**
+ * Primary content in *HighlightedText → Primary*
+ */
+export interface HighlightedTextSliceDefaultPrimary {
+  /**
+   * Description field in *HighlightedText → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: highlighted_text.primary.description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+}
+
+/**
+ * Default variation for HighlightedText Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type HighlightedTextSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<HighlightedTextSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *HighlightedText*
+ */
+type HighlightedTextSliceVariation = HighlightedTextSliceDefault;
+
+/**
+ * HighlightedText Shared Slice
+ *
+ * - **API ID**: `highlighted_text`
+ * - **Description**: HighlightedText
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type HighlightedTextSlice = prismic.SharedSlice<
+  "highlighted_text",
+  HighlightedTextSliceVariation
+>;
+
+/**
  * Primary content in *Projects → Primary*
  */
 export interface ProjectsSliceDefaultPrimary {
@@ -365,6 +414,9 @@ declare module "@prismicio/client" {
       HeroSlice,
       HeroSliceVariation,
       HeroSliceDefault,
+      HighlightedTextSlice,
+      HighlightedTextSliceVariation,
+      HighlightedTextSliceDefault,
       ProjectsSlice,
       ProjectsSliceVariation,
       ProjectsSliceDefault,

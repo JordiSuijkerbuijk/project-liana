@@ -31,9 +31,6 @@ export default function Projects(slice: Content.ProjectsSlice): JSX.Element {
         slice.items.length - 1,
         Math.floor(Math.ceil(scrollPercentage) / dividedPercentage)
       );
-      console.log('currentKey', currentKey);
-
-      console.log('currentKey', currentKey, currentIndex);
 
       if (currentIndex !== currentKey) {
         setCurrentIndex(currentKey);

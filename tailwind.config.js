@@ -6,6 +6,7 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./slices/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: ['bg-purple', 'text-2xl'],
   theme: {
     colors: {
       purple: "#c295d8",

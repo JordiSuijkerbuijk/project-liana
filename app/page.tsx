@@ -2,6 +2,7 @@ import OnScrollLine from "@/components/OnScrollLine";
 import SliceZone, { Components } from "@/helpers/SliceZone";
 import { getClient } from "@/helpers/getClient";
 import Hero from "@/slices/Hero";
+import HighlightedText from "@/slices/HighlightedText";
 import Projects from "@/slices/Projects";
 import VideoSlice from "@/slices/VideoSlice";
 
@@ -19,6 +20,7 @@ const components: Components = {
   projects: Projects,
   video_slice: VideoSlice,
   hero: Hero,
+  highlighted_text: HighlightedText
 };
 
 export default async function Home() {
