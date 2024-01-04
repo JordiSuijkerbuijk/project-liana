@@ -1,30 +1,83 @@
+'use client';
+
 import Container from '@/components/Container';
-import { Content, HTMLRichTextMapSerializer, asHTML } from '@prismicio/client';
+import { Content } from '@prismicio/client';
+import { asText } from '@prismicio/client/richtext';
 import { SliceComponentProps } from '@prismicio/react';
+import anime, { AnimeTimelineInstance } from 'animejs';
+import { useCallback, useEffect, useRef } from 'react';
 
 /**
  * Props for `HighlightedText`.
  */
 export type HighlightedTextProps = SliceComponentProps<Content.HighlightedTextSlice>;
 
-const serializer = {
-  heading2: ({ children }: HTMLRichTextMapSerializer) => {
-    return `<span class='flex flex-wrap items-center gap-x-2 text-7xl'><div class='px-8 py-4 bg-pink rounded-full text-lg h-full'>Agency</div>${children}</span>`;
-  },
-  strong: ({ children }: HTMLRichTextMapSerializer) => {
-    return `<div class="bg-purple rounded-xl px-6 py-2">${children}</div>`;
-  },
-};
-
 /**
  * Component for "HighlightedText" Slices.
  */
 const HighlightedText = (slice: Content.HighlightedTextSlice): JSX.Element => {
-  const description = asHTML(slice.primary.description, { serializer });
+  const textRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const timelineRef = useRef<AnimeTimelineInstance | null>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const description = asText(slice.primary.description);
+  const splitDescription = description ? description.split(/\s/) : [];
+
+  const scrollHandler = useCallback(() => {
+    if (!containerRef.current || !textRef.current || !timelineRef.current) return;
+
+    const scrollPercentage = Math.max(
+      0,
+      Math.min(
+        1,
+        (window.scrollY - (textRef.current.offsetTop - containerRef.current.clientHeight * 1.25)) /
+          containerRef.current.clientHeight
+      )
+    );
+
+    timelineRef.current.seek(timelineRef.current.duration * scrollPercentage);
+  }, [containerRef]);
+
+  useEffect(() => {
+    if (!containerRef.current || !textRef.current) return;
+
+    timelineRef.current = anime
+      .timeline({
+        targets: Array.from(textRef.current.children),
+        easing: 'easeInQuad',
+        delay: anime.stagger(100),
+        duration: 100,
+        autoplay: false,
+      })
+      .add({ opacity: [0.2, 1] });
+
+    observerRef.current = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          window.addEventListener('scroll', scrollHandler);
+          return;
+        }
+
+        window.removeEventListener('scroll', scrollHandler);
+      });
+    });
+
+    observerRef.current.observe(containerRef.current);
+
+    return () => {
+      window.removeEventListener('scroll', scrollHandler);
+    };
+  }, [containerRef, scrollHandler]);
+
+  console.log('description', description);
   return (
-    <section>
-      <Container className='flex lg:max-w-6xl'>
-        <div dangerouslySetInnerHTML={{ __html: description }} />
+    <section ref={containerRef} className='py-40'>
+      <Container className='flex lg:max-w-4xl lg:text-4xl'>
+        <div ref={textRef} className='flex flex-wrap gap-x-2'>
+          {splitDescription.map((item, key) => (
+            <span key={key}>{item}</span>
+          ))}
+        </div>
       </Container>
     </section>
   );
