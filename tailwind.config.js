@@ -6,7 +6,6 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./slices/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  safelist: ['bg-purple', 'text-2xl'],
   theme: {
     colors: {
       purple: "#c295d8",
@@ -18,7 +17,6 @@ module.exports = {
       "gradient-purple": "#c295d8",
       "gradient-pink": "#f1c6d3",
       transparent: "transparent",
-      "background-shade": "#0e0e0e",
       "gradient-purple": "#c295d8",
       "gradient-pink": "#f1c6d3",
     },
@@ -47,6 +45,9 @@ module.exports = {
       scale: {
         33: "0.33",
         66: "0.66",
+      },
+      spacing: {
+        '0.25': '0.25rem'
       },
       transitionTimingFunction: {
         "custom-ease-in": "cubic-bezier(.12,0,.66,.04)",

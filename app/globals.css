@@ -82,3 +82,7 @@ body {
 .clip-rounded {
   clip-path: inset(0 0 0 0 round 1rem);
 }
+
+.backdrop-blur-default {
+  backdrop-filter: blur(1.25rem);
+}

@@ -1,137 +1,62 @@
-'use client';
+"use client";
 
-import Container from '@/components/Container';
-import GlitchEffectText from '@/components/GlitchEffectText';
-import Icon from '@/components/Icon/Icon';
-import anime from 'animejs';
-import clsx from 'clsx';
-import Link from 'next/link';
+import Icon from "@/components/Icon/Icon";
+import Link from "next/link";
+import { useState } from "react";
 
-import { MouseEvent, useRef, useState } from 'react';
-
-const mockMenu = [
+const mockData = [
   {
-    label: 'Projects',
-    link: '/projects',
-    iconType: 'browser' as const,
+    title: "Showreel",
+    anchor: "showreel",
   },
   {
-    label: 'About us',
-    link: '/about-us',
-    iconType: 'speechBubble' as const,
+    title: "Project",
+    anchor: "projects",
   },
   {
-    label: 'Contact',
-    link: '/contact',
-    iconType: 'addressBook' as const,
+    title: "Contact",
+    anchor: "contact",
   },
 ];
 
-export default function NavBar() {
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const barRef = useRef<HTMLDivElement>(null);
-  const hamburgerContentContainer = useRef<HTMLDivElement>(null);
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
 
-  function handleBurgerClick() {
-    const tl = anime.timeline({
-      easing: 'easeInOutCubic',
-      duration: 400,
-      autoplay: false,
-    });
-    if (menuIsOpen) {
-      tl.add({
-        targets: hamburgerContentContainer.current,
-        height: '0',
-      }).add(
-        {
-          targets: barRef.current,
-          width: '6rem',
-        },
-        250
-      );
-    } else {
-      tl.add({
-        targets: barRef?.current,
-        width: '15.625rem',
-      }).add(
-        {
-          targets: hamburgerContentContainer.current,
-          height: ['0', hamburgerContentContainer.current?.scrollHeight],
-        },
-        250
-      );
-    }
-    tl.play();
-    setMenuIsOpen(!menuIsOpen);
-  }
-
-  function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
-    if (!barRef?.current) return;
-    const menuPositioning = barRef.current.getBoundingClientRect();
-
-    const x = e.clientX - menuPositioning.left;
-    const y = e.clientY - menuPositioning.top;
-
-    barRef.current.style.setProperty('--mouse-x', `${x}px`);
-    barRef.current.style.setProperty('--mouse-y', `${y}px`);
+  function handleClick() {
+    setTimeout(() => {
+      setIsOpen((v) => !v);
+    }, 200);
   }
 
   return (
-    <div className='fixed z-20 w-full top-6'>
-      <Container className='flex justify-center'>
-        <div
-          className='relative w-24 px-4 py-2 clip-rounded'
-          ref={barRef}
-          onMouseMove={handleMouseMove}
+    <nav className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50">
+      <div className="relative inline-flex gap-x-4 px-2 py-2 bg-background-tint/40 rounded-xl">
+        {/* Span is separate to make it a couple pixels taller for nicer blur */}
+        <span className="absolute w-full h-full inset-0 -z-10 backdrop-blur-md rounded-xl bg-background-tint/40" />
+
+        <Link
+          href="/"
+          className="inline-flex items-center justify-center w-10 rounded bg-background aspect-square"
         >
-          {/* Hover circle */}
-          <span className='absolute top-0 left-0 inline-block w-full h-full radial-gradient-white' />
-          {/* Backdrop handling */}
-          <span className='absolute inset-0 inline-block w-full h-full backdrop-blur-xl -z-10'>
-            <span className='absolute inset-0 inline-block w-full h-full bg-background-shade/80' />
-          </span>
-          {/* Outer items */}
-          <div className='relative flex items-center justify-between w-full gap-x-4'>
-            <Link href='/' aria-label='Go to homepage'>
-              <Icon type='home' className='w-6 fill-white' />
-            </Link>
-            <button
-              className='flex flex-col items-center justify-center w-8 h-8 gap-y-1 clip-rounded'
-              aria-label={`${menuIsOpen ? 'Close' : 'Open'} menu`}
-              onClick={handleBurgerClick}
-            >
-              <span className='inline-block w-6 h-0.5 rounded-3xl bg-white' />
-              <span className='inline-block w-6 h-0.5 rounded-3xl bg-white' />
-              <span className='inline-block w-6 h-0.5 rounded-3xl bg-white' />
-            </button>
+          L
+        </Link>
+        <div className="flex items-center border px-4 h-10 border-white/20 rounded-[4px]">
+          <div className="flex gap-x-2">
+            {mockData.map((navItem) => (
+              <Link href={navItem.anchor} key={navItem.anchor}>
+                {navItem.title}
+              </Link>
+            ))}
           </div>
-          <div
-            className={clsx(
-              'h-0 -translate-x-4 overflow-hidden',
-              menuIsOpen ? 'w-[calc(100%_+_2rem)]' : 'w-[15.625rem]'
-            )}
-            ref={hamburgerContentContainer}
-          >
-            <nav className='relative px-4 pt-5 pb-2'>
-              <ul className='flex flex-col gap-y-3'>
-                {/* TODO: Connect to Prismic */}
-                {mockMenu.map((item) => {
-                  return (
-                    <li key={item.link}>
-                      <GlitchEffectText
-                        text={item.label}
-                        link={item.link}
-                        iconType={item.iconType}
-                        iconClass={item.iconType === 'browser' ? 'stroke-white' : 'fill-white'}
-                      />
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
-          </div>
+          {/* <button onClick={handleClick}>...</button> */}
         </div>
-      </Container>
-    </div>
+        <Link
+          href="mailto:tristan.kirwan@dpdk.com"
+          className="inline-flex items-center justify-center w-10 rounded border border-white/20 aspect-square"
+        >
+          <Icon type="phone" className="fill-white w-6" />
+        </Link>
+      </div>
+    </nav>
   );
 }

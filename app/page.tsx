@@ -20,7 +20,7 @@ const components: Components = {
   projects: Projects,
   video_slice: VideoSlice,
   hero: Hero,
-  highlighted_text: HighlightedText
+  highlighted_text: HighlightedText,
 };
 
 export default async function Home() {
