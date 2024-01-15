@@ -104,7 +104,7 @@ const VideoSlice = (): JSX.Element => {
   );
 
   return (
-    <section className='flex flex-col w-full py-24'>
+    <section className='flex flex-col w-full py-24 video-animation translate-y-4 opacity-0'>
       <div ref={sectionContainer as RefObject<HTMLDivElement>}>
         <Container className='flex justify-center pt-12 pb-8 overflow-hidden lg:pb-12 lg:pt-24'>
           <h2

@@ -82,3 +82,14 @@ body {
 .clip-rounded {
   clip-path: inset(0 0 0 0 round 1rem);
 }
+
+body.loaded .lines-animation {
+  transition: all 1s;
+  height: 100%
+}
+
+body.loaded .video-animation {
+  transition: all 1s;
+  opacity: 100;
+  transform: translateY(0px);
+}
