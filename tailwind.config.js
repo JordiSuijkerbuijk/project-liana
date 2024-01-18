@@ -21,6 +21,7 @@ module.exports = {
       "background-shade": "#0e0e0e",
       "gradient-purple": "#c295d8",
       "gradient-pink": "#f1c6d3",
+      'black': '#000',
     },
     fontFamily: {
       "ppmori-regular": "ppmori-regular",
