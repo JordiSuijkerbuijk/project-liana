@@ -1,5 +1,6 @@
 import { GeistSans } from 'geist/font/sans';
 import { League_Spartan } from 'next/font/google';
+import LenisInstantiator from '@/components/LenisInstantiator';
 import './globals.css';
 
 const leagueSpartan = League_Spartan({
@@ -15,12 +16,12 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en'>
-      {/* <LenisInstantiator> */}
+      <LenisInstantiator>
         <body className={GeistSans.className}>
           {/* <Navbar /> */}
           {children}
         </body>
-      {/* </LenisInstantiator> */}
+      </LenisInstantiator>
     </html>
   );
 }

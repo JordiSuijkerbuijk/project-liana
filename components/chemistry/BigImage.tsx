@@ -60,9 +60,6 @@ export default function BigImage({ src } : Props){
     }).add({
       targets: imageRef.current,
       duration: 25,
-      begin: () => {
-        console.log('a')
-      },
       clipPath: [
         'inset(0px round)',
         `inset(${deltaHeight}px ${targetRight}px ${deltaHeight}px ${targetLeft}px round 2rem)`,
@@ -77,7 +74,6 @@ export default function BigImage({ src } : Props){
 
   const containerRef = useScroll<HTMLDivElement>(
     (progress) => {
-      console.log('progress', progress)
       playScrollBasedAnimation(progress, timelineRef?.current);
     },
     {
@@ -86,10 +82,10 @@ export default function BigImage({ src } : Props){
     }
   );
 
-  return <div className="absolute top-0 left-0 h-full w-full pointer-events-none" ref={containerRef}>
-    <div className="h-screen sticky top-0 flex flex-col justify-end">
+  return <div className="absolute top-0 left-0 w-full h-full pointer-events-none" ref={containerRef}>
+    <div className="sticky top-0 flex flex-col justify-end h-screen">
 
-    <div className="h-full w-full" ref={wrapperRef}>
+    <div className="w-full h-full" ref={wrapperRef}>
       <img src={src} alt="" className="w-full h-full" width="1109" height="739" ref={imageRef} />
     </div>
     </div>

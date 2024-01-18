@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Container from "./Container";
+import CoolSectionItem from './CoolSectionItem';
 
 const items = [
   {
@@ -35,25 +36,8 @@ export default function CoolSection(){
         const isFirstItem = key === 0;
         const isLastItem = key === items.length - 1;
         const isMiddleItem = !isFirstItem && !isLastItem;
-
         return(
-        <div className={clsx("relative -mb-[100vh] [contain:paint]", isLastItem ? "h-[100vh]" : "h-[200vh]")} key={key}>
-        <div className="absolute sticky top-0 w-full h-screen" key={key}>
-          <img src={item.image} alt="" className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/30 w-full h-full" />
-        </div>
-        <div className={clsx("absolute z-10 w-full", isFirstItem && "h-[200vh] top-0", isMiddleItem && "h-[300vh] top-[-100vh]", isLastItem && "h-[200vh] top-[-100vh]")}>
-        <Container className="sticky top-0 h-[100vh] flex items-center justify-between relative z-10">
-          <div className="flex flex-col gap-y-4">
-            <h2 className="font-bold text-8xl">{item.title}</h2>
-            <span>{item.subtitle}</span>
-          </div>
-            <div className="aspect-[1/1.25] w-[25%]">
-              <img src={item.image2} alt="" className="w-full h-full object-fit"/>
-            </div>
-          </Container>
-        </div>
-        </div>
+        <CoolSectionItem {...item} isFirstItem={isFirstItem} isLastItem={isLastItem} isMiddleItem={isMiddleItem} key={key} />
       )}
       )}
       <p>Important stuff!</p>

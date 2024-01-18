@@ -20,7 +20,7 @@ export function useScroll<T extends HTMLElement>(
   options: { startTracking: 'bottom' | 'top'; stopTracking: 'bottom' | 'top' }
 ) {
   options = { ...defaultOptions, ...options };
-  const slice = useRef<T>(null);
+  const slice = useRef<T | null>(null);
   const previous = useRef(0);
 
   const onScroll = useCallback(() => {
