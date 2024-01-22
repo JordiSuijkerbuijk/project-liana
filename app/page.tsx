@@ -1,6 +1,7 @@
 import OnScrollLine from '@/components/OnScrollLine';
 import SliceZone, { Components } from '@/helpers/SliceZone';
 import { getClient } from '@/helpers/getClient';
+import Contact from '@/slices/Contact';
 import Hero from '@/slices/Hero';
 import HighlightedText from '@/slices/HighlightedText';
 import Projects from '@/slices/Projects';
@@ -21,6 +22,7 @@ const components: Components = {
   video_slice: VideoSlice,
   hero: Hero,
   highlighted_text: HighlightedText,
+  contact: Contact,
 };
 
 export default async function Home() {
@@ -32,7 +34,7 @@ export default async function Home() {
       <div className='relative z-10 w-full'>{SliceZone(data?.slices, components)}</div>
       <OnScrollLine />
 
-      <div className='fixed left-0 top-0 h-0 w-full flex justify-around lines-animation'>
+      <div className='fixed top-0 left-0 flex justify-around w-full h-0 lines-animation'>
         <div className='w-0.5 h-full bg-white/10' />
         <div className='w-0.5 h-full bg-white/10' />
         <div className='w-0.5 h-full bg-white/10' />

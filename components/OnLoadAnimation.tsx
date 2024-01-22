@@ -24,7 +24,7 @@ export default function OnLoadAnimation({ image1, image2, callback, className }:
 
   useEffect(() => {
     if (!image1RevealRef.current) return;
-    console.log('image1Ref', image1Ref);
+    scrollTo(0, 0);
 
     anime
       .timeline({ easing: 'cubicBezier(.5, .05, .1, .3)' })
@@ -113,8 +113,8 @@ export default function OnLoadAnimation({ image1, image2, callback, className }:
 
   return (
     <div className={clsx(['fixed top-0 left-0 flex w-screen h-screen', className])}>
-      <div className='relative w-1/2 h-screen overflow-hidden z-20'>
-        <div ref={image1Ref} className='h-0 absolute top-0 overflow-hidden'>
+      <div className='relative z-20 w-1/2 h-screen overflow-hidden'>
+        <div ref={image1Ref} className='absolute top-0 h-0 overflow-hidden'>
           <Image
             src={image1?.url || ''}
             alt={image1?.alt || ''}
@@ -126,8 +126,8 @@ export default function OnLoadAnimation({ image1, image2, callback, className }:
         <div className='absolute top-0 left-0 z-10 w-full h-0 bg-pink' ref={image1RevealRef} />
         <div className='absolute top-0 left-0 z-10 w-full h-0 bg-pink' ref={image1RevealRef2} />
       </div>
-      <div className='relative w-1/2 h-screen overflow-hidden z-20'>
-        <div ref={image2Ref} className='h-0 absolute bottom-0 overflow-hidden'>
+      <div className='relative z-20 w-1/2 h-screen overflow-hidden'>
+        <div ref={image2Ref} className='absolute bottom-0 h-0 overflow-hidden'>
           <Image
             src={image2?.url || ''}
             alt={image2?.alt || ''}
@@ -140,7 +140,7 @@ export default function OnLoadAnimation({ image1, image2, callback, className }:
         <div className='absolute bottom-0 left-0 z-10 w-full h-0 bg-pink' ref={image2RevealRef2} />
       </div>
 
-      <div className='bg-background absolute left-0 top-0 w-full h-full z-10' />
+      <div className='absolute top-0 left-0 z-10 w-full h-full bg-background' />
     </div>
   );
 }

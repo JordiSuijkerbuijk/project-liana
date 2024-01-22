@@ -53,11 +53,6 @@
   }
 }
 
-h1 {
-  /* color: #c295d8; */
-  font-family: "drukwide";
-}
-
 body {
   background-color: var(--background-color);
   transition: 0.6s ease-in-out;

@@ -69,7 +69,6 @@ const HighlightedText = (slice: Content.HighlightedTextSlice): JSX.Element => {
     };
   }, [containerRef, scrollHandler]);
 
-  console.log('description', description);
   return (
     <section ref={containerRef} className='py-40'>
       <Container className='flex lg:max-w-4xl lg:text-4xl'>
