@@ -25,13 +25,13 @@ export default function OnScrollLine() {
       playScrollBasedAnimation(progress * 2, timelineRef.current);
     },
     {
-      top: false,
-      bottom: false,
+      startTracking: 'top',
+      stopTracking: 'bottom'
     }
   );
 
   return (
-    <div className='absolute top-0 left-0 w-full overflow-hidden aspect-square z-50 '>
+    <div className='absolute top-0 left-0 z-50 w-full overflow-hidden aspect-square '>
       <div
         className='absolute w-[calc(100%_+_40px)] -left-4 top-16'
         ref={sectionContainer as RefObject<HTMLDivElement>}

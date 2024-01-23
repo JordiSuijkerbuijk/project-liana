@@ -27,6 +27,9 @@ module.exports = {
       drukwide: "drukwide",
     },
     extend: {
+      aspectRatio: { 
+        '1/1.25': '1 / 1.25'
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -47,6 +50,11 @@ module.exports = {
       scale: {
         33: "0.33",
         66: "0.66",
+      },
+      spacing: {
+        "100vh": '100vh',
+        '200vh': '200vh', 
+        '300vh': '300vh',	
       },
       transitionTimingFunction: {
         "custom-ease-in": "cubic-bezier(.12,0,.66,.04)",

@@ -5,6 +5,7 @@ import Hero from '@/slices/Hero';
 import HighlightedText from '@/slices/HighlightedText';
 import Projects from '@/slices/Projects';
 import VideoSlice from '@/slices/VideoSlice';
+import ProjectsSlice from '@/components/ProjectsV2Slice';
 
 async function getData() {
   const client = getClient();
@@ -29,10 +30,11 @@ export default async function Home() {
 
   return (
     <main className='relative flex flex-col items-center justify-between min-h-screen'>
-      <div className='relative z-10 w-full'>{SliceZone(data?.slices, components)}</div>
+      {/* <div className='relative z-10 w-full'>{SliceZone(data?.slices, components)}</div> */}
+      <ProjectsSlice />
       <OnScrollLine />
 
-      <div className='fixed left-0 top-0 h-0 w-full flex justify-around lines-animation'>
+      <div className='fixed top-0 left-0 flex justify-around w-full h-0 lines-animation'>
         <div className='w-0.5 h-full bg-white/10' />
         <div className='w-0.5 h-full bg-white/10' />
         <div className='w-0.5 h-full bg-white/10' />
