@@ -3,6 +3,7 @@
 import { Content } from '@prismicio/client';
 import { SliceComponentProps } from '@prismicio/react';
 import anime, { AnimeTimelineInstance } from 'animejs';
+import clsx from 'clsx';
 import localFont from 'next/font/local';
 import { useCallback, useEffect, useRef } from 'react';
 
@@ -35,7 +36,7 @@ const Contact = ({ slice }: ContactProps): JSX.Element => {
       Math.min(
         1,
         (window.scrollY -
-          (scrollingTextContainerRef.current.offsetTop - containerRef.current.clientHeight * 1)) /
+          (scrollingTextContainerRef.current.offsetTop - containerRef.current.clientHeight * 0.8)) /
           containerRef.current.clientHeight
       )
     );
@@ -61,7 +62,7 @@ const Contact = ({ slice }: ContactProps): JSX.Element => {
         easing: 'easeInOutQuad',
         duration: 100,
       })
-      .add({ translateX: ['-25%', '-35%'] });
+      .add({ translateX: ['-25%', '-40%'] });
 
     observerRef.current = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -82,17 +83,28 @@ const Contact = ({ slice }: ContactProps): JSX.Element => {
   }, [scrollHandler]);
 
   return (
-    <section className='h-screen overflow-hidden' ref={containerRef}>
+    <section
+      className='flex flex-col justify-center h-screen overflow-hidden pb-60 -mt-60'
+      ref={containerRef}
+    >
       <div
-        className='inline-flex font-medium tracking-tighter gap-x-20 text-purple/80'
+        className='inline-flex font-medium tracking-tighter gap-x-20 text-purple/80 lg:pt-20'
         ref={scrollingTextContainerRef}
       >
-        <div className='inline-flex whitespace-nowrap' ref={scrollingTextRef}>
-          <h1 className='text-[13vw]'>Talk to us.</h1>
-          <h1 className='text-[13vw]'>Talk to us.</h1>
-          <h1 className='text-[13vw]'>Talk to us.</h1>
-          <h1 className='text-[13vw]'>Talk to us.</h1>
+        <div
+          className={clsx(['inline-flex whitespace-nowrap gap-x-20', drukwide.className])}
+          ref={scrollingTextRef}
+        >
+          <h1 className='text-[9vw]'>Talk to us.</h1>
+          <h1 className='text-[9vw]'>Talk to us.</h1>
+          <h1 className='text-[9vw]'>Talk to us.</h1>
+          <h1 className='text-[9vw]'>Talk to us.</h1>
         </div>
+      </div>
+      <div className='w-full mx-auto lg:max-w-4xl'>
+        <button className='flex px-6 py-3 transition-colors border border-white rounded-full border-1 w-fit hover:text-black hover:bg-white'>
+          Get in touch
+        </button>
       </div>
     </section>
   );
