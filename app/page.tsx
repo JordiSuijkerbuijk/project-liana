@@ -31,7 +31,7 @@ export default async function Home() {
 
   return (
     <main className='relative flex flex-col items-center justify-between min-h-screen'>
-      <div className='relative z-10 w-full'>{SliceZone(data?.slices, components)}</div>
+      <div className='relative z-20 w-full'>{SliceZone(data?.slices, components)}</div>
       <OnScrollLine />
 
       <div className='fixed top-0 left-0 flex justify-around w-full h-0 lines-animation'>
