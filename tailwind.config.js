@@ -21,7 +21,15 @@ module.exports = {
       "background-shade": "#0e0e0e",
       "gradient-purple": "#c295d8",
       "gradient-pink": "#f1c6d3",
-      black: '#000000'
+      black: '#000000',
+      "menu": "#2c2c2c",
+      "menu-backdrop": "rgba(34, 34, 34, 0.8)",
+      "menu-inner": "#2c2c2c",
+      "menu-text": "#d3d3d3",
+      "accent": "var(--accent)",
+      "primary": "var(--primary)",
+      "color-text": "var(--color-text)",
+      "background": "var(--background)",
     },
     fontFamily: {
       "ppmori-regular": "ppmori-regular",

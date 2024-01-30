@@ -123,8 +123,8 @@ export default function OnLoadAnimation({ image1, image2, callback, className }:
             className='object-cover w-full h-screen'
           />
         </div>
-        <div className='absolute top-0 left-0 z-10 w-full h-0 bg-pink' ref={image1RevealRef} />
-        <div className='absolute top-0 left-0 z-10 w-full h-0 bg-pink' ref={image1RevealRef2} />
+        <div className='absolute top-0 left-0 z-10 w-full h-0 bg-primary' ref={image1RevealRef} />
+        <div className='absolute top-0 left-0 z-10 w-full h-0 bg-primary' ref={image1RevealRef2} />
       </div>
       <div className='relative z-20 w-1/2 h-screen overflow-hidden'>
         <div ref={image2Ref} className='absolute bottom-0 h-0 overflow-hidden'>
@@ -136,8 +136,14 @@ export default function OnLoadAnimation({ image1, image2, callback, className }:
             className='object-cover w-full h-screen'
           />
         </div>
-        <div className='absolute bottom-0 left-0 z-10 w-full h-0 bg-pink' ref={image2RevealRef} />
-        <div className='absolute bottom-0 left-0 z-10 w-full h-0 bg-pink' ref={image2RevealRef2} />
+        <div
+          className='absolute bottom-0 left-0 z-10 w-full h-0 bg-primary'
+          ref={image2RevealRef}
+        />
+        <div
+          className='absolute bottom-0 left-0 z-10 w-full h-0 bg-primary'
+          ref={image2RevealRef2}
+        />
       </div>
 
       <div className='absolute top-0 left-0 z-10 w-full h-full bg-background' />

@@ -88,7 +88,7 @@ const Contact = ({ slice }: ContactProps): JSX.Element => {
       ref={containerRef}
     >
       <div
-        className='inline-flex font-medium tracking-tighter gap-x-20 text-purple/80 lg:pt-20'
+        className='inline-flex font-medium tracking-tighter gap-x-20 text-accent lg:pt-20'
         ref={scrollingTextContainerRef}
       >
         <div

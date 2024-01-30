@@ -63,8 +63,8 @@ export default function OnScrollLine() {
         >
           <defs>
             <linearGradient id='linear' x1='0%' y1='0%' x2='100%' y2='0%'>
-              <stop offset='0%' stopColor='#c295d8' />
-              <stop offset='100%' stopColor='#f1c6d3' />
+              <stop offset='0%' stopColor='var(--accent)' />
+              <stop offset='100%' stopColor='var(--accent)' />
             </linearGradient>
           </defs>
           <path
