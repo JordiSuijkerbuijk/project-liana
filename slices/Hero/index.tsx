@@ -49,10 +49,10 @@ const Hero = (slice: Content.HeroSlice): JSX.Element => {
           className='z-20'
         />
       )}
-      <section className='flex w-full justify-center pt-44 pb-12'>
+      <section className='flex justify-center w-full pb-12 pt-44'>
         <div
           className={clsx([
-            'flex leading-none tracking-wide uppercase text-[15rem] overflow-hidden',
+            'flex leading-none uppercase text-accent text-[15rem] overflow-hidden',
             drukwide.className,
           ])}
           ref={textRef}

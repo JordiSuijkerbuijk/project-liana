@@ -5,6 +5,7 @@ import type * as prismic from "@prismicio/client";
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
 type HomeDocumentDataSlicesSlice =
+  | ContactSlice
   | ProjectsSlice
   | HeroSlice
   | VideoSliceSlice
@@ -34,8 +35,7 @@ interface HomeDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#slices
    */
-  slices: prismic.SliceZone<HomeDocumentDataSlicesSlice>
-  /**
+  slices: prismic.SliceZone<HomeDocumentDataSlicesSlice> /**
    * Meta Description field in *Home*
    *
    * - **Field Type**: Rich Text
@@ -147,6 +147,51 @@ export type ProjectsDocument<Lang extends string = string> =
   >;
 
 export type AllDocumentTypes = HomeDocument | ProjectsDocument;
+
+/**
+ * Primary content in *Contact → Primary*
+ */
+export interface ContactSliceDefaultPrimary {
+  /**
+   * Scrolling text field in *Contact → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: contact.primary.scrolling_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  scrolling_text: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for Contact Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ContactSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ContactSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Contact*
+ */
+type ContactSliceVariation = ContactSliceDefault;
+
+/**
+ * Contact Shared Slice
+ *
+ * - **API ID**: `contact`
+ * - **Description**: Contact
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ContactSlice = prismic.SharedSlice<
+  "contact",
+  ContactSliceVariation
+>;
 
 /**
  * Primary content in *Hero → Primary*
@@ -399,7 +444,7 @@ declare module "@prismicio/client" {
   interface CreateClient {
     (
       repositoryNameOrEndpoint: string,
-      options?: prismic.ClientConfig
+      options?: prismic.ClientConfig,
     ): prismic.Client<AllDocumentTypes>;
   }
 
@@ -411,13 +456,21 @@ declare module "@prismicio/client" {
       ProjectsDocument,
       ProjectsDocumentData,
       AllDocumentTypes,
+      ContactSlice,
+      ContactSliceDefaultPrimary,
+      ContactSliceVariation,
+      ContactSliceDefault,
       HeroSlice,
+      HeroSliceDefaultPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
       HighlightedTextSlice,
+      HighlightedTextSliceDefaultPrimary,
       HighlightedTextSliceVariation,
       HighlightedTextSliceDefault,
       ProjectsSlice,
+      ProjectsSliceDefaultPrimary,
+      ProjectsSliceDefaultItem,
       ProjectsSliceVariation,
       ProjectsSliceDefault,
       VideoSliceSlice,

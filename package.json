@@ -22,7 +22,7 @@
     "clsx": "^2.0.0",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
-    "geist": "^1.2.0",
+    "geist": "^1.2.1",
     "next": "13.4.5",
     "postcss": "8.4.23",
     "react": "18.2.0",

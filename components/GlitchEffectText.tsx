@@ -1,14 +1,14 @@
-"use client";
-import { iconsMap } from "@/components/Icon/Icon";
-import createGlitchHover from "@/helpers/createGlitchHover";
-import { AnimeTimelineInstance } from "animejs";
-import Link from "next/link";
-import { useEffect, useRef } from "react";
-import DisappearingArrow from "./DisappearingArrow";
+'use client';
+import { iconsMap } from '@/components/Icon/Icon';
+import { AnimeTimelineInstance } from 'animejs';
+import clsx from 'clsx';
+import Link from 'next/link';
+import { useRef } from 'react';
+import DisappearingArrow from './DisappearingArrow';
 
 export default function GlitchEffectText({
   text,
-  link = "",
+  link = '',
   iconType,
   iconClass,
 }: {
@@ -19,28 +19,28 @@ export default function GlitchEffectText({
 }) {
   const wrapper = useRef<HTMLSpanElement>(null);
   const timeline = useRef<AnimeTimelineInstance | null>(null);
-  const splitText = text.split("");
+  const splitText = text.split('');
 
-  useEffect(() => {
-    if (!wrapper?.current?.children) return;
-    timeline.current = createGlitchHover(wrapper.current);
-  }, []);
+  // useEffect(() => {
+  //   if (!wrapper?.current?.children) return;
+  //   timeline.current = createGlitchHover(wrapper.current);
+  // }, []);
 
-  function animateLetters() {
-    if (
-      !timeline?.current ||
-      !(timeline?.current.progress === 0 || timeline?.current?.progress === 100)
-    )
-      return;
-    timeline.current.play();
-  }
+  // function animateLetters() {
+  //   if (
+  //     !timeline?.current ||
+  //     !(timeline?.current.progress === 0 || timeline?.current?.progress === 100)
+  //   )
+  //     return;
+  //   timeline.current.play();
+  // }
 
   if (!Array.isArray(splitText) || splitText.length === 0) return null;
   return (
     <Link
       href={link}
-      className="relative inline-flex items-center w-full gap-x-2 text-body group leading-none group"
-      onMouseEnter={animateLetters}
+      className='relative inline-flex items-center w-full text-xs leading-none tracking-wide gap-x-2 group'
+      // onMouseEnter={animateLetters}
     >
       {/* {iconType && (
         <Icon
@@ -50,16 +50,13 @@ export default function GlitchEffectText({
       )} */}
       <span ref={wrapper}>
         {splitText.map((letter, i) => (
-          <span
-            key={`glitch-effect-text-${text}-${i}`}
-            data-original={`${letter}`}
-          >
+          <span key={`glitch-effect-text-${text}-${i}`} data-original={`${letter}`}>
             {letter}
           </span>
         ))}
       </span>
-      <span className="ml-auto">
-        <DisappearingArrow arrowClass="fill-white" />
+      <span className='ml-auto'>
+        <DisappearingArrow arrowClass={clsx(['h-4', iconClass])} />
       </span>
     </Link>
   );

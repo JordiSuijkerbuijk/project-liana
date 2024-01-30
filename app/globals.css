@@ -3,8 +3,6 @@
 @tailwind utilities;
 
 :root {
-  --background-color: #1c1c1c;
-
   --heading-1: 3rem;
   --heading-1-line-height: 3.5rem;
   --heading-2: 2.5rem;
@@ -21,6 +19,40 @@
 
   --small-body-text: 0.875rem;
   --small-body-text-line-height: 1.75;
+
+  /* random color change */
+  --background: #1c1c1c;
+  --accent: #ffffff;
+  --primary: #f1c6d3;
+  --color-text: #ffffff;
+}
+
+body.red {
+  --background: #c5cfba;
+  --accent: #f16d50;
+  --primary: #f16d50;
+  --color-text: #6d7567;
+}
+
+body.dark {
+  --background: #101010;
+  --accent: #cdc9b9;
+  --primary: #cdc9b9;
+  --color-text: #797872;
+}
+
+body.grey {
+  --background: #999d9c;
+  --accent: #cdc9b9;
+  --primary: #cdc9b9;
+  --color-text: #797872;
+}
+
+body.navy {
+  --background: #2a2c29;
+  --accent: #5d6c6a;
+  --primary: #5d6c6a;
+  --color-text: #a7a597;
 }
 
 @media only screen and (min-width: 768px) {
@@ -53,15 +85,10 @@
   }
 }
 
-h1 {
-  /* color: #c295d8; */
-  font-family: "drukwide";
-}
-
 body {
-  background-color: var(--background-color);
+  background-color: var(--background);
   transition: 0.6s ease-in-out;
-  color: #ffffff;
+  color: var(--color-text);
 }
 
 .lineAnimation path {
@@ -92,4 +119,17 @@ body.loaded .video-animation {
   transition: all 1s;
   opacity: 100;
   transform: translateY(0px);
+}
+
+.navbar-dots {
+  background-image: linear-gradient(to bottom, #7a7a7a 0 10%, rgba(255, 255, 255, 0) 10%);
+  background-position: left top;
+  background-repeat: repeat-y;
+  background-size: 1px 8px;
+}
+
+.navbar-selected {
+  background-image: linear-gradient(to bottom, #fff 0 10%, rgb(255, 255, 255) 100%);
+    background-position: left top;
+    background-size: 1px 8px;
 }

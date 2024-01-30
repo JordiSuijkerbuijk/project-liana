@@ -1,8 +1,7 @@
 'use client';
 
 import Container from '@/components/Container';
-import { Content } from '@prismicio/client';
-import { asText } from '@prismicio/client/richtext';
+import { Content, asText } from '@prismicio/client';
 import { SliceComponentProps } from '@prismicio/react';
 import anime, { AnimeTimelineInstance } from 'animejs';
 import { useCallback, useEffect, useRef } from 'react';
@@ -69,10 +68,9 @@ const HighlightedText = (slice: Content.HighlightedTextSlice): JSX.Element => {
     };
   }, [containerRef, scrollHandler]);
 
-  console.log('description', description);
   return (
-    <section ref={containerRef} className='py-40'>
-      <Container className='flex lg:max-w-4xl lg:text-4xl'>
+    <section ref={containerRef} className='py-60'>
+      <Container className='flex lg:max-w-4xl lg:text-[3rem]'>
         <div ref={textRef} className='flex flex-wrap gap-x-2'>
           {splitDescription.map((item, key) => (
             <span key={key}>{item}</span>

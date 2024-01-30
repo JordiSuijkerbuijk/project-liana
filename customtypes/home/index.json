@@ -8,17 +8,31 @@
     "Main": {
       "title": {
         "type": "Text",
-        "config": { "label": "Title", "placeholder": "" }
+        "config": {
+          "label": "Title",
+          "placeholder": ""
+        }
       },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
-            "projects": { "type": "SharedSlice" },
-            "hero": { "type": "SharedSlice" },
-            "video_slice": { "type": "SharedSlice" },
-            "highlighted_text": { "type": "SharedSlice" }
+            "contact": {
+              "type": "SharedSlice"
+            },
+            "projects": {
+              "type": "SharedSlice"
+            },
+            "hero": {
+              "type": "SharedSlice"
+            },
+            "video_slice": {
+              "type": "SharedSlice"
+            },
+            "highlighted_text": {
+              "type": "SharedSlice"
+            }
           }
         }
       }
@@ -33,7 +47,10 @@
       },
       "meta_image": {
         "config": {
-          "constraint": { "height": 1260, "width": 2400 },
+          "constraint": {
+            "height": 1260,
+            "width": 2400
+          },
           "label": "Meta Image",
           "thumbnails": []
         },
