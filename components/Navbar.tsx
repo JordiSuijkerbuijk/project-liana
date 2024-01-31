@@ -1,6 +1,5 @@
 'use client';
 
-import Container from '@/components/Container';
 import anime from 'animejs';
 import clsx from 'clsx';
 import localFont from 'next/font/local';
@@ -73,7 +72,7 @@ export default function NavBar() {
 
   return (
     <div className='fixed z-20 w-auto mx-auto -translate-x-1/2 left-1/2 top-6 bg-menu-backdrop clip-rounded'>
-      <Container className='flex justify-center'>
+      <div className='flex justify-center'>
         <div className='relative flex flex-col px-1 pt-1 gap-y-1 w-60' ref={barRef}>
           {/* Outer items */}
           <div className='relative flex items-center justify-between w-full px-3 py-2 gap-x-4 bg-menu rounded-xl'>
@@ -105,16 +104,16 @@ export default function NavBar() {
                   return (
                     <li
                       key={item.link}
-                      className='relative transition-all group text-menu-text hover:text-pink'
+                      className='relative transition-all group text-menu-text hover:text-primary'
                     >
                       <GlitchEffectText
                         text={item.label}
                         link={item.link}
                         iconType={item.iconType}
-                        iconClass={'fill-menu-text group-hover:fill-pink'}
+                        iconClass={'fill-menu-text group-hover:fill-primary'}
                       />
 
-                      <div className='absolute top-0 left-0 w-px h-full transition-opacity duration-150 -translate-x-4 opacity-0 bg-pink group-hover:opacity-100' />
+                      <div className='absolute top-0 left-0 w-px h-full transition-opacity duration-150 -translate-x-4 opacity-0 bg-primary group-hover:opacity-100' />
                     </li>
                   );
                 })}
@@ -122,7 +121,7 @@ export default function NavBar() {
             </nav>
           </div>
         </div>
-      </Container>
+      </div>
     </div>
   );
 }

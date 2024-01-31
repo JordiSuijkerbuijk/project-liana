@@ -4,7 +4,6 @@ import { Content } from '@prismicio/client';
 import { SliceComponentProps } from '@prismicio/react';
 import { useEffect, useRef, useState } from 'react';
 
-import OnLoadAnimation from '@/components/OnLoadAnimation';
 import anime from 'animejs';
 import clsx from 'clsx';
 import localFont from 'next/font/local';
@@ -24,7 +23,7 @@ const drukwide = localFont({
  * Component for "Hero" Slices.
  */
 const Hero = (slice: Content.HeroSlice): JSX.Element => {
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
   const textRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -41,14 +40,7 @@ const Hero = (slice: Content.HeroSlice): JSX.Element => {
 
   return (
     <>
-      {!loaded && slice?.primary?.left_image && slice?.primary?.right_image && (
-        <OnLoadAnimation
-          image1={slice.primary.left_image}
-          image2={slice.primary.right_image}
-          callback={setLoaded}
-          className='z-20'
-        />
-      )}
+      {/* {!loaded && <OnLoadAnimation callback={setLoaded} className='z-20' />} */}
       <section className='flex justify-center w-full pb-12 pt-44'>
         <div
           className={clsx([
