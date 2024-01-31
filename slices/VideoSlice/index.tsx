@@ -17,7 +17,7 @@ export type VideoSliceProps = SliceComponentProps<Content.VideoSliceSlice>;
  * Component for "VideoSlice" Slices.
  */
 // const VideoSlice = ({ slice }: VideoSliceProps): JSX.Element => {
-const VideoSlice = (): JSX.Element => {
+const VideoSlice = ({ slice }: VideoSliceProps): JSX.Element => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const titleWrapper = useRef<HTMLHeadingElement>(null);
@@ -99,7 +99,7 @@ const VideoSlice = (): JSX.Element => {
     },
     {
       startTracking: 'top',
-      stopTracking: 'top'
+      stopTracking: 'top',
     }
   );
 

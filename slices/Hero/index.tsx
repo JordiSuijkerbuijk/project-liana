@@ -22,7 +22,7 @@ const drukwide = localFont({
 /**
  * Component for "Hero" Slices.
  */
-const Hero = (slice: Content.HeroSlice): JSX.Element => {
+const Hero = ({ slice }: HeroProps): JSX.Element => {
   const [loaded, setLoaded] = useState(true);
   const textRef = useRef<HTMLDivElement | null>(null);
 

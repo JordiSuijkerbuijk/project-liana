@@ -14,7 +14,7 @@ export type HighlightedTextProps = SliceComponentProps<Content.HighlightedTextSl
 /**
  * Component for "HighlightedText" Slices.
  */
-const HighlightedText = (slice: Content.HighlightedTextSlice): JSX.Element => {
+const HighlightedText = ({ slice }: HighlightedTextProps): JSX.Element => {
   const textRef = useRef<HTMLDivElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const timelineRef = useRef<AnimeTimelineInstance | null>(null);
