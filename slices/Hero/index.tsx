@@ -44,7 +44,7 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
       <section className='flex justify-center w-full pb-12 pt-44'>
         <div
           className={clsx([
-            'flex leading-none uppercase text-accent text-[15rem] overflow-hidden',
+            'flex leading-none uppercase text-accent text-[20vw] overflow-hidden',
             drukwide.className,
           ])}
           ref={textRef}
