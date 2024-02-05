@@ -48,14 +48,14 @@ export default function ProjectsSliceItem({
       </div>
       <div
         className={clsx(
-          'absolute z-10 w-full',
+          'absolute z-20 w-full',
           isFirstItem && 'h-200vh top-0',
           isMiddleItem && 'h-300vh -top-100vh',
           isLastItem && 'h-200vh -top-100vh'
         )}
       >
         <Container className='sticky top-0 z-10 flex flex-col justify-center h-100vh gap-y-10 md:flex-row md:justify-between md:items-center'>
-          <div className='flex flex-col lg:gap-y-4'>
+          <div className='flex flex-col text-white lg:gap-y-4'>
             <h2 className='font-bold text-heading-1'>{title}</h2>
             <span>{subtitle}</span>
           </div>
@@ -68,6 +68,8 @@ export default function ProjectsSliceItem({
           </div>
         </Container>
       </div>
+
+      <div className='absolute top-0 left-0 z-10 w-full h-full bg-black opacity-40' />
     </div>
   );
 }

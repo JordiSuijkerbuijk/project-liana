@@ -17,8 +17,8 @@ export default async function Home() {
         <div className='w-0.5 h-full bg-color-text opacity-20' />
         <div className='w-0.5 h-full bg-color-text opacity-20' />
         <div className='w-0.5 h-full bg-color-text opacity-20' />
-        <div className='w-0.5 h-full bg-color-text opacity-20' />
-        <div className='w-0.5 h-full bg-color-text opacity-20' />
+        <div className='w-0.5 h-full bg-color-text opacity-20 hidden lg:block' />
+        <div className='w-0.5 h-full bg-color-text opacity-20 hidden lg:block' />
       </div>
     </main>
   );

@@ -70,7 +70,7 @@ const HighlightedText = ({ slice }: HighlightedTextProps): JSX.Element => {
 
   return (
     <section ref={containerRef} className='py-60'>
-      <Container className='flex lg:max-w-4xl lg:text-[3rem]'>
+      <Container className='flex lg:max-w-5xl text-[6vw] lg:text-[3vw]'>
         <div ref={textRef} className='flex flex-wrap gap-x-2'>
           {splitDescription.map((item, key) => (
             <span key={key}>{item}</span>

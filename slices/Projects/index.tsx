@@ -58,6 +58,8 @@ export default function Projects({ slice }: ProjectProps): JSX.Element {
           />
         );
       })}
+      {/* Setting empty 100vh div to make sure contact slice doesn't overlap with the projects slice */}
+      <div className='w-full h-screen' />
     </section>
   );
 }
