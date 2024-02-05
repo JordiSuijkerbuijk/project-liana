@@ -83,7 +83,7 @@ const Contact = ({ slice }: ContactProps): JSX.Element => {
   }, [scrollHandler]);
 
   return (
-    <section className='flex flex-col justify-center h-screen overflow-hidden' ref={containerRef}>
+    <section className='flex flex-col h-screen pt-32 overflow-hidden' ref={containerRef}>
       <div
         className='inline-flex font-medium tracking-tighter gap-x-20 text-accent lg:pt-20'
         ref={scrollingTextContainerRef}

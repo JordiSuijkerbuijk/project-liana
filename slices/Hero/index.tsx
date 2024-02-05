@@ -34,9 +34,12 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
         delay: anime.stagger(75),
         easing: 'easeInOutQuad',
         duration: 500,
+        begin: () => {
+          document.querySelector('body')?.classList.add('loaded');
+        },
       });
     }
-  }, [loaded]);
+  }, []);
 
   return (
     <>

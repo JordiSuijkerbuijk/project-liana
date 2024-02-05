@@ -23,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='en'>
       <LenisInstantiator>
-        <body className={clsx([colors[randomNumber], GeistSans.className, 'loaded'])}>
+        <body className={clsx([colors[randomNumber], GeistSans.className])}>
           <Navbar />
           {children}
         </body>
