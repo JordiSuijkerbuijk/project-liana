@@ -17,7 +17,7 @@ export type VideoSliceProps = SliceComponentProps<Content.VideoSliceSlice>;
  * Component for "VideoSlice" Slices.
  */
 // const VideoSlice = ({ slice }: VideoSliceProps): JSX.Element => {
-const VideoSlice = (): JSX.Element => {
+const VideoSlice = ({ slice }: VideoSliceProps): JSX.Element => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const titleWrapper = useRef<HTMLHeadingElement>(null);
@@ -98,13 +98,13 @@ const VideoSlice = (): JSX.Element => {
       playScrollBasedAnimation(progress, timelineRef.current);
     },
     {
-      top: false,
-      bottom: false,
+      startTracking: 'top',
+      stopTracking: 'top',
     }
   );
 
   return (
-    <section className='flex flex-col w-full py-24'>
+    <section className='flex flex-col w-full py-24 translate-y-4 opacity-0 video-animation'>
       <div ref={sectionContainer as RefObject<HTMLDivElement>}>
         <Container className='flex justify-center pt-12 pb-8 overflow-hidden lg:pb-12 lg:pt-24'>
           <h2

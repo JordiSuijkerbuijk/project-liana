@@ -1,0 +1,14 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"scrolling_text": {
+				"__TYPE__": "FieldContent",
+				"value": "rose",
+				"type": "Text"
+			}
+		},
+		"items": []
+	}
+]

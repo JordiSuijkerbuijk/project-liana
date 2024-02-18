@@ -1,6 +1,8 @@
 import FontResizer from "@/components/FontSizeResizer";
 import LenisInstantiator from "@/components/LenisInstantiator";
 import Navbar from "@/components/Navbar";
+import clsx from "clsx";
+import { GeistSans } from "geist/font/sans";
 import { League_Spartan } from "next/font/google";
 import "./globals.css";
 
@@ -19,11 +21,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const colors = ["default", "red", "dark", "grey", "navy"];
+
+  const randomNumber = Math.floor(Math.random() * colors.length);
+
   return (
     <html lang="en">
       <LenisInstantiator>
-        <FontResizer />
-        <body className={leagueSpartan.className}>
+        <body className={clsx([colors[randomNumber], GeistSans.className])}>
+          <FontResizer />
           <Navbar />
           {children}
         </body>

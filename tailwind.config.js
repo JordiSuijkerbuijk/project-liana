@@ -6,6 +6,7 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./slices/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: ["bg-purple", "text-2xl"],
   theme: {
     colors: {
       purple: "#c295d8",
@@ -20,12 +21,24 @@ module.exports = {
       "background-shade": "#0e0e0e",
       "gradient-purple": "#c295d8",
       "gradient-pink": "#f1c6d3",
+      black: "#000000",
+      menu: "#2c2c2c",
+      "menu-backdrop": "rgba(34, 34, 34, 0.8)",
+      "menu-inner": "#2c2c2c",
+      "menu-text": "#d3d3d3",
+      accent: "var(--accent)",
+      primary: "var(--primary)",
+      "color-text": "var(--color-text)",
+      background: "var(--background)",
     },
     fontFamily: {
       "ppmori-regular": "ppmori-regular",
       drukwide: "drukwide",
     },
     extend: {
+      aspectRatio: {
+        "1/1.25": "1 / 1.25",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -49,6 +62,9 @@ module.exports = {
       },
       spacing: {
         px: "0.0625rem",
+        "100vh": "100vh",
+        "200vh": "200vh",
+        "300vh": "300vh",
       },
       transitionTimingFunction: {
         "custom-ease-in": "cubic-bezier(.12,0,.66,.04)",
