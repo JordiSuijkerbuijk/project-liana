@@ -1,4 +1,3 @@
-import Container from '@/components/Container';
 import clsx from 'clsx';
 import localFont from 'next/font/local';
 
@@ -12,7 +11,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   return (
     <div className='sticky z-20 -top-20 bg-menu-inner text-white/40'>
-      <Container className='flex flex-col'>
+      <div className='flex flex-col px-8'>
         <div
           className={clsx([
             'flex leading-none uppercase text-[12vw] overflow-hidden py-12',
@@ -26,7 +25,7 @@ export default function Footer() {
           <span>Liana © {currentYear}</span>
           <a href='mailto:info@liana.com'>info@liana.com</a>
         </div>
-      </Container>
+      </div>
     </div>
   );
 }
