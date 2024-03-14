@@ -45,7 +45,7 @@ body.grey {
   --background: #999d9c;
   --accent: #cdc9b9;
   --primary: #cdc9b9;
-  --color-text: #797872;
+  --color-text: #474741;
 }
 
 body.navy {
@@ -87,7 +87,6 @@ body.navy {
 
 body {
   background-color: var(--background);
-  transition: 0.6s ease-in-out;
   color: var(--color-text);
 }
 
