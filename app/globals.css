@@ -23,7 +23,7 @@
   /* random color change */
   --background: #1c1c1c;
   --accent: #ffffff;
-  --primary: #f1c6d3;
+  --primary: #ffffff;
   --color-text: #ffffff;
 }
 
@@ -81,7 +81,7 @@ body.navy {
 
 @media (prefers-reduced-motion: no-preference) {
   .clip-path-video-element {
-    clip-path: inset(0% 7.5% 0% 7.5%);
+    clip-path: inset(0% 7.5% 0% 7.5% round 1rem);
   }
 }
 

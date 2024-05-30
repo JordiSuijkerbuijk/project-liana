@@ -79,7 +79,7 @@ const VideoSlice = ({ slice }: VideoSliceProps): JSX.Element => {
       .add(
         {
           targets: videoContainerRef.current,
-          clipPath: ['inset(0% 7.5% 0% 7.5%)', 'inset(0% 0% 0% 0%)'],
+          clipPath: ['inset(0% 7.5% 0% 7.5% round 1rem)', 'inset(0% 0% 0% 0% round 0rem)'],
         },
         0
       )

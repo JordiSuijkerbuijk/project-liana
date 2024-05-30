@@ -104,7 +104,7 @@ const Contact = ({ slice }: ContactProps): JSX.Element => {
           We believe close collaboration is the key to creating exceptional products. If you do too,
           we’d love to hear from you.
         </p>
-        <button className='flex px-6 py-3 transition-colors border rounded-full border-text border-1 w-fit bg-background hover:border-white hover:text-black hover:bg-white'>
+        <button className='flex px-6 py-3 transition-colors border rounded-xl border-text border-1 w-fit bg-background hover:border-white hover:text-black hover:bg-white'>
           Get in touch
         </button>
       </Container>

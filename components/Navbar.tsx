@@ -5,7 +5,8 @@ import clsx from 'clsx';
 import localFont from 'next/font/local';
 import Link from 'next/link';
 
-import { useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import ReactFocusLock from 'react-focus-lock';
 import GlitchEffectText from './GlitchEffectText';
 
 const drukwide = localFont({
@@ -36,8 +37,9 @@ export default function NavBar() {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
   const hamburgerContentContainer = useRef<HTMLDivElement>(null);
+  const navbarContainerRef = useRef<HTMLDivElement | null>(null);
 
-  function handleBurgerClick() {
+  const handleBurgerClick = useCallback(() => {
     const tl = anime.timeline({
       easing: 'easeInOutCubic',
       duration: 400,
@@ -68,10 +70,33 @@ export default function NavBar() {
     }
     tl.play();
     setMenuIsOpen(!menuIsOpen);
-  }
+  }, [menuIsOpen]);
+
+  useEffect(() => {
+    if (!menuIsOpen) return;
+
+    const handleClosingMenu = (event: Event) => {
+      if (!navbarContainerRef.current?.contains(event.target) || event.key === 'Escape') {
+        console.log('outside click');
+        handleBurgerClick();
+      }
+    };
+
+    window.addEventListener('mousedown', handleClosingMenu);
+    window.addEventListener('keydown', handleClosingMenu);
+
+    return () => {
+      window.removeEventListener('mousedown', handleClosingMenu);
+      window.addEventListener('keydown', handleClosingMenu);
+    };
+  }, [navbarContainerRef, menuIsOpen, handleBurgerClick]);
 
   return (
-    <div className='fixed z-20 w-auto mx-auto -translate-x-1/2 left-1/2 top-6 bg-menu-backdrop clip-rounded'>
+    <ReactFocusLock
+      disabled={!menuIsOpen}
+      className='fixed z-20 w-auto mx-auto -translate-x-1/2 left-1/2 top-6 bg-menu-backdrop clip-rounded'
+      ref={navbarContainerRef}
+    >
       <div className='flex justify-center'>
         <div className='relative flex flex-col px-1 pt-1 gap-y-1 w-60' ref={barRef}>
           {/* Outer items */}
@@ -84,7 +109,7 @@ export default function NavBar() {
               Liana
             </Link>
             <button
-              className='flex flex-col items-center justify-center w-8 h-8 gap-y-1 clip-rounded'
+              className='flex flex-col items-center justify-center w-8 h-8 gap-y-1'
               aria-label={`${menuIsOpen ? 'Close' : 'Open'} menu`}
               onClick={handleBurgerClick}
             >
@@ -122,6 +147,6 @@ export default function NavBar() {
           </div>
         </div>
       </div>
-    </div>
+    </ReactFocusLock>
   );
 }
