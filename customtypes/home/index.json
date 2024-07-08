@@ -18,13 +18,13 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "hero": {
+              "type": "SharedSlice"
+            },
             "contact": {
               "type": "SharedSlice"
             },
             "projects": {
-              "type": "SharedSlice"
-            },
-            "hero": {
               "type": "SharedSlice"
             },
             "video_slice": {

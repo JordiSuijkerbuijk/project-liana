@@ -3,23 +3,21 @@
 import Container from '@/components/Container';
 import playScrollBasedAnimation from '@/helpers/playScrollBasedAnimation';
 import { useScroll } from '@/helpers/useScroll';
-import { Content } from '@prismicio/client';
-import { SliceComponentProps } from '@prismicio/react';
+import { EmbedField } from '@prismicio/types';
 import anime, { AnimeTimelineInstance } from 'animejs';
 import { RefObject, useCallback, useEffect, useRef } from 'react';
 
-/**
- * Props for `VideoSlice`.
- */
-export type VideoSliceProps = SliceComponentProps<Content.VideoSliceSlice>;
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 
-/**
- * Component for "VideoSlice" Slices.
- */
-// const VideoSlice = ({ slice }: VideoSliceProps): JSX.Element => {
-const VideoSlice = ({ slice }: VideoSliceProps): JSX.Element => {
+export type VideoSliceProps = {
+  title?: string;
+  youtube?: EmbedField;
+  youtubeId?: string;
+};
+
+export default function VideoSlice({ title, youtubeId, youtube }: VideoSliceProps): JSX.Element {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const videoContainerRef = useRef<HTMLDivElement>(null);
+  const videoContainerRef = useRef<HTMLIFrameElement>(null);
   const titleWrapper = useRef<HTMLHeadingElement>(null);
 
   const timelineRef = useRef<AnimeTimelineInstance | null>(null);
@@ -103,6 +101,8 @@ const VideoSlice = ({ slice }: VideoSliceProps): JSX.Element => {
     }
   );
 
+  const splitTitle = title?.split(' ');
+
   return (
     <section className='flex flex-col w-full py-24 translate-y-4 opacity-0 video-animation'>
       <div ref={sectionContainer as RefObject<HTMLDivElement>}>
@@ -112,36 +112,38 @@ const VideoSlice = ({ slice }: VideoSliceProps): JSX.Element => {
             ref={titleWrapper}
           >
             <span>
-              <span className='px-3 word'>Create</span>
-              <span className='px-3 word'>stunning</span>
-              <span className='px-3 word'>websites</span>
+              {splitTitle?.slice(0, splitTitle?.length / 2).map((item, key) => (
+                <span className='px-3 word' key={`0-${item}-${key}`}>
+                  {item}
+                </span>
+              ))}
             </span>
             <span>
-              <span className='px-3 word'>with</span>
-              <span className='px-3 word'>Liana</span>
+              {splitTitle?.slice(splitTitle?.length / 2, splitTitle?.length).map((item, key) => (
+                <span className='px-3 word' key={`1-${item}-${key}`}>
+                  {item}
+                </span>
+              ))}
             </span>
           </h2>
         </Container>
       </div>
-      <div
-        className='relative w-full h-screen overflow-hidden clip-path-video-element'
-        ref={videoContainerRef}
-      >
-        <video
-          muted
-          disablePictureInPicture
-          disableRemotePlayback
-          loop
-          playsInline
-          autoPlay
-          className='absolute inset-0 object-cover w-full h-full'
-          ref={videoRef}
+      {youtubeId && youtube?.title && (
+        <div
+          ref={videoContainerRef}
+          className='relative w-full h-screen overflow-hidden clip-path-video-element'
         >
-          <source src='https://terrazabalear.com/wp-content/uploads/2023/03/terraza_balear-awakening_senses_-_loop-1.mp4-1080p-1.mp4' />
-        </video>
-      </div>
+          <LiteYouTubeEmbed
+            params='start=0&controls=0&disablekb=1&autoplay=0&loop=1&muted=1'
+            id={youtubeId}
+            title={youtube?.title}
+            wrapperClass='absolute inset-0 w-full h-full'
+            iframeClass='absolute top-0 left-0 bg-cover bg-center w-full h-full'
+            poster='maxresdefault'
+            muted
+          />
+        </div>
+      )}
     </section>
   );
-};
-
-export default VideoSlice;
+}

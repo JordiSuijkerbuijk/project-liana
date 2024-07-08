@@ -1,8 +1,9 @@
 import clsx from 'clsx';
 import localFont from 'next/font/local';
 
+// If loading a variable font, you don't need to specify the font weight
 const drukwide = localFont({
-  src: '../public/fonts/DrukWide/Druk-Wide-Bold.ttf',
+  src: '../../public/fonts/DrukWide/Druk-Wide-Bold.ttf',
   variable: '--font-drukwide',
   display: 'swap',
 });

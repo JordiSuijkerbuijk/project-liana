@@ -1,17 +1,10 @@
 'use client';
 
-import { Content } from '@prismicio/client';
-import { SliceComponentProps } from '@prismicio/react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import anime from 'animejs';
 import clsx from 'clsx';
 import localFont from 'next/font/local';
-
-/**
- * Props for `Hero`.
- */
-export type HeroProps = SliceComponentProps<Content.HeroSlice>;
 
 const drukwide = localFont({
   src: '../../public/fonts/DrukWide/Druk-Wide-Bold.ttf',
@@ -19,15 +12,15 @@ const drukwide = localFont({
   display: 'swap',
 });
 
-/**
- * Component for "Hero" Slices.
- */
-const Hero = ({ slice }: HeroProps): JSX.Element => {
-  const [loaded, setLoaded] = useState(true);
+export type HeroSliceProps = {
+  title?: string;
+};
+
+export default function HeroSlice({ title }: HeroSliceProps): JSX.Element {
   const textRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (textRef?.current && loaded) {
+    if (textRef?.current) {
       anime({
         targets: textRef.current.children,
         translateY: ['100%', 0],
@@ -43,7 +36,6 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
 
   return (
     <>
-      {/* {!loaded && <OnLoadAnimation callback={setLoaded} className='z-20' />} */}
       <section className='flex justify-center w-full pb-12 pt-44'>
         <div
           className={clsx([
@@ -52,15 +44,14 @@ const Hero = ({ slice }: HeroProps): JSX.Element => {
           ])}
           ref={textRef}
         >
-          <h2 className='translate-y-full'>L</h2>
-          <h2 className='translate-y-full'>I</h2>
-          <h2 className='translate-y-full'>A</h2>
-          <h2 className='translate-y-full'>N</h2>
-          <h2 className='translate-y-full'>A</h2>
+          {title &&
+            title.split('')?.map((item, key) => (
+              <h2 key={`home-hero-${key}`} className='translate-y-full'>
+                {item}
+              </h2>
+            ))}
         </div>
       </section>
     </>
   );
-};
-
-export default Hero;
+}

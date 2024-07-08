@@ -10,7 +10,7 @@ import ReactFocusLock from 'react-focus-lock';
 import GlitchEffectText from './GlitchEffectText';
 
 const drukwide = localFont({
-  src: '../public/fonts/DrukWide/Druk-Wide-Bold.ttf',
+  src: '../../public/fonts/DrukWide/Druk-Wide-Bold.ttf',
   variable: '--font-drukwide',
   display: 'swap',
 });
@@ -75,9 +75,12 @@ export default function NavBar() {
   useEffect(() => {
     if (!menuIsOpen) return;
 
-    const handleClosingMenu = (event: Event) => {
-      if (!navbarContainerRef.current?.contains(event.target) || event.key === 'Escape') {
-        console.log('outside click');
+    const handleClosingMenu = (event: KeyboardEvent | MouseEvent) => {
+      if (
+        (event?.target instanceof Element &&
+          !navbarContainerRef.current?.contains(event?.target)) ||
+        ('key' in event && event?.key === 'Escape')
+      ) {
         handleBurgerClick();
       }
     };

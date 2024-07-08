@@ -3,6 +3,7 @@
 import Container from '@/components/Container';
 import useParallax from '@/helpers/useParallax';
 import clsx from 'clsx';
+import Image from 'next/image';
 import { RefObject, useRef } from 'react';
 
 interface Props {
@@ -35,6 +36,8 @@ export default function ProjectsSliceItem({
 
   if (!image || !title) return null;
 
+  console.log('image', image);
+
   return (
     <div
       className={clsx('relative -mb-100vh [contain:paint]', isLastItem ? 'h-screen' : 'h-200vh')}
@@ -42,7 +45,7 @@ export default function ProjectsSliceItem({
     >
       <div className='sticky top-0 w-full h-screen'>
         <div className='absolute inset-0 object-cover w-full h-full scale-125'>
-          <img src={image} alt='' className='object-cover w-full h-full' ref={imageRef} />
+          <Image src={image} alt='' className='object-cover w-full h-full' ref={imageRef} />
         </div>
         <div className='absolute inset-0 z-10 w-full h-full bg-background/20' />
       </div>
@@ -60,7 +63,7 @@ export default function ProjectsSliceItem({
             <span>{subtitle}</span>
           </div>
           <div className='w-full md:w-2/4 md:min-w-[50%] lg:w-1/4 lg:min-w-[25%] max-h-[80vh]'>
-            <img
+            <Image
               src={image2}
               alt=''
               className='aspect-[1/0.5] object-cover w-full h-full rounded-xl lg:aspect-1/1.25'

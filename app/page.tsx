@@ -1,6 +1,6 @@
 import { getClient } from '@/helpers/getClient';
-import { components } from '@/slices';
 import { SliceZone } from '@prismicio/react';
+import { components } from './prismic/slices';
 
 export default async function Home() {
   const client = getClient();
@@ -11,7 +11,6 @@ export default async function Home() {
       <div className='relative z-20 w-full'>
         <SliceZone slices={data?.data?.slices} components={components} />
       </div>
-      {/* <OnScrollLine /> */}
 
       <div className='fixed top-0 left-0 flex justify-around w-full h-0 lines-animation'>
         <div className='w-0.5 h-full bg-color-text opacity-20' />

@@ -4,20 +4,12 @@ import Container from '@/components/Container';
 import { Content } from '@prismicio/client';
 import { SliceComponentProps } from '@prismicio/react';
 import anime, { AnimeTimelineInstance } from 'animejs';
-import clsx from 'clsx';
-import localFont from 'next/font/local';
 import { useCallback, useEffect, useRef } from 'react';
 
 /**
  * Props for `Contact`.
  */
 export type ContactProps = SliceComponentProps<Content.ContactSlice>;
-
-const drukwide = localFont({
-  src: '../../public/fonts/DrukWide/Druk-Wide-Bold.ttf',
-  variable: '--font-drukwide',
-  display: 'swap',
-});
 
 /**
  * Component for "Contact" Slices.
@@ -89,10 +81,7 @@ const Contact = ({ slice }: ContactProps): JSX.Element => {
         className='inline-flex font-medium tracking-tighter gap-x-20 text-accent'
         ref={scrollingTextContainerRef}
       >
-        <div
-          className={clsx(['inline-flex whitespace-nowrap gap-x-20', drukwide.className])}
-          ref={scrollingTextRef}
-        >
+        <div className='inline-flex whitespace-nowrap gap-x-20' ref={scrollingTextRef}>
           <h1 className='text-[9vw]'>Talk to us.</h1>
           <h1 className='text-[9vw]'>Talk to us.</h1>
           <h1 className='text-[9vw]'>Talk to us.</h1>

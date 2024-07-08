@@ -3,13 +3,7 @@ import Footer from '@/components/Footer';
 import LenisInstantiator from '@/components/LenisInstantiator';
 import Navbar from '@/components/Navbar';
 import { GeistSans } from 'geist/font/sans';
-import { League_Spartan } from 'next/font/google';
 import './globals.css';
-
-const leagueSpartan = League_Spartan({
-  weight: ['100', '400', '600', '900'],
-  subsets: ['latin'],
-});
 
 export const metadata = {
   title: 'Create Next App',

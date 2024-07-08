@@ -6,10 +6,18 @@
   "status": true,
   "json": {
     "Main": {
-      "uid": { "config": { "label": "UID" }, "type": "UID" },
+      "uid": {
+        "config": {
+          "label": "UID"
+        },
+        "type": "UID"
+      },
       "project_title": {
         "type": "Text",
-        "config": { "label": "Project title", "placeholder": "" }
+        "config": {
+          "label": "Project title",
+          "placeholder": ""
+        }
       },
       "project_description": {
         "type": "StructuredText",
@@ -22,13 +30,20 @@
       },
       "image": {
         "type": "Image",
-        "config": { "label": "Image", "constraint": {}, "thumbnails": [] }
+        "config": {
+          "label": "Image",
+          "constraint": {},
+          "thumbnails": []
+        }
       },
       "hover_image": {
         "type": "Image",
         "config": {
           "label": "Hover image",
-          "constraint": { "width": 144, "height": 144 },
+          "constraint": {
+            "width": 144,
+            "height": 144
+          },
           "thumbnails": []
         }
       }

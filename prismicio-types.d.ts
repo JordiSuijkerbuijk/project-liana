@@ -5,9 +5,9 @@ import type * as prismic from "@prismicio/client";
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
 type HomeDocumentDataSlicesSlice =
+  | HeroSlice
   | ContactSlice
   | ProjectsSlice
-  | HeroSlice
   | VideoSliceSlice
   | HighlightedTextSlice;
 
@@ -149,15 +149,15 @@ export type ProjectsDocument<Lang extends string = string> =
 export type AllDocumentTypes = HomeDocument | ProjectsDocument;
 
 /**
- * Primary content in *Contact → Primary*
+ * Primary content in *Contact → Default → Primary*
  */
 export interface ContactSliceDefaultPrimary {
   /**
-   * Scrolling text field in *Contact → Primary*
+   * Scrolling text field in *Contact → Default → Primary*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: contact.primary.scrolling_text
+   * - **API ID Path**: contact.default.primary.scrolling_text
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */
   scrolling_text: prismic.KeyTextField;
@@ -194,48 +194,18 @@ export type ContactSlice = prismic.SharedSlice<
 >;
 
 /**
- * Primary content in *Hero → Primary*
+ * Primary content in *Hero → Default → Primary*
  */
 export interface HeroSliceDefaultPrimary {
   /**
-   * Left image field in *Hero → Primary*
+   * Title field in *Hero → Default → Primary*
    *
-   * - **Field Type**: Image
+   * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: hero.primary.left_image
-   * - **Documentation**: https://prismic.io/docs/field#image
+   * - **API ID Path**: hero.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
    */
-  left_image: prismic.ImageField<never>;
-
-  /**
-   * Right image field in *Hero → Primary*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.primary.right_image
-   * - **Documentation**: https://prismic.io/docs/field#image
-   */
-  right_image: prismic.ImageField<never>;
-
-  /**
-   * Text part 1 field in *Hero → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.primary.text_part_1
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-   */
-  text_part_1: prismic.RichTextField;
-
-  /**
-   * Text part 2 field in *Hero → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.primary.text_part_2
-   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
-   */
-  text_part_2: prismic.RichTextField;
+  title: prismic.KeyTextField;
 }
 
 /**
@@ -266,15 +236,15 @@ type HeroSliceVariation = HeroSliceDefault;
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
 /**
- * Primary content in *HighlightedText → Primary*
+ * Primary content in *HighlightedText → Default → Primary*
  */
 export interface HighlightedTextSliceDefaultPrimary {
   /**
-   * Description field in *HighlightedText → Primary*
+   * Description field in *HighlightedText → Default → Primary*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: highlighted_text.primary.description
+   * - **API ID Path**: highlighted_text.default.primary.description
    * - **Documentation**: https://prismic.io/docs/field#rich-text-title
    */
   description: prismic.RichTextField;
@@ -311,25 +281,25 @@ export type HighlightedTextSlice = prismic.SharedSlice<
 >;
 
 /**
- * Primary content in *Projects → Primary*
+ * Primary content in *Projects → Default → Primary*
  */
 export interface ProjectsSliceDefaultPrimary {
   /**
-   * Title field in *Projects → Primary*
+   * Title field in *Projects → Default → Primary*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: projects.primary.title
+   * - **API ID Path**: projects.default.primary.title
    * - **Documentation**: https://prismic.io/docs/field#rich-text-title
    */
   title: prismic.RichTextField;
 
   /**
-   * Description field in *Projects → Primary*
+   * Description field in *Projects → Default → Primary*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: projects.primary.description
+   * - **API ID Path**: projects.default.primary.description
    * - **Documentation**: https://prismic.io/docs/field#rich-text-title
    */
   description: prismic.RichTextField;
@@ -411,6 +381,31 @@ export type ProjectsSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Primary content in *VideoSlice → Default → Primary*
+ */
+export interface VideoSliceSliceDefaultPrimary {
+  /**
+   * Title field in *VideoSlice → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: video_slice.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Youtube field in *VideoSlice → Default → Primary*
+   *
+   * - **Field Type**: Embed
+   * - **Placeholder**: *None*
+   * - **API ID Path**: video_slice.default.primary.youtube
+   * - **Documentation**: https://prismic.io/docs/field#embed
+   */
+  youtube: prismic.EmbedField;
+}
+
+/**
  * Default variation for VideoSlice Slice
  *
  * - **API ID**: `default`
@@ -419,7 +414,7 @@ export type ProjectsSlice = prismic.SharedSlice<
  */
 export type VideoSliceSliceDefault = prismic.SharedSliceVariation<
   "default",
-  Record<string, never>,
+  Simplify<VideoSliceSliceDefaultPrimary>,
   never
 >;
 
@@ -474,6 +469,7 @@ declare module "@prismicio/client" {
       ProjectsSliceVariation,
       ProjectsSliceDefault,
       VideoSliceSlice,
+      VideoSliceSliceDefaultPrimary,
       VideoSliceSliceVariation,
       VideoSliceSliceDefault,
     };

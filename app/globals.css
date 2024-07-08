@@ -90,21 +90,6 @@ body {
   color: var(--color-text);
 }
 
-.lineAnimation path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 0;
-  stroke: linear-gradient(
-    to right,
-    #e5405e 0%,
-    #e5405e 15%,
-    rgba(46, 2014, 113, 0.8) 30%,
-    rgba(39, 174, 96, 0.3) 45%,
-    #3fffa2 60%,
-    #1a9be0 73%,
-    #ba68ed 100%
-  );
-}
-
 .clip-rounded {
   clip-path: inset(0 0 0 0 round 1rem);
 }

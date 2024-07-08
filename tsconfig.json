@@ -20,7 +20,11 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/slices/*": ["./app/slices/*"],
+      "@/helpers/*": ["./app/helpers/*"],
+      "@/components/*": ["./app/components/*"],
+      "@/prismic/slices/*": ["./app/prismic/slices/*"],
+      "@/types/*": ["./app/types/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

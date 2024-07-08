@@ -1,5 +1,5 @@
 {
   "repositoryName": "project-liana",
   "adapter": "@slicemachine/adapter-next",
-  "libraries": ["./slices"]
+  "libraries": ["./app/prismic/slices"]
 }
