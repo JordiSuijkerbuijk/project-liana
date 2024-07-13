@@ -137,7 +137,7 @@ export default function VideoSlice({ title, youtubeId, youtube }: VideoSliceProp
             params='start=0&controls=0&disablekb=1&autoplay=0&loop=1&muted=1'
             id={youtubeId}
             title={youtube?.title}
-            wrapperClass='absolute inset-0 w-full h-full'
+            wrapperClass='absolute inset-0 w-full h-full bg-cover'
             iframeClass='absolute top-0 left-0 bg-cover bg-center w-full h-full'
             poster='maxresdefault'
             muted

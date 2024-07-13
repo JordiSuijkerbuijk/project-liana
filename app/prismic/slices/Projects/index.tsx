@@ -1,65 +1,29 @@
-import ProjectsSliceItem from '@/components/ProjectsSliceItem';
-import { Content } from '@prismicio/client';
+import autoMapping from '@/helpers/autoMapping';
+import type { ProjectSliceProps } from '@/slices/ProjectsSlice';
+import ProjectsSlice from '@/slices/ProjectsSlice';
+import { asText, Content } from '@prismicio/client';
 import { SliceComponentProps } from '@prismicio/react';
+import model from './model.json';
 
 /**
  * Props for `ProjectSlice`.
  */
 export type ProjectProps = SliceComponentProps<Content.ProjectsSlice>;
 
-export default function Projects({ slice }: ProjectProps): JSX.Element {
-  const items = [
-    {
-      title: 'Kip Kerrie',
-      subtitle: 'By my mom',
-      image:
-        'https://images.pexels.com/photos/10411161/pexels-photo-10411161.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      image2:
-        'https://images.pexels.com/photos/440162/pexels-photo-440162.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-    {
-      title: 'Nasi Goreng',
-      subtitle: 'By my mom',
-      image:
-        'https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      image2:
-        'https://images.pexels.com/photos/6394571/pexels-photo-6394571.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-    {
-      title: 'A filthy burger',
-      subtitle: 'By Diegos',
-      image:
-        'https://images.pexels.com/photos/37347/office-sitting-room-executive-sitting.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      image2:
-        'https://images.pexels.com/photos/827518/pexels-photo-827518.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-    {
-      title: 'Please',
-      subtitle: 'Mom make me some dinner',
-      image:
-        'https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      image2:
-        'https://images.pexels.com/photos/2632292/pexels-photo-2632292.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-  ];
-  return (
-    <section className='w-full'>
-      {items.map((item, key) => {
-        const isFirstItem = key === 0;
-        const isLastItem = key === items.length - 1;
-        const isMiddleItem = !isFirstItem && !isLastItem;
-        return (
-          <ProjectsSliceItem
-            {...item}
-            isFirstItem={isFirstItem}
-            isLastItem={isLastItem}
-            isMiddleItem={isMiddleItem}
-            key={key}
-          />
-        );
-      })}
-      {/* Setting empty 100vh div to make sure contact slice doesn't overlap with the projects slice */}
-      <div className='w-full h-screen' />
-    </section>
-  );
+export default function Projects({ slice }: ProjectProps): JSX.Element | null {
+  let props = autoMapping<ProjectSliceProps>(slice, model);
+
+  if (props && Array.isArray(slice?.items)) {
+    props.items = slice?.items?.map((item) => {
+      return {
+        title: asText(item.title),
+        description: asText(item.description),
+        image: item.background_image,
+        image2: item.hover_image,
+      };
+    });
+    return <ProjectsSlice {...props} />;
+  }
+
+  return null;
 }

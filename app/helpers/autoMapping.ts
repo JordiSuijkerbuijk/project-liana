@@ -1,4 +1,4 @@
-import { LinkField, RichTextField, SharedSlice, asHTML } from '@prismicio/client';
+import { LinkField, RichTextField, SharedSlice, asText } from '@prismicio/client';
 import createLinkType from './createLinkType';
 
 type Model = {
@@ -39,7 +39,7 @@ export default function autoMapping<Type>(slice: SharedSlice, model: Model): Typ
     if (item.type === 'StructuredText') {
       // We don't specifically check the type since we know for sure the
       // RichtTextField type is correct since we get it from the model.json
-      props[key] = asHTML(slice.primary[key] as RichTextField);
+      props[key] = asText(slice.primary[key] as RichTextField);
       return;
     }
 
