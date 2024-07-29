@@ -10,7 +10,7 @@ import { RefObject, useRef } from 'react';
 interface Props {
   image: ImageField;
   title: string;
-  subtitle: string;
+  description: string;
   isLastItem: boolean;
   isFirstItem: boolean;
   isMiddleItem: boolean;
@@ -19,7 +19,7 @@ interface Props {
 
 export default function ProjectsSliceItem({
   title,
-  subtitle,
+  description,
   image,
   image2,
   isFirstItem,
@@ -66,7 +66,7 @@ export default function ProjectsSliceItem({
         <Container className='sticky top-0 z-10 flex flex-col justify-center h-100vh gap-y-10 md:flex-row md:gap-x-6 md:justify-between md:items-center'>
           <div className='flex flex-col text-white lg:gap-y-4'>
             {title && <h2 className='font-bold text-heading-1'>{title}</h2>}
-            {subtitle && <span>{subtitle}</span>}
+            {description && <span>{description}</span>}
           </div>
           <div className='w-full md:w-2/4 md:min-w-[50%] lg:w-1/4 lg:min-w-[25%] max-h-[80vh]'>
             <Image
