@@ -11,9 +11,6 @@ import { useCallback, useEffect, useRef } from 'react';
  */
 export type ContactProps = SliceComponentProps<Content.ContactSlice>;
 
-/**
- * Component for "Contact" Slices.
- */
 const Contact = ({ slice }: ContactProps): JSX.Element => {
   const scrollingTextRef = useRef<HTMLDivElement | null>(null);
   const scrollingTextContainerRef = useRef<HTMLDivElement | null>(null);
