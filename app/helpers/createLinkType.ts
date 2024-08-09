@@ -1,6 +1,7 @@
+import { LinkField, PrismicDocument, asLink } from '@prismicio/client';
+
 import { LinkType } from '@/types/general';
 import { isLinkToWebField } from '@/types/guard';
-import { LinkField, PrismicDocument, asLink } from '@prismicio/client';
 
 export default function createLinkType(link: LinkField | PrismicDocument): LinkType {
   return {

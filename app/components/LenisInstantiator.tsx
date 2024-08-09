@@ -1,13 +1,10 @@
-"use client";
+'use client';
 
-import Lenis from "@studio-freight/lenis";
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-export default function LenisInstantiator({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+import Lenis from '@studio-freight/lenis';
+
+export default function LenisInstantiator({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const lenis = new Lenis();
 

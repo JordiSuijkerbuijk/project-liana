@@ -1,8 +1,10 @@
+import { GeistSans } from 'geist/font/sans';
+
 import ColorChange from '@/components/ColorChange';
 import Footer from '@/components/Footer';
 import LenisInstantiator from '@/components/LenisInstantiator';
 import Navbar from '@/components/Navbar';
-import { GeistSans } from 'geist/font/sans';
+
 import './globals.css';
 
 export const metadata = {
@@ -12,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <LenisInstantiator>
         <body className={GeistSans.className}>
           <Navbar />

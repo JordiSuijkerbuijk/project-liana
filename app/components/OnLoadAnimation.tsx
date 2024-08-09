@@ -1,7 +1,8 @@
 'use client';
 
-import clsx from 'clsx';
 import { useEffect, useRef } from 'react';
+
+import clsx from 'clsx';
 
 type onLoad = {
   callback: (v: boolean) => void;
@@ -13,7 +14,6 @@ export default function OnLoadAnimation({ callback, className }: onLoad) {
   useEffect(() => {
     // TODO: add toggle body scrolling so scrolling is unavailable before
     // loading in all the way.
-
     //TODO: some animation not sure what
   }, [callback]);
 

@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import clsx from 'clsx';
 
 type Props = {
   children: React.ReactNode;
@@ -6,19 +6,9 @@ type Props = {
   withPadding?: boolean;
 };
 
-export default function Container({
-  children,
-  withPadding = true,
-  className,
-}: Props) {
+export default function Container({ children, withPadding = true, className }: Props) {
   return (
-    <div
-      className={clsx(
-        "mx-auto max-w-[80rem]",
-        withPadding && "px-5 lg:px-10",
-        className
-      )}
-    >
+    <div className={clsx('mx-auto max-w-[80rem]', withPadding && 'px-5 lg:px-10', className)}>
       {children}
     </div>
   );

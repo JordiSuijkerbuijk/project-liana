@@ -1,20 +1,16 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 type EventHandler = (e: Event) => void;
 
 const handlers: { [event: string]: Set<EventHandler> } = {};
-const passiveEvents = ["scroll", "touchstart", "touchmove", "wheel"];
+const passiveEvents = ['scroll', 'touchstart', 'touchmove', 'wheel'];
 
 function addEventListener(event: string, callback: EventHandler) {
   if (!handlers[event]) {
     handlers[event] = new Set();
-    window.addEventListener(
-      event,
-      (e) => handlers[event].forEach((cb) => cb(e)),
-      {
-        passive: passiveEvents.includes(event),
-      }
-    );
+    window.addEventListener(event, (e) => handlers[event].forEach((cb) => cb(e)), {
+      passive: passiveEvents.includes(event),
+    });
   }
 
   handlers[event].add(callback);

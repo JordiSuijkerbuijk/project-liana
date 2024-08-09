@@ -1,12 +1,13 @@
 'use client';
 
+import { RefObject, useCallback, useEffect, useRef } from 'react';
+
+import { EmbedField } from '@prismicio/types';
+import anime, { AnimeTimelineInstance } from 'animejs';
+
 import Container from '@/components/Container';
 import playScrollBasedAnimation from '@/helpers/playScrollBasedAnimation';
 import { useScroll } from '@/helpers/useScroll';
-import { EmbedField } from '@prismicio/types';
-import anime, { AnimeTimelineInstance } from 'animejs';
-import { RefObject, useCallback, useEffect, useRef } from 'react';
-
 
 export type VideoSliceProps = {
   title?: string;
@@ -78,14 +79,14 @@ export default function VideoSlice({ title, youtubeId, youtube }: VideoSliceProp
           targets: videoContainerRef.current,
           clipPath: ['inset(0% 7.5% 0% 7.5% round 1rem)', 'inset(0% 0% 0% 0% round 0rem)'],
         },
-        0
+        0,
       )
       .add(
         {
           targets: videoRef.current,
           scale: [1, 1.1],
         },
-        0
+        0,
       );
   }
 
@@ -97,29 +98,29 @@ export default function VideoSlice({ title, youtubeId, youtube }: VideoSliceProp
     {
       startTracking: 'top',
       stopTracking: 'top',
-    }
+    },
   );
 
   const splitTitle = title?.split(' ');
 
   return (
-    <section className='flex flex-col w-full py-24 translate-y-4 opacity-0 video-animation'>
+    <section className="flex flex-col w-full py-24 translate-y-4 opacity-0 video-animation">
       <div ref={sectionContainer as RefObject<HTMLDivElement>}>
-        <Container className='flex justify-center pt-12 pb-8 overflow-hidden lg:pb-12 lg:pt-24'>
+        <Container className="flex justify-center pt-12 pb-8 overflow-hidden lg:pb-12 lg:pt-24">
           <h2
-            className='flex flex-col justify-center font-semibold text-center text-heading-2'
+            className="flex flex-col justify-center font-semibold text-center text-heading-2"
             ref={titleWrapper}
           >
             <span>
               {splitTitle?.slice(0, splitTitle?.length / 2).map((item, key) => (
-                <span className='px-3 word' key={`0-${item}-${key}`}>
+                <span className="px-3 word" key={`0-${item}-${key}`}>
                   {item}
                 </span>
               ))}
             </span>
             <span>
               {splitTitle?.slice(splitTitle?.length / 2, splitTitle?.length).map((item, key) => (
-                <span className='px-3 word' key={`1-${item}-${key}`}>
+                <span className="px-3 word" key={`1-${item}-${key}`}>
                   {item}
                 </span>
               ))}
@@ -128,7 +129,7 @@ export default function VideoSlice({ title, youtubeId, youtube }: VideoSliceProp
         </Container>
       </div>
       <div
-        className='relative w-full h-screen overflow-hidden clip-path-video-element'
+        className="relative w-full h-screen overflow-hidden clip-path-video-element"
         ref={videoContainerRef}
       >
         <video
@@ -138,9 +139,10 @@ export default function VideoSlice({ title, youtubeId, youtube }: VideoSliceProp
           loop
           playsInline
           autoPlay
-          className='absolute inset-0 object-cover w-full h-full'
-          ref={videoRef}>
-          <source src='https://terrazabalear.com/wp-content/uploads/2023/03/terraza_balear-awakening_senses_-_loop-1.mp4-1080p-1.mp4' />
+          className="absolute inset-0 object-cover w-full h-full"
+          ref={videoRef}
+        >
+          <source src="https://terrazabalear.com/wp-content/uploads/2023/03/terraza_balear-awakening_senses_-_loop-1.mp4-1080p-1.mp4" />
         </video>
       </div>
     </section>

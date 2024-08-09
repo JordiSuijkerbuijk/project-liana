@@ -1,8 +1,10 @@
+import { Content, asText } from '@prismicio/client';
+import { SliceComponentProps } from '@prismicio/react';
+
 import autoMapping from '@/helpers/autoMapping';
 import type { ProjectSliceProps } from '@/slices/ProjectsSlice';
 import ProjectsSlice from '@/slices/ProjectsSlice';
-import { asText, Content } from '@prismicio/client';
-import { SliceComponentProps } from '@prismicio/react';
+
 import model from './model.json';
 
 /**

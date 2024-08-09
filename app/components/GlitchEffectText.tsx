@@ -1,9 +1,14 @@
 'use client';
-import { iconsMap } from '@/components/Icon/Icon';
+
+import { useRef } from 'react';
+
+import Link from 'next/link';
+
 import { AnimeTimelineInstance } from 'animejs';
 import clsx from 'clsx';
-import Link from 'next/link';
-import { useRef } from 'react';
+
+import { iconsMap } from '@/components/Icon/Icon';
+
 import DisappearingArrow from './DisappearingArrow';
 
 export default function GlitchEffectText({
@@ -39,7 +44,7 @@ export default function GlitchEffectText({
   return (
     <Link
       href={link}
-      className='relative inline-flex items-center w-full text-xs leading-none tracking-wide gap-x-2 group'
+      className="relative inline-flex items-center w-full text-xs leading-none tracking-wide gap-x-2 group"
       // onMouseEnter={animateLetters}
     >
       {/* {iconType && (
@@ -55,7 +60,7 @@ export default function GlitchEffectText({
           </span>
         ))}
       </span>
-      <span className='ml-auto'>
+      <span className="ml-auto">
         <DisappearingArrow arrowClass={clsx(['h-4', iconClass])} />
       </span>
     </Link>

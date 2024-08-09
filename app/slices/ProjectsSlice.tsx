@@ -1,5 +1,6 @@
-import ProjectsSliceItem from '@/components/ProjectsSliceItem';
 import { ImageField } from '@prismicio/types';
+
+import ProjectsSliceItem from '@/components/ProjectsSliceItem';
 
 export type ProjectSliceProps = {
   items: Array<{
@@ -13,7 +14,7 @@ export type ProjectSliceProps = {
 
 export default function ProjectsSlice({ items }: ProjectSliceProps): JSX.Element {
   return (
-    <section className='w-full'>
+    <section className="w-full">
       {Array.isArray(items) &&
         items.map((item, key) => {
           const isFirstItem = key === 0;
@@ -30,7 +31,7 @@ export default function ProjectsSlice({ items }: ProjectSliceProps): JSX.Element
           );
         })}
       {/* Setting empty 100vh div to make sure contact slice doesn't overlap with the projects slice */}
-      <div className='w-full h-screen' />
+      <div className="w-full h-screen" />
     </section>
   );
 }

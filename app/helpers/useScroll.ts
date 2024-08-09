@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
+
 import { useEvent } from './useEvent';
 
 const defaultOptions = { top: true, bottom: false, alternativeFunction: false };
@@ -17,7 +18,7 @@ function clamp(value: number): number {
  */
 export function useScroll<T extends HTMLElement>(
   callback: (progress: number) => void,
-  options: { startTracking: 'bottom' | 'top'; stopTracking: 'bottom' | 'top' }
+  options: { startTracking: 'bottom' | 'top'; stopTracking: 'bottom' | 'top' },
 ) {
   options = { ...defaultOptions, ...options };
   const slice = useRef<T | null>(null);

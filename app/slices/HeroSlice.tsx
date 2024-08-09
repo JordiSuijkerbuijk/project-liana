@@ -2,9 +2,10 @@
 
 import { useEffect, useRef } from 'react';
 
+import localFont from 'next/font/local';
+
 import anime from 'animejs';
 import clsx from 'clsx';
-import localFont from 'next/font/local';
 
 const drukwide = localFont({
   src: '../../public/fonts/DrukWide/Druk-Wide-Bold.ttf',
@@ -36,7 +37,7 @@ export default function HeroSlice({ title }: HeroSliceProps): JSX.Element {
 
   return (
     <>
-      <section className='flex justify-center w-full pb-12 pt-44'>
+      <section className="flex justify-center w-full pb-12 pt-44">
         <div
           className={clsx([
             'flex leading-none uppercase text-accent text-[20vw] overflow-hidden',
@@ -46,7 +47,7 @@ export default function HeroSlice({ title }: HeroSliceProps): JSX.Element {
         >
           {title &&
             title.split('')?.map((item, key) => (
-              <h2 key={`home-hero-${key}`} className='translate-y-full'>
+              <h2 key={`home-hero-${key}`} className="translate-y-full">
                 {item}
               </h2>
             ))}

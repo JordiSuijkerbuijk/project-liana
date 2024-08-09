@@ -1,9 +1,11 @@
 'use client';
 
+import { RefObject, useEffect, useRef } from 'react';
+
+import anime, { AnimeTimelineInstance } from 'animejs';
+
 import playScrollBasedAnimation from '@/helpers/playScrollBasedAnimation';
 import { useScroll } from '@/helpers/useScroll';
-import anime, { AnimeTimelineInstance } from 'animejs';
-import { RefObject, useEffect, useRef } from 'react';
 
 export default function OnScrollLine() {
   const timelineRef = useRef<AnimeTimelineInstance | null>(null);
@@ -26,14 +28,14 @@ export default function OnScrollLine() {
     },
     {
       startTracking: 'top',
-      stopTracking: 'bottom'
-    }
+      stopTracking: 'bottom',
+    },
   );
 
   return (
-    <div className='absolute top-0 left-0 z-10 w-full h-full overflow-hidden'>
+    <div className="absolute top-0 left-0 z-10 w-full h-full overflow-hidden">
       <div
-        className='absolute top-[85rem] left-0'
+        className="absolute top-[85rem] left-0"
         ref={sectionContainer as RefObject<HTMLDivElement>}
       >
         {/* <svg viewBox='0 0 2000 2000' className='lineAnimation'>
@@ -56,27 +58,27 @@ export default function OnScrollLine() {
           />
         </svg> */}
         <svg
-          width='1370.877'
-          height='1277.283'
-          viewBox='0 0 1370.877 1277.283'
-          className='lineAnimation'
+          width="1370.877"
+          height="1277.283"
+          viewBox="0 0 1370.877 1277.283"
+          className="lineAnimation"
         >
           <defs>
-            <linearGradient id='linear' x1='0%' y1='0%' x2='100%' y2='0%'>
-              <stop offset='0%' stopColor='var(--accent)' />
-              <stop offset='100%' stopColor='var(--accent)' />
+            <linearGradient id="linear" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="var(--accent)" />
+              <stop offset="100%" stopColor="var(--accent)" />
             </linearGradient>
           </defs>
           <path
-            d='M360.219-225.348S427.9,258.1,609.027,380.359s436.96-31.7,491.3-43.017,292.061-185.651,461.864,296.589,126.786,369.039,126.786,369.039'
-            transform='translate(-340.461 245.105)'
+            d="M360.219-225.348S427.9,258.1,609.027,380.359s436.96-31.7,491.3-43.017,292.061-185.651,461.864,296.589,126.786,369.039,126.786,369.039"
+            transform="translate(-340.461 245.105)"
             ref={svgRef}
-            fill='none'
-            strokeLinecap='round'
-            stroke='url(#linear)'
-            strokeWidth='35'
-            pathLength='1'
-            strokeDashoffset='1'
+            fill="none"
+            strokeLinecap="round"
+            stroke="url(#linear)"
+            strokeWidth="35"
+            pathLength="1"
+            strokeDashoffset="1"
             style={{ strokeDashoffset: 1 }}
           />
         </svg>

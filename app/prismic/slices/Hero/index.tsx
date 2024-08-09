@@ -3,7 +3,6 @@ import { SliceComponentProps } from '@prismicio/react';
 
 import autoMapping from '@/helpers/autoMapping';
 import HeroSlice from '@/slices/HeroSlice';
-
 import type { HeroSliceProps } from '@/slices/HeroSlice';
 
 import model from './model.json';

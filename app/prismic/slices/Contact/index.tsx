@@ -1,12 +1,15 @@
 'use client';
 
-import Container from '@/components/Container';
+import { useCallback, useEffect, useRef } from 'react';
+
+import localFont from 'next/font/local';
+
 import { Content } from '@prismicio/client';
 import { SliceComponentProps } from '@prismicio/react';
 import anime, { AnimeTimelineInstance } from 'animejs';
 import clsx from 'clsx';
-import localFont from 'next/font/local';
-import { useCallback, useEffect, useRef } from 'react';
+
+import Container from '@/components/Container';
 
 // If loading a variable font, you don't need to specify the font weight
 const drukwide = localFont({
@@ -40,8 +43,8 @@ const Contact = ({ slice }: ContactProps): JSX.Element => {
       Math.min(
         1,
         (window.scrollY - (containerRef.current.offsetTop - window.innerHeight)) /
-          window.innerHeight
-      )
+          window.innerHeight,
+      ),
     );
 
     scrollingTimelineRef.current.seek(scrollingTimelineRef.current.duration * scrollPercentage);
@@ -77,25 +80,28 @@ const Contact = ({ slice }: ContactProps): JSX.Element => {
   }, [scrollHandler]);
 
   return (
-    <section className='flex flex-col min-h-[50vh] py-32 overflow-hidden' ref={containerRef}>
+    <section className="flex flex-col min-h-[50vh] py-32 overflow-hidden" ref={containerRef}>
       <div
-        className='inline-flex font-medium tracking-tighter gap-x-20 text-accent'
+        className="inline-flex font-medium tracking-tighter gap-x-20 text-accent"
         ref={scrollingTextContainerRef}
       >
-        <div className='inline-flex whitespace-nowrap' ref={scrollingTextRef}>
+        <div className="inline-flex whitespace-nowrap" ref={scrollingTextRef}>
           {Array.from({ length: 10 }, (_, i) => (
-            <h1 className={clsx(['text-[9vw] px-10 stroke-text', drukwide.className])} key={`contact-scroll-item-${i}`}>
+            <h1
+              className={clsx(['text-[9vw] px-10 stroke-text', drukwide.className])}
+              key={`contact-scroll-item-${i}`}
+            >
               Talk to us.
             </h1>
           ))}
         </div>
       </div>
-      <Container className='flex flex-col w-full mt-4 gap-y-4'>
-        <p className='max-w-sm'>
+      <Container className="flex flex-col w-full mt-4 gap-y-4">
+        <p className="max-w-sm">
           We believe close collaboration is the key to creating exceptional products. If you do too,
           we’d love to hear from you.
         </p>
-        <button className='flex px-6 py-3 transition-colors border border-2 rounded-xl border-text w-fit bg-background hover:border-white hover:text-black hover:bg-white'>
+        <button className="flex px-6 py-3 transition-colors border border-2 rounded-xl border-text w-fit bg-background hover:border-white hover:text-black hover:bg-white">
           Get in touch
         </button>
       </Container>

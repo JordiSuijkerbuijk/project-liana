@@ -1,4 +1,4 @@
-import { IconItemProps } from "../Icon";
+import { IconItemProps } from '../Icon';
 
 export default function SpeechBubble({ className }: IconItemProps) {
   return (

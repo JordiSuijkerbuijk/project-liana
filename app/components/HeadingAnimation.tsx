@@ -1,7 +1,8 @@
 'use client';
 
-import anime, { AnimeTimelineInstance } from 'animejs';
 import { RefObject, useCallback, useEffect, useRef } from 'react';
+
+import anime, { AnimeTimelineInstance } from 'animejs';
 
 export default function HeadingAnimation({
   text = '',
@@ -23,8 +24,8 @@ export default function HeadingAnimation({
         1,
         (window.scrollY -
           (textRef.current.offsetTop + window.innerHeight + textRef.current.clientHeight)) /
-          containerRef.current.clientHeight
-      )
+          containerRef.current.clientHeight,
+      ),
     );
 
     timelineRef.current.seek(timelineRef.current.duration * scrollPercentage);
@@ -63,11 +64,11 @@ export default function HeadingAnimation({
 
   return (
     <div
-      className='flex flex-wrap max-w-5xl px-12 py-12 font-bold text-black text-heading-5 gap-x-1'
+      className="flex flex-wrap max-w-5xl px-12 py-12 font-bold text-black text-heading-5 gap-x-1"
       ref={textRef}
     >
       {text.split(' ').map((item, key) => (
-        <p className='transition-opacity opacity-20 duration-400' key={key}>
+        <p className="transition-opacity opacity-20 duration-400" key={key}>
           {item}
         </p>
       ))}

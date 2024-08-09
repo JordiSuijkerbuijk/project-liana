@@ -1,8 +1,10 @@
 'use client';
 
-import Container from '@/components/Container';
-import anime, { AnimeTimelineInstance } from 'animejs';
 import { useCallback, useEffect, useRef } from 'react';
+
+import anime, { AnimeTimelineInstance } from 'animejs';
+
+import Container from '@/components/Container';
 
 export type HighlightedTextSliceProps = {
   description?: string;
@@ -26,8 +28,8 @@ export default function HighlightedTextSlice({
       Math.min(
         1,
         (window.scrollY - (textRef.current.offsetTop - containerRef.current.clientHeight * 1.25)) /
-          containerRef.current.clientHeight
-      )
+          containerRef.current.clientHeight,
+      ),
     );
 
     timelineRef.current.seek(timelineRef.current.duration * scrollPercentage);
@@ -65,9 +67,9 @@ export default function HighlightedTextSlice({
   }, [containerRef, scrollHandler]);
 
   return (
-    <section ref={containerRef} className='py-60'>
-      <Container className='flex lg:max-w-5xl text-[6vw] lg:text-[3vw]'>
-        <div ref={textRef} className='flex flex-wrap gap-x-2'>
+    <section ref={containerRef} className="py-60">
+      <Container className="flex lg:max-w-5xl text-[6vw] lg:text-[3vw]">
+        <div ref={textRef} className="flex flex-wrap gap-x-2">
           {splitDescription && splitDescription.map((item, key) => <span key={key}>{item}</span>)}
         </div>
       </Container>

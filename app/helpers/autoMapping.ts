@@ -1,4 +1,5 @@
 import { LinkField, RichTextField, SharedSlice, asText } from '@prismicio/client';
+
 import createLinkType from './createLinkType';
 
 type Model = {

@@ -1,10 +1,12 @@
 'use client';
 
+import { Content } from '@prismicio/client';
+import { SliceComponentProps } from '@prismicio/react';
+
 import autoMapping from '@/helpers/autoMapping';
 import type { HighlightedTextSliceProps } from '@/slices/HighlightedTextSlice';
 import HighlightedTextSlice from '@/slices/HighlightedTextSlice';
-import { Content } from '@prismicio/client';
-import { SliceComponentProps } from '@prismicio/react';
+
 import model from './model.json';
 
 /**
