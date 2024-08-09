@@ -17,7 +17,7 @@
   --body-text: 1rem;
   --body-text-line-height: 1.75;
 
-  --small-body-text: 0.875rem;
+  --small-body-text: 0.675rem;
   --small-body-text-line-height: 1.75;
 
   /* random color change */
@@ -25,6 +25,36 @@
   --accent: #ffffff;
   --primary: #ffffff;
   --color-text: #ffffff;
+
+  --padding: 1.25rem;
+}
+
+@media only screen and (min-width: 768px) {
+  :root {
+    --heading-1: 3.875rem;
+    --heading-2: 3rem;
+    --heading-3: 2.5rem;
+    --heading-4: 2rem;
+    --heading-5: 1.5rem;
+    --body-text: 1.25rem;
+    --small-body-text: 0.75rem;
+
+    --padding: 2rem;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  :root {
+    --heading-1: 4.75rem;
+    --heading-2: 3.875rem;
+    --heading-3: 3rem;
+    --heading-4: 2.5rem;
+    --heading-5: 2rem;
+    --body-text: 1.5rem;
+    --small-body-text: 0.875rem;
+
+    --padding: 3rem
+  }
 }
 
 body.red {
@@ -53,30 +83,6 @@ body.navy {
   --accent: #5d6c6a;
   --primary: #5d6c6a;
   --color-text: #a7a597;
-}
-
-@media only screen and (min-width: 768px) {
-  :root {
-    --heading-1: 3.875rem;
-    --heading-2: 3rem;
-    --heading-3: 2.5rem;
-    --heading-4: 2rem;
-    --heading-5: 1.5rem;
-    --body-text: 1.25rem;
-    --small-body-text: 1rem;
-  }
-}
-
-@media only screen and (min-width: 1024px) {
-  :root {
-    --heading-1: 4.75rem;
-    --heading-2: 3.875rem;
-    --heading-3: 3rem;
-    --heading-4: 2.5rem;
-    --heading-5: 2rem;
-    --body-text: 1.5rem;
-    --small-body-text: 1.25rem;
-  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -116,4 +122,10 @@ body.loaded .video-animation {
   background-image: linear-gradient(to bottom, #fff 0 10%, rgb(255, 255, 255) 100%);
     background-position: left top;
     background-size: 1px 8px;
+}
+
+.stroke-text {
+  color: transparent;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: white;
 }

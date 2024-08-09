@@ -7,7 +7,6 @@ import { EmbedField } from '@prismicio/types';
 import anime, { AnimeTimelineInstance } from 'animejs';
 import { RefObject, useCallback, useEffect, useRef } from 'react';
 
-import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 
 export type VideoSliceProps = {
   title?: string;
@@ -128,22 +127,22 @@ export default function VideoSlice({ title, youtubeId, youtube }: VideoSliceProp
           </h2>
         </Container>
       </div>
-      {youtubeId && youtube?.title && (
-        <div
-          ref={videoContainerRef}
-          className='relative w-full h-screen overflow-hidden clip-path-video-element'
-        >
-          <LiteYouTubeEmbed
-            params='start=0&controls=0&disablekb=1&autoplay=0&loop=1&muted=1'
-            id={youtubeId}
-            title={youtube?.title}
-            wrapperClass='absolute inset-0 w-full h-full bg-cover'
-            iframeClass='absolute top-0 left-0 bg-cover bg-center w-full h-full'
-            poster='maxresdefault'
-            muted
-          />
-        </div>
-      )}
+      <div
+        className='relative w-full h-screen overflow-hidden clip-path-video-element'
+        ref={videoContainerRef}
+      >
+        <video
+          muted
+          disablePictureInPicture
+          disableRemotePlayback
+          loop
+          playsInline
+          autoPlay
+          className='absolute inset-0 object-cover w-full h-full'
+          ref={videoRef}>
+          <source src='https://terrazabalear.com/wp-content/uploads/2023/03/terraza_balear-awakening_senses_-_loop-1.mp4-1080p-1.mp4' />
+        </video>
+      </div>
     </section>
   );
 }

@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { RefObject, useRef } from 'react';
 
 interface Props {
+  type: string;
   image: ImageField;
   title: string;
   description: string;
@@ -19,6 +20,7 @@ interface Props {
 
 export default function ProjectsSliceItem({
   title,
+  type,
   description,
   image,
   image2,
@@ -68,7 +70,13 @@ export default function ProjectsSliceItem({
             {title && <h2 className='font-bold text-heading-1'>{title}</h2>}
             {description && <span>{description}</span>}
           </div>
-          <div className='w-full md:w-2/4 md:min-w-[50%] lg:w-1/4 lg:min-w-[25%] max-h-[80vh]'>
+          <div className='relative w-full md:w-2/4 md:min-w-[50%] lg:w-1/4 lg:min-w-[25%] max-h-[80vh]'>
+          {type && (
+          <span className="absolute px-2 py-1 bg-black rounded-lg top-2 left-2 bg-menu-backdrop text-small-body">
+           
+            {type}
+            </span>
+        )}
             <Image
               src={image2.url}
               alt={image2?.alt || ''}

@@ -3,6 +3,7 @@ import { ImageField } from '@prismicio/types';
 
 export type ProjectSliceProps = {
   items: Array<{
+    type: string;
     image: ImageField;
     image2: ImageField;
     title: string;

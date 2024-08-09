@@ -26,5 +26,5 @@ function addEventListener(event: string, callback: EventHandler) {
 }
 
 export function useEvent(event: string, callback: EventHandler) {
-  useEffect(() => addEventListener(event, callback), [callback]);
+  useEffect(() => addEventListener(event, callback), [callback, event]);
 }

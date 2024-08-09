@@ -16,6 +16,7 @@ export default function Projects({ slice }: ProjectProps): JSX.Element | null {
   if (props && Array.isArray(slice?.items)) {
     props.items = slice?.items?.map((item) => {
       return {
+        type: item.type || 'Proposition',
         title: asText(item.title),
         description: asText(item.description),
         image: item.background_image,

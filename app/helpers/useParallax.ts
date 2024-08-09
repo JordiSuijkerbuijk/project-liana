@@ -1,7 +1,7 @@
 "use client";
 
 import anime, { AnimeTimelineInstance } from "animejs";
-import { useEffect, useRef, RefObject } from "react";
+import { RefObject, useCallback, useEffect, useRef } from "react";
 import { useScroll } from "./useScroll";
 
 interface Layer {
@@ -18,11 +18,7 @@ export default function useParallax(layers: Layer[]) {
     stopTracking: 'bottom'
   });
 
-  useEffect(() => {
-    timelineRef.current = createTimeline();
-  }, [layers]);
-
-  function createTimeline() {
+  const createTimeline = useCallback(() => {
     const tl = anime.timeline({
       easing: "linear",
       duration: 100,
@@ -39,7 +35,11 @@ export default function useParallax(layers: Layer[]) {
       );
     });
     return tl;
-  }
+  }, [layers])
+
+  useEffect(() => {
+    timelineRef.current = createTimeline();
+  }, [layers, createTimeline]);
 
   function parallaxElements(progress: number) {
     if (!timelineRef.current) return;
