@@ -2,7 +2,8 @@
 
 import { RefObject, useCallback, useEffect, useRef } from 'react';
 
-import anime, { AnimeTimelineInstance } from 'animejs';
+import type { AnimeTimelineInstance } from 'animejs';
+import anime from 'animejs';
 
 import { useScroll } from './useScroll';
 
@@ -13,7 +14,6 @@ interface Layer {
 
 export default function useParallax(layers: Layer[]) {
   const timelineRef = useRef<AnimeTimelineInstance | null>(null);
-  const elementRefs = useRef;
 
   const section = useScroll(parallaxElements, {
     startTracking: 'bottom',

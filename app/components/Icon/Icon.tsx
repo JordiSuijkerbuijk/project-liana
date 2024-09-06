@@ -1,6 +1,5 @@
 import AddressBook from './types/AddressBook';
 import Arrow from './types/Arrow';
-import Browser from './types/Browser';
 import Home from './types/Home';
 import SpeechBubble from './types/SpeechBubble';
 
@@ -11,7 +10,6 @@ export type IconItemProps = {
 
 export const iconsMap = {
   home: Home,
-  browser: Browser,
   addressBook: AddressBook,
   speechBubble: SpeechBubble,
   arrow: Arrow,

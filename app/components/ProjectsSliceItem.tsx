@@ -4,7 +4,7 @@ import { RefObject, useRef } from 'react';
 
 import Image from 'next/image';
 
-import { ImageField } from '@prismicio/types';
+import type { ImageField } from '@prismicio/types';
 import clsx from 'clsx';
 
 import Container from '@/components/Container';

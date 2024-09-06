@@ -1,10 +1,4 @@
-'use client';
-
-import { useEffect } from 'react';
-
 import clsx from 'clsx';
-
-import BackgroundTransition from '@/helpers/BackgroundTransition';
 
 export type SectionType = {
   color?: string;
@@ -13,10 +7,6 @@ export type SectionType = {
 };
 
 export default function Section({ children, className = '', color = '' }: SectionType) {
-  useEffect(() => {
-    BackgroundTransition();
-  });
-
   return (
     <section className={clsx(['w-full', className])} data-color={color}>
       <div className="z-10 h-full">{children}</div>

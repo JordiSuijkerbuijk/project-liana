@@ -9,7 +9,7 @@ import Link from 'next/link';
 import anime from 'animejs';
 import clsx from 'clsx';
 
-import GlitchEffectText from './GlitchEffectText';
+import DisappearingArrow from './DisappearingArrow';
 
 const drukwide = localFont({
   src: '../../public/fonts/DrukWide/Druk-Wide-Bold.ttf',
@@ -129,19 +129,21 @@ export default function NavBar() {
           >
             <nav className="relative p-4">
               <ul className="flex flex-col pl-4 gap-y-3 navbar-dots">
-                {/* TODO: Connect to Prismic */}
                 {mockMenu.map((item) => {
                   return (
                     <li
                       key={item.link}
                       className="relative transition-all group text-menu-text hover:text-primary"
                     >
-                      <GlitchEffectText
-                        text={item.label}
-                        link={item.link}
-                        iconType={item.iconType}
-                        iconClass={'fill-menu-text group-hover:fill-primary'}
-                      />
+                      <Link
+                        href={item.link}
+                        className="relative inline-flex items-center w-full text-xs leading-none tracking-wide gap-x-2 group"
+                      >
+                        <span>{item.label}</span>
+                        <span className="ml-auto">
+                          <DisappearingArrow arrowClass="h-4 fill-white" />
+                        </span>
+                      </Link>
 
                       <div className="absolute top-0 left-0 w-px h-full transition-opacity duration-150 -translate-x-4 opacity-0 bg-primary group-hover:opacity-100" />
                     </li>
